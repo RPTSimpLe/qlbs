@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/admin-layout">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+
+
+		<form id="seacrch-filter-role">
+			<div class="form-group">
+				<label>nhập code</label>
+				<input class="form-control" name="code">
+			</div>
+			<button type="submit" class="btn btn-primary">Tìm kiếm</button>
+		</form>
+
+
+		<table class="table">
+			<thead class="thead-dark" id="role-filter-form">
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Name</th>
+					<th scope="col">Code</th>
+					<th scope="col">thêm</th>
+				</tr>
+			</thead>
+			<tbody id="list">
+			</tbody>
+		</table>
+
+		<script>
+			
+			function deleteRole(roleId){
+				const isConfirm = confirm('Bạn có chắc muốn xóa role này không');
+				if (isConfirm) {
+					callDelete('/admin/api/v1/roles/' + roleId)
+						.then(res => {
+							const roleElement = document.querySelector('#roleId_' + roleId)
+							roleElement.remove();
+						})
+				}
+			}
+			
+			function renderRole(roles){
+				let html = ``;
+						for (const a of roles) {
+							html += `
+						<tr id="roleId_${a.roleId}">
+							<th scope="col">${a.roleId}</th>
+							<th scope="col">${a.name}</th>
+							<th scope="col">${a.code}</th>
+							<th scope="col">
+								<a href="/admin/role/${a.roleId}">
+											<button class="btn btn-primary">Cập nhật</button>
+										</a>
+								<button class="btn btn-danger" onclick="deleteRole(${a.roleId})">xóa</button>
+								</th>
+							
+						</tr>
+					`
+						}
+						document.getElementById('list').innerHTML = html
+			}
+			
+			function getRoleAndRender() {
+				get('/admin/api/v1/roles', {...formValue})
+					.then(roles => {
+						renderRole(roles)
+					})
+			}
+				let formValue = {};
+			const searchForm = document.getElementById("seacrch-filter-role")
+			searchForm.addEventListener('submit', (e) => {
+				e.preventDefault();
+				formValue = formToObject("#seacrch-filter-role")
+				console.log(formValue)
+				getRoleAndRender()
+			})
+			
+			getRoleAndRender()
+		</script>
+	</div>
+</body>
+
+</html>

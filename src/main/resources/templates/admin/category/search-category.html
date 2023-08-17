@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/admin-layout">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+
+</head>
+
+<body>
+
+
+	<div layout:fragment="content">
+
+		<form id="category-filter-form">
+			<div class="form-group">
+				<input class="form-control" name="name" placeholder="Tên danh mục" />
+			</div>
+			<button class="btn btn-primary" type="submit">Tìm kiếm</button>
+
+
+		</form>
+
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Tên</th>
+					<th>Mô tả</th>
+					<th>Ngày tạo</th>
+					<th>Người tạo</th>
+					<th>Ngày chỉnh sửa</th>
+					<th>Người chỉnh sửa</th>
+					<th>Thao tác</th>
+				</tr>
+			</thead>
+			<tbody id="categoryList">
+
+			</tbody>
+		</table>
+		<div id="demo" style="display: flex; justify-content: flex-end;"></div>
+
+		<script>
+			const searchForm = document.querySelector('#category-filter-form');
+			const limit = 5;
+			let formValue = {};
+
+			searchForm.addEventListener('submit', (e) => {
+				e.preventDefault();
+				formValue = formToObject('#category-filter-form');
+				getCategoriesAndRender({
+					page: 1,
+					limit: limit,
+				})
+
+			})
+
+			const _$ = $;
+
+			showPagination({
+				totalItems: 1,
+				limit,
+				currentPage: 1,
+				onPageClick: () => { }
+			})
+
+			function renderCategories(categories) {
+				let html = '';
+				for (const category of categories) {
+					html += `
+						<tr id="category_${category.categoryId}">
+							<td>${category.categoryId}</td>						
+							<td>${category.name}</td>						
+							<td>${category.description}</td>						
+							<td>${category.createdDate}</td>						
+							<td>${category.createBy}</td>						
+							<td>${category.modifierDate}</td>						
+							<td>${category.modifierBy}</td>		
+							<td>
+								<a href="/admin/categories/${category.categoryId}">
+									<button class="btn btn-primary">Cập nhật</button>
+									
+								</a>
+								<button onclick="deleteCategory(${category.categoryId})" class="btn btn-danger">xóa</button>
+							</td>				
+						</tr>
+					`;
+				}
+				document.querySelector("#categoryList").innerHTML = html;
+			}
+
+			function deleteCategory(categoryId) {
+				console.log(categoryId)
+				const isConfirm = confirm('Bạn có chắc muốn xóa danh sách này không');
+				console.log(isConfirm);
+				if (isConfirm) {
+					callDelete('/admin/api/v1/categories/' + categoryId)
+						.then(res => {
+							const categoryElement = document.querySelector('#category_' + categoryId);
+							categoryElement.remove();
+						})
+				}
+			}
+			
+			function getCategoriesAndRender({page, limit}) {
+				get(`/admin/api/v1/categories`, {
+					page,
+					limit,
+					...formValue
+				})
+					.then(pageDto => {
+						renderCategories(pageDto.data);
+						_$("#demo").pagination("destroy");
+						const {page, totalItems, limit} = pageDto;
+
+						showPagination({
+							totalItems,
+							limit,
+							currentPage: page,
+							onPageClick: function (pageNumber) {
+								getCategoriesAndRender({page: pageNumber, limit})
+								console.log(pageNumber)
+							}
+						})
+					})
+			}
+
+
+			getCategoriesAndRender({
+				page: 1,
+				limit: limit
+			});
+
+
+
+		</script>
+	</div>

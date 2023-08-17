@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/admin-layout">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+
+	<!--	<form id="supplier-filter-form">
+			<div class="form-group">
+				<input class="form-control" name="name" placeholder="Tên nhà cung cấp" />
+			</div>
+			<button class="btn btn-primary" type="submit">Tìm kiếm</button>
+
+
+		</form>-->
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Tên</th>
+					<th scope="col">điện thoại</th>
+					<th scope="col">mô tả</th>
+					<th scope="col">email</th>
+				</tr>
+			</thead>
+			<tbody id="supplierList">
+			</tbody>
+		</table>
+		<div class="demo"></div>
+
+
+
+
+		<script>
+			const _$ = $;
+			
+			function showPaginitation({page, limit, current, onPageClick}){
+				_$("#demo").pagination({
+					items: totalItems,
+					itemsOnPage: limit,
+					currentPage,
+					prevText: "&laquo;",
+					nextText: "&raquo;",
+					onPageClick: onPageClick
+				})
+			}
+
+			get(`/admin/api/V1/supplier`)
+				.then(respond => {
+					let html = ``;
+					console.log(respond.data)
+					for (const a of respond.data) {
+						html += `
+								<tr id="supplier_${a.supplierId}">
+									<td>${a.supplierId}</td>
+									<td>${a.name}</td>
+									<td>${a.phone}</td>
+									<td>${a.description}</td>
+									<td>${a.email}</td>
+								</tr>
+							`;
+					}
+					document.getElementById('supplierList').innerHTML = html
+				})
+		</script>
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/admin-layout">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<form id="addSupplier" class="addform">
+			<div class="form-group">
+				<label>tên</label>
+				<input name="name" class="form-control" placeholder="nhập tên">
+			</div>
+			<div class="form-group">
+				<label>Số điện thoại</label>
+				<input name="phone" class="form-control" placeholder="nhập sdt">
+			</div>
+			<div class="form-group">
+				<label>description</label>
+				<input name="description" class="form-control" placeholder="nhập description">
+			</div>
+			<div class="form-group">
+				<label>email</label>
+				<input name="email" type="email" class="form-control" placeholder="nhập email">
+			</div>
+			<button type="submit" class="btn btn-primary">tạo nhà cc</button>
+		</form>
+
+
+
+
+
+		<script>
+			const addForm = document.getElementById("addSupplier");
+			addForm.addEventListener('submit', (e) => {
+				e.preventDefault();
+				const formValue = formToObject("#addSupplier")
+				console.log(formValue)
+				post('/admin/api/V1/supplier',formValue)
+				.then(response => console.log(response))
+			})
+		</script>
+	</div>
+
+</body>
+
+</html>

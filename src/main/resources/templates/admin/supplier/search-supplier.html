@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/admin-layout">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+
+		<form id="supplier-filter-form">
+			<div class="form-group">
+				<input class="form-control" name="name" placeholder="Tên nhà cung cấp" />
+			</div>
+			<button class="btn btn-primary" type="submit">Tìm kiếm</button>
+
+
+		</form>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Tên</th>
+					<th scope="col">điện thoại</th>
+					<th scope="col">mô tả</th>
+					<th scope="col">email</th>
+					<th scope="col">thêm</th>
+				</tr>
+			</thead>
+			<tbody id="supplierList">
+			</tbody>
+		</table>
+		<div id="demo"></div>
+
+
+
+
+		<script>
+			let formValue = {}
+			const searchForm = document.getElementById("supplier-filter-form")
+			searchForm.addEventListener('submit', (e) => {
+				e.preventDefault()
+				formValue = formToObject("#supplier-filter-form");
+				getStudentandRender({
+					page: 1,
+					limit: limit
+				})
+			})
+
+
+			const limit = 5
+			const _$ = $;
+			function renderSupplier(respond) {
+				let html = ``;
+				for (const a of respond.data) {
+					html += `
+								<tr id="supplier_${a.supplierId}">
+									<td>${a.supplierId}</td>
+									<td>${a.name}</td>
+									<td>${a.phone}</td>
+									<td>${a.description}</td>
+									<td>${a.email}</td>
+									<td>
+										<a href="/admin/supplier/${a.supplierId}">
+											<button class="btn btn-primary">Cập nhật</button>
+										</a>
+										<button onclick="deleteSupplier(${a.supplierId})" class="btn btn-danger">xóa</button>
+									</td>
+								</tr>
+							`;
+				}
+				document.getElementById('supplierList').innerHTML = html
+			}
+
+			function getStudentandRender({page, limit}) {
+				get(`/admin/api/V1/supplier`, {
+					page,
+					limit, ...formValue
+				})
+					.then(respond => {
+						renderSupplier(respond)
+						_$("#demo").pagination("destroy");
+						const {page, totalItems, limit} = respond;
+
+						showPagination({
+							totalItems: totalItems,
+							limit,
+							currentPage: page,
+							onPageClick: function (pageNumber) {
+								getStudentandRender({page: pageNumber, limit})
+								console.log(pageNumber)
+							}
+						})
+					})
+			}
+
+			function deleteSupplier(supplierId) {
+				const isConfirm = confirm('Bạn có chắc muốn xóa nhà cung cấp này không');
+				if (isConfirm) {
+					callDelete('/admin/api/V1/supplier/' + supplierId)
+						.then(res => {
+							const supplierElement = document.querySelector('#supplier_' + supplierId)
+							supplierElement.remove();
+						})
+				}
+			}
+
+			showPagination({
+				totalItems: 1,
+				limit,
+				currentPage: 1,
+				onPageClick: () => { }
+			})
+
+			getStudentandRender({
+				page: 1,
+				limit: limit
+			})
+		</script>
+	</div>
+
+</body>
+
+</html>

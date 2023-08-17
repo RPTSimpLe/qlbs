@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/admin-layout">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<form id="createRole" class="addform">
+			<div class="form-group">
+				<label>tên</label>
+				<input name="name" class="form-control" placeholder="nhập tên">
+			</div>
+			<div class="form-group">
+				<label>mã role</label>
+				<input name="code" class="form-control" placeholder="nhập role">
+			</div>
+			<button type="submit" class="btn btn-primary">tạo role</button>
+		</form>
+
+
+
+
+
+		<script>
+			const createForm = document.getElementById("createRole")
+			createForm.addEventListener('submit', (e)=> {
+				e.preventDefault();
+				const formValue = formToObject("#createRole")
+				post("/admin/api/v1/roles", formValue)
+				.then(create =>		console.log(create))
+			})
+		</script>
+	</div>
+
+</body>
+
+</html>

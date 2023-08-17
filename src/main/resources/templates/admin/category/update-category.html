@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/admin-layout">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<form id="updateCategoryForm">
+			<input name="categoryId" th:value="${category.categoryId}" type="hidden">
+			<div class="form-group">
+				<label>Tên danh mục</label>
+				<input name="name" th:value="${category.name}" class="form-control name" placeholder="tên danh mục">
+			</div>
+
+			<div class="form-group">
+				<label>Mô tả</label>
+				<input name="description" th:value="${category.description}" class="form-control description" placeholder="mô tả">
+			</div>
+			<div class="form-group">
+				<button class="btn btn-primary" type="submit">
+					Cập nhật
+				</button>
+			</div>
+		</form>
+
+
+
+
+
+		<script>
+			const updateFrom = document.querySelector("#updateCategoryForm")
+			updateFrom.addEventListener('submit', (e) => {
+				e.preventDefault();
+				const updateFormValue = formToObject("#updateCategoryForm")
+				const {categoryId} = updateFormValue;
+				put("/admin/api/v1/categories/"+categoryId, updateFormValue)
+				.then(category => {
+					 window.location.href = '/admin/categories/search'
+				})
+			})
+		</script>
+	</div>
+
+</body>
+
+</html>

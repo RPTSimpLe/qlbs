@@ -1,0 +1,8 @@
+authentication
+authorization  ADD_PRODUCT
+
+-- authentication
+USER username, password
+
+-- ManytoMany
+ROLES

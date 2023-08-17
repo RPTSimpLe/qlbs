@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/admin-layout">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<form id="updateSupplier" class="addform">
+			<div class="form-group">
+				<input name="supplierId" class="form-control" th:value="${supplier.supplierId}" type="hidden">
+			</div>
+			<div class="form-group">
+				<label>tên</label>
+				<input name="name" class="form-control" th:value="${supplier.name}">
+			</div>
+			<div class="form-group">
+				<label>Số điện thoại</label>
+				<input name="phone" class="form-control" th:value="${supplier.phone}">
+			</div>
+			<div class="form-group">
+				<label>description</label>
+				<input name="description" class="form-control" th:value="${supplier.description}">
+			</div>
+			<div class="form-group">
+				<label>email</label>
+				<input name="email" type="email" class="form-control" th:value="${supplier.email}">
+			</div>
+			<button type="submit" class="btn btn-primary">Cập nhật</button>
+		</form>
+
+
+
+
+
+		<script>
+			const updateForm = document.getElementById("updateSupplier");
+			updateForm.addEventListener('submit', (e) => {
+				e.preventDefault();
+				const formValue = formToObject("#updateSupplier")
+				const {supplierId} = formValue
+				put("/admin/api/V1/supplier/" + supplierId, formValue)
+					.then(response => {
+						window.location.href = '/admin/supplier/search'
+					})
+			})
+		</script>
+	</div>
+
+</body>
+
+</html>

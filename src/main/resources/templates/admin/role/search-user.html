@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/admin-layout">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+
+
+		<form id="seacrch-filter-user">
+			<div class="form-group">
+				<label>nhập tên</label>
+				<input class="form-control" name="code">
+			</div>
+			<button type="submit" class="btn btn-primary">Tìm kiếm</button>
+		</form>
+
+
+		<table class="table">
+			<thead class="thead-dark" id="role-filter-form">
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Username</th>
+					<th scope="col">Password</th>
+					<th scope="col">FirstName</th>
+					<th scope="col">Lastname</th>
+					<th scope="col">PhoneNumber</th>
+					<th scope="col">Address</th>
+					<th scope="col">createdDate</th>
+					<th scope="col">modifierDate</th>
+					<th scope="col">createdDate</th>
+					<th scope="col">modifierDate</th>
+					<th scope="col">createdBy</th>
+					<th scope="col">modifierBy</th>
+				</tr>
+			</thead>
+			<tbody id="list">
+			</tbody>
+		</table>
+
+		<script>
+			
+			function deleteRole(userId){
+				const isConfirm = confirm('Bạn có chắc muốn xóa user này không');
+				if (isConfirm) {
+					callDelete('/admin/api/v1/roles/' + userId)
+						.then(res => {
+							const userElement = document.querySelector('#userId_' + userId)
+							userElement.remove();
+						})
+				}
+			}
+			
+			function renderRole(users){
+				let html = ``;
+						for (const a of users) {
+							html += `
+						<tr id="roleId_${a.userId}">
+							<th scope="col">${a.userId}</th>
+							<th scope="col">${a.name}</th>
+							<th scope="col">${a.code}</th>
+							<th scope="col">
+								<a href="/admin/role/${a.roleId}">
+											<button class="btn btn-primary">Cập nhật</button>
+										</a>
+								<button class="btn btn-danger" onclick="deleteRole(${a.roleId})">xóa</button>
+								</th>
+							
+						</tr>
+					`
+						}
+						document.getElementById('list').innerHTML = html
+			}
+			
+			function getRoleAndRender() {
+				get('/admin/api/v1/roles', {...formValue})
+					.then(roles => {
+						renderRole(roles)
+					})
+			}
+				let formValue = {};
+			const searchForm = document.getElementById("seacrch-filter-role")
+			searchForm.addEventListener('submit', (e) => {
+				e.preventDefault();
+				formValue = formToObject("#seacrch-filter-role")
+				console.log(formValue)
+				getRoleAndRender()
+			})
+			
+			getRoleAndRender()
+		</script>
+	</div>
+</body>
+
+</html>

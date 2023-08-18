@@ -8,11 +8,11 @@ import com.shopeeClone.shopeeClone.entity.DistrictEntity;
 
 public interface AddressService {
 
-	AddressDTO create(AddressDTO dto);
+	AddressDTO create(AddressDTO dto, Long userId);
 
 	List<AddressDTO> getAll();
 
-	void delete(String id);
+	void delete(String id, Long userId);
 
 	AddressDTO update(AddressDTO dto, String id);
 

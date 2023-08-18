@@ -15,7 +15,7 @@ public interface UserService {
 
 	UserDTO updateByPatch(String id, UserDTO dto);
 
-	void deleteById(String id);
+	void deleteById(Long id);
 
 	UserDTO updateRole(String id, String code);
 	

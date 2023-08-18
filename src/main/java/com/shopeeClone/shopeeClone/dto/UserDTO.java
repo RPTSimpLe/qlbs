@@ -30,8 +30,15 @@ private Long userId;
 	private Date createdDate;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date modifierDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	private String createdBy;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	private String modifierBy;
+	
 	private List<UserEntity> role;
 	private List<String> roleName = new ArrayList<String>();
+	
+	
 	@Override
 	public String toString() {
 		return "UserDTO [userId=" + userId + ", username=" + username + ", firstName=" + firstName + ", lastName="

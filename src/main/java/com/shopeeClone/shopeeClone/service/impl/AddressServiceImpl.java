@@ -14,8 +14,10 @@ import com.shopeeClone.shopeeClone.dto.DistrictDTO;
 import com.shopeeClone.shopeeClone.entity.AddressEntity;
 import com.shopeeClone.shopeeClone.entity.DistrictEntity;
 import com.shopeeClone.shopeeClone.entity.ProvinceEntity;
+import com.shopeeClone.shopeeClone.entity.UserEntity;
 import com.shopeeClone.shopeeClone.entity.WardEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
+import com.shopeeClone.shopeeClone.repository.UserRepository;
 import com.shopeeClone.shopeeClone.repository.address.AddressRepository;
 import com.shopeeClone.shopeeClone.repository.address.DistrictRepository;
 import com.shopeeClone.shopeeClone.repository.address.ProvinceRepository;
@@ -38,15 +40,19 @@ public class AddressServiceImpl implements AddressService {
 	private DistrictRepository districtRepository;
 	@Autowired
 	private AddressConverter addressConverter;
+	@Autowired UserRepository userRepository;
 	
 	@Override
-	public AddressDTO create(AddressDTO dto) {
+	public AddressDTO create(AddressDTO dto, Long userId) {
 		AddressEntity addressEntity  = addressConverter.toEntity(dto);
+		UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new ValidateException("user not found"));
 		ProvinceEntity provinceEntity = findProvince(dto.getProvinceName());
 		WardEntity wardEntity = findWard(dto.getWardName());
 		DistrictEntity districtEntity = findDistrict(dto.getDistrictName());
 		addressEntity.setProvince(provinceEntity);
 		addressEntity.setDistrict(districtEntity);
+		addressEntity.setUser(userEntity);
 		addressEntity.setWard(wardEntity);
 		
 		addressRepository.save(addressEntity);
@@ -85,10 +91,13 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public void delete(String id) {
+	public void delete(String id, Long userId) {
 		Long id1 = validate.validateId(id);
 		AddressEntity addressEntity = addressRepository.findById(id1).orElseThrow(() -> new ValidateException("khong thay dia chi"));
-		
+		addressEntity.setUser(null);
+		addressEntity.setDistrict(null);
+		addressEntity.setWard(null);
+		addressEntity.setProvince(null);
 		addressRepository.delete(addressEntity);
 	}
 

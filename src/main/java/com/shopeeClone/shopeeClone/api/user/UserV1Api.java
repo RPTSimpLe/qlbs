@@ -40,7 +40,7 @@ public class UserV1Api {
 	}
 	
 	@DeleteMapping("{id}")
-	public void delete(@PathVariable String id) {
+	public void delete(@PathVariable Long id) {
 		service.deleteById(id);
 	}
 	

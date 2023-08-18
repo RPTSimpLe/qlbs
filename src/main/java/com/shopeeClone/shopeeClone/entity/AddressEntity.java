@@ -29,7 +29,20 @@ public class AddressEntity extends BaseEntity {
 	@JoinColumn(name = "ward_id")
 	private WardEntity ward;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "userId")
+	private UserEntity user;
+	
 	private String description;
+
+	
+	public UserEntity getUser() {
+		return user;
+	}
+
+	public void setUser(UserEntity user) {
+		this.user = user;
+	}
 
 	public String getDescription() {
 		return description;

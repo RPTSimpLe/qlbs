@@ -22,4 +22,8 @@ public class UserController {
 		return "user/homePage";
 	}
 
+	@GetMapping
+	public String signup() {
+		return "signUp";
+	}
 }

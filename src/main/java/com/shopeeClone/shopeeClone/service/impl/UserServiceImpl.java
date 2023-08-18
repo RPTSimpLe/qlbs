@@ -80,9 +80,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void deleteById(String id) {
-		Long id1 = validate.validateId(id);
-		UserEntity userEntity = getUserByName(id1);
+	public void deleteById(Long id) {
+		UserEntity userEntity = getUserByName(id);
 		List<RoleEntity> roleEntities = userEntity.getRoles();
 		for (RoleEntity roleEntity : roleEntities) {
 			if (roleEntity.getUsers().contains(userEntity)) {

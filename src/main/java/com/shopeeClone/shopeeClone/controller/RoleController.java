@@ -34,4 +34,9 @@ public class RoleController {
 		model.addAttribute("a", dto);
 		return "admin/role/update-role";
 	}
+	
+	@GetMapping("user")
+	public String searchUser() {
+		return "admin/role/search-user";
+	}
 }

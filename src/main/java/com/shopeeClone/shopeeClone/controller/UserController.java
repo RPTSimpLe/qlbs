@@ -22,7 +22,7 @@ public class UserController {
 		return "user/homePage";
 	}
 
-	@GetMapping
+	@GetMapping("/signUp")
 	public String signup() {
 		return "signUp";
 	}

@@ -38,7 +38,7 @@ public class ProductEntity extends BaseEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "supplier_id", nullable = false )
-	private SupplierEntity supplier;
+	private SupplierEntity suppilier;
 	
 	@OneToMany(mappedBy = "product")
 	private List<ImageEntity> imageEntities = new ArrayList<>();
@@ -99,12 +99,12 @@ public class ProductEntity extends BaseEntity {
 		this.category = category;
 	}
 
-	public SupplierEntity getSupplier() {
-		return supplier;
+	public SupplierEntity getSuppilier() {
+		return suppilier;
 	}
 
-	public void setSupplier(SupplierEntity supplier) {
-		this.supplier = supplier;
+	public void setSupplier(SupplierEntity suppilier) {
+		this.suppilier = suppilier;
 	}
 
 	public List<ImageEntity> getImageEntities() {

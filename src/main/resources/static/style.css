@@ -35,7 +35,7 @@ body{
   top: 0;
   left: 0;
   height: 100%;
-  width: 300px;
+  width: inherit;
   background: #11101d;
 }
 .sidebar .logo-details{

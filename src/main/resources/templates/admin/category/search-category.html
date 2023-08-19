@@ -91,9 +91,7 @@
 			}
 
 			function deleteCategory(categoryId) {
-				console.log(categoryId)
 				const isConfirm = confirm('Bạn có chắc muốn xóa danh sách này không');
-				console.log(isConfirm);
 				if (isConfirm) {
 					callDelete('/admin/api/v1/categories/' + categoryId)
 						.then(res => {

@@ -33,6 +33,15 @@ function put(path, body) {
 		headers: myHeaders
 	}).then(response => response.json())
 }
+function pat(path, body={}) {
+	var myHeaders = new Headers();
+	myHeaders.append('Content-Type', 'application/json');
+	return fetch(path, {
+		method: 'PATCH',
+		body: JSON.stringify(body),
+		headers: myHeaders
+	}).then(response => response.json())
+}
 
 function showPagination({
 	totalItems,

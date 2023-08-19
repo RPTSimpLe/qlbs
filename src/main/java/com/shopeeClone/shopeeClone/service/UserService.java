@@ -1,13 +1,13 @@
 package com.shopeeClone.shopeeClone.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.shopeeClone.shopeeClone.dto.PageDTO;
 import com.shopeeClone.shopeeClone.dto.UserDTO;
 import com.shopeeClone.shopeeClone.entity.UserEntity;
 
 public interface UserService {
-
-	List<UserDTO> getAll();
 
 	UserDTO createUser(UserEntity entity);
 
@@ -18,5 +18,9 @@ public interface UserService {
 	void deleteById(Long id);
 
 	UserDTO updateRole(String id, String code);
+
+	PageDTO<UserDTO> getUs(Map<String, String> params);
+
+	void deleteRole(Long id, String roleName);
 	
 }

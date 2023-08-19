@@ -1,6 +1,7 @@
 package com.shopeeClone.shopeeClone.api.user;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shopeeClone.shopeeClone.dto.PageDTO;
 import com.shopeeClone.shopeeClone.dto.UserDTO;
 import com.shopeeClone.shopeeClone.entity.UserEntity;
 import com.shopeeClone.shopeeClone.service.UserService;
@@ -29,9 +32,9 @@ public class UserV1Api {
 		return service.createUser(entity);
 	}
 	
-	@GetMapping("/admin")
-	public List<UserDTO> getAll(){
-		return service.getAll();
+	@GetMapping("/admin/getAll")
+	public PageDTO<UserDTO> getUs(@RequestParam Map<String, String>params) {
+		return service.getUs(params);
 	}
 	
 	@GetMapping("{name}")
@@ -42,6 +45,11 @@ public class UserV1Api {
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable Long id) {
 		service.deleteById(id);
+	}
+	
+	@DeleteMapping("/admin/deleteRole/{id}/{roleName}")
+	public void deleteRole(@PathVariable Long id, @PathVariable String roleName) {
+		service.deleteRole(id, roleName);
 	}
 	
 	@PutMapping("{id}")

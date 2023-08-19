@@ -42,11 +42,6 @@ public class UserEntity extends BaseEntity {
 	@OneToMany(mappedBy = "user")
 	private List<AddressEntity> address;
 	
-	private Date createdDate;
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-	private Date modifierDate;
-	
 	@ManyToMany(mappedBy = "users")
 	private List<RoleEntity> roles = new ArrayList<>();
 
@@ -54,7 +49,7 @@ public class UserEntity extends BaseEntity {
 	public String toString() {
 		return "UserEntity [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", address=" + address
-				+ ", createdDate=" + createdDate + ", modifierDate=" + modifierDate + "]";
+				+ ", roles=" + roles + "]";
 	}
 	
 	

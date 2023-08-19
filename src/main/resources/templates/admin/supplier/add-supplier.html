@@ -26,7 +26,7 @@
 				<label>email</label>
 				<input name="email" type="email" class="form-control" placeholder="nhập email">
 			</div>
-			<button type="submit" class="btn btn-primary">tạo nhà cc</button>
+			<button type="submit" class="btn btn-primary">Tạo supplier</button>
 		</form>
 
 
@@ -40,7 +40,9 @@
 				const formValue = formToObject("#addSupplier")
 				console.log(formValue)
 				post('/admin/api/V1/supplier',formValue)
-				.then(response => response.json())
+				.then(
+					window.location.href = '/admin/supplier/search'
+					)
 			})
 		</script>
 	</div>

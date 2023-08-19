@@ -31,7 +31,7 @@
 				e.preventDefault();
 				const formValue = formToObject("#createRole")
 				post("/admin/api/v1/roles", formValue)
-				.then(create =>		console.log(create))
+				.then(	window.location.href="/admin/role/search")
 			})
 		</script>
 	</div>

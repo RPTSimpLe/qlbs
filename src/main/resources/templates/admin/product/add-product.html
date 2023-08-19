@@ -22,34 +22,34 @@
         <h2 style="color: red;" th:if="${message != null}">
             <span th:text="${message}"></span>
         </h2>
-        <form id="addProductForm" class="addform">
+        <form id="addProductForm" class="addform" method="POST" action="/admin/products/add">
             <div class="form-group">
                 <label>Tên Product</label>
-                <input type="text" name="name" class="form-control name" placeholder="Tên Product">
+                <input th:value = "${form.name}" type="text" name="name" class="form-control name" placeholder="Tên Product">
             </div>
             <div class="form-group">
                 <label>Mô tả</label>
-                <input type="text" name="description" class="form-control description" placeholder="Mô tả">
+                <input th:value = "${form.description}" type="text" name="description" class="form-control description" placeholder="Mô tả">
             </div>
             <div class="form-group">
                 <label>Giá nhập</label>
-                <input type="number" name="importPrice" class="form-control importPrice" placeholder="Giá nhập">
+                <input th:value = "${form.importPrice}" type="number" name="importPrice" class="form-control importPrice" placeholder="Giá nhập">
             </div>
             <div class="form-group">
                 <label>Giá sản phẩm</label>
-                <input type="number" name="price" class="form-control price" placeholder="Giá nhập">
+                <input th:value = "${form.price}" type="number" name="price" class="form-control price" placeholder="Giá nhập">
             </div>
             <div class="form-group">
                 <label>discountPercent</label>
-                <input type="number" name="discountPercent" class="form-control discountPercent" placeholder="discountPercent">
+                <input th:value = "${form.discountPercent}" type="number" name="discountPercent" class="form-control discountPercent" placeholder="discountPercent">
             </div>
             <div class="form-group">
                 <label>Danh mục</label>
-                <input type="text" name="category" class="form-control category" placeholder="Danh mục">
+                <input th:value = "${form.category}" type="text" name="category" class="form-control category" placeholder="Danh mục">
             </div>
             <div class="form-group">
                 <label>Nhà cung cấp</label>
-                <input type="text" name="suppilier" class="form-control suppilier" placeholder="Nhà cung cấp">
+                <input th:value = "${form.suppilier}" type="text" name="suppilier" class="form-control suppilier" placeholder="Nhà cung cấp">
             </div>
             <div class="form-group">
 				<button class="btn btn-primary" type="submit">

@@ -4,10 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.shopeeClone.shopeeClone.converter.product.ProductConverter;
 import com.shopeeClone.shopeeClone.dto.ProductDTO;
+import com.shopeeClone.shopeeClone.exeption.ValidateException;
 import com.shopeeClone.shopeeClone.service.ProductService;
 
 @Controller
@@ -15,10 +19,24 @@ import com.shopeeClone.shopeeClone.service.ProductService;
 public class ProductController {
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private ProductConverter productConverter;
 	
 	@GetMapping("add")
-	public String showAddProductPage() {
+	public String showAddProductPage(Model model) {
+		model.addAttribute("form", new ProductDTO());
 		return "admin/product/add-product";
+	}
+	@PostMapping("add")
+	public String validateProduct(@ModelAttribute ProductDTO form,Model model){
+		try {
+			productConverter.toEntity(form);
+			return "admin/product/search-product";
+		} catch (ValidateException e) {
+			model.addAttribute("message", e.getMessage());
+			model.addAttribute("form", form);
+			return "admin/product/add-product";
+		}
 	}
 	@GetMapping("search")
 	public String showSearchProductsPage(){

@@ -1,5 +1,6 @@
 package com.shopeeClone.shopeeClone.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.shopeeClone.shopeeClone.converter.product.ProductConverter;
 import com.shopeeClone.shopeeClone.dto.PageDTO;
 import com.shopeeClone.shopeeClone.dto.ProductDTO;
-import com.shopeeClone.shopeeClone.entity.CategoryEntity;
 import com.shopeeClone.shopeeClone.entity.ProductEntity;
-import com.shopeeClone.shopeeClone.entity.SupplierEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
-import com.shopeeClone.shopeeClone.repository.CategoryRepository;
 import com.shopeeClone.shopeeClone.repository.ProductRepository;
-import com.shopeeClone.shopeeClone.repository.SupplierRepository;
 import com.shopeeClone.shopeeClone.service.ProductService;
 import com.shopeeClone.shopeeClone.utils.AppStringUtils;
-import com.shopeeClone.shopeeClone.utils.validate;
-
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 @Service
 @Transactional
@@ -46,26 +42,73 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public PageDTO<ProductDTO> getProducts(Map<String, String> params) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProducts'");
+        // hql
+		// http://localhost:8080/admin/api/v1/products?page=1?limit=10
+		System.out.println(params);
+		String pageStr = params.get("page");
+		String limitStr = params.get("limit");
+		Integer page = 1;
+		Integer limit = 10;
+		if (AppStringUtils.hasTextAnd(pageStr)) {
+			page = Integer.valueOf(pageStr);
+		}
+		if (AppStringUtils.hasTextAnd(limitStr)) {
+			limit = Integer.valueOf(limitStr);
+		}
+
+		// lay data
+		// dem data
+		StringBuilder selectQueryBuilder = new StringBuilder("Select c from ProductEntity c ");
+		StringBuilder countQueryBuilder = new StringBuilder("Select count(c.productId) " + "from ProductEntity c ");
+
+		String name = params.get("name");
+		if (AppStringUtils.hasTextAnd(name)) {
+			selectQueryBuilder.append(" Where c.name like :name");
+			countQueryBuilder.append(" Where c.name like :name");
+		}
+
+		TypedQuery<ProductEntity> selectQuery = entityManager.createQuery(selectQueryBuilder.toString(),
+				ProductEntity.class);
+		TypedQuery<Long> countQuery = entityManager.createQuery(countQueryBuilder.toString(), Long.class);
+
+		Integer firstItems = (page - 1) * limit;
+
+		if (AppStringUtils.hasTextAnd(name)) {
+			selectQuery.setParameter("name", "%"+name+"%");
+			countQuery.setParameter("name", "%"+name+"%");
+		}
+
+		selectQuery.setFirstResult(firstItems);
+		selectQuery.setMaxResults(limit);
+
+		List<ProductEntity> productEntities = selectQuery.getResultList();
+		Long totalItems = countQuery.getSingleResult();
+
+		// entity -> dto
+		List<ProductDTO> dtos = productConverter.toDTOList(productEntities);
+
+		return new PageDTO<>(page, limit, totalItems, dtos);
     }
 
     @Override
     public ProductDTO updateProduct(Long productId, ProductDTO productDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateProduct'");
+        ProductEntity productEntity = productRepository.findById(productId).orElseThrow(() -> new ValidateException("Khong tim thay product"));
+        productConverter.toEntity(productEntity, productDTO);
+        productRepository.save(productEntity);
+       return productConverter.toDTO(productEntity);
     }
 
     @Override
     public void deleteProductById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteProductById'");
+        productRepository.findById(id).orElseThrow(() -> new ValidateException("Khong tim thay product"));
+        productRepository.deleteById(id);
     }
 
     @Override
     public ProductDTO getProductByProductId(Long productId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProductByProductId'");
+        ProductEntity productEntity = productRepository.findById(productId).orElseThrow(() -> new ValidateException("Khong tim thay product"));
+
+        return productConverter.toDTO(productEntity);
     }
     
 }

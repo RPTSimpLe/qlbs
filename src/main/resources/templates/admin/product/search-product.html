@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/admin-layout">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ShowProduct</title>
+
+</head>
+
+<body>
+
+
+	<div layout:fragment="content">
+        <form id="product-filter-form">
+			<div class="form-group">
+				<input class="form-control" name="name" placeholder="Tên sản phẩm" />
+			</div>
+			<button class="btn btn-primary" type="submit">Tìm kiếm</button>
+
+
+		</form>
+
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Tên</th>
+					<th>Mô tả</th>
+                    <th>Giá nhập</th>
+                    <th>Giá bán</th>
+                    <th>Giảm giá(%)</th>
+                    <th>Danh mục</th>
+                    <th>Nhà cung cấp</th>
+					<th>Ngày tạo</th>
+					<th>Người tạo</th>
+					<th>Ngày chỉnh sửa</th>
+					<th>Người chỉnh sửa</th>
+					<th>Thao tác</th>
+				</tr>
+			</thead>
+			<tbody id="productList">
+
+			</tbody>
+		</table>
+		<div id="demo" style="display: flex; justify-content: flex-end;"></div>
+
+
+		<script>
+			const searchForm = document.querySelector('#product-filter-form');
+			const limit = 2;
+			let formValue = {};
+
+			searchForm.addEventListener('submit', (e) => {
+				e.preventDefault();
+				formValue = formToObject('#product-filter-form');
+				console.log(formValue);
+				getProductsAndRender({
+					page: 1,
+					limit: limit,
+				})
+
+			})
+
+			const _$ = $;
+
+			showPagination({
+				totalItems: 1,
+				limit,
+				currentPage: 1,
+				onPageClick: () => { }
+			})
+
+			function renderProducts(products) {
+				let html = '';
+				for (const product of products) {
+					html += `
+						<tr id="product_${product.productId}">
+							<td>${product.productId}</td>						
+							<td>${product.name}</td>						
+							<td>${product.description}</td>
+							<td>${product.importPrice}</td>								
+							<td>${product.price}</td>								
+							<td>${product.discountPercent}</td>								
+							<td>${product.category}</td>								
+							<td>${product.suppilier}</td>								
+							<td>${product.createDate}</td>						
+							<td>${product.createBy}</td>						
+							<td>${product.modifierDate}</td>						
+							<td>${product.modifierBy}</td>		
+							<td>
+								<a href="/admin/products/${product.productId}">
+									<button class="btn btn-primary">Cập nhật</button>
+									
+								</a>
+								<button onclick="deleteProduct(${product.productId})" class="btn btn-danger">xóa</button>
+							</td>				
+						</tr>
+					`;
+				}
+				document.querySelector("#productList").innerHTML = html;
+			}
+
+			function deleteProduct(productId) {
+				console.log(productId)
+				const isConfirm = confirm('Bạn có chắc muốn xóa sản phẩm này không');
+				console.log(isConfirm);
+				if (isConfirm) {
+					callDelete('/admin/api/v1/products/' + productId)
+						.then(res => {
+							const productElement = document.querySelector('#product_' + productId);
+							productElement.remove();
+						})
+				}
+			}
+			
+			function getProductsAndRender({page, limit}) {
+				get(`/admin/api/v1/products`, {
+					page,
+					limit,
+					...formValue
+				})
+					.then(pageDto => {
+						console.log(pageDto);
+						renderProducts(pageDto.data);
+						_$("#demo").pagination("destroy");
+						const {page, totalItems, limit} = pageDto;
+						showPagination({
+							totalItems,
+							limit,
+							currentPage: page,
+							onPageClick: function (pageNumber) {
+								getProductsAndRender({page: pageNumber, limit})
+								console.log(pageNumber)
+							}
+						})
+					})
+			}
+
+
+			getProductsAndRender({
+				page: 1,
+				limit: limit
+			});
+
+		</script>
+    </div>
+</body>
+</html>

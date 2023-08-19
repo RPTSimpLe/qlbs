@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Data
 public class ProductDTO {
+    private Long productId;
     private String name;
     private Double importPrice;
     private Double price;

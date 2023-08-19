@@ -19,6 +19,9 @@
 
 <body>
 	<div layout:fragment="content">
+        <h2 style="color: red;" th:if="${message != null}">
+            <span th:text="${message}"></span>
+        </h2>
         <form id="addProductForm" class="addform">
             <div class="form-group">
                 <label>Tên Product</label>

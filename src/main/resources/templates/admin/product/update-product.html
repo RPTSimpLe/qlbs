@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/admin-layout">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Add Product</title>
+    <style>
+        .form-group{
+            height: 40px;
+            display: flex;
+            flex-direction: row;
+        }
+        label{
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+	<div layout:fragment="content">
+        <form id="updateProductForm">
+            <input name="productId" th:value = "${product.productId}" type="hidden">
+            <div class="form-group">
+                <label>Tên Product</label>
+                <input th:value = "${product.name}" type="text" name="name" class="form-control name" placeholder="Tên Product">
+            </div>
+            <div class="form-group">
+                <label>Mô tả</label>
+                <input th:value = "${product.description}" type="text" name="description" class="form-control description" placeholder="Mô tả">
+            </div>
+            <div class="form-group">
+                <label>Giá nhập</label>
+                <input th:value = "${product.importPrice}" type="number" name="importPrice" class="form-control importPrice" placeholder="Giá nhập">
+            </div>
+            <div class="form-group">
+                <label>Giá sản phẩm</label>
+                <input th:value = "${product.price}" type="number" name="price" class="form-control price" placeholder="Giá nhập">
+            </div>
+            <div class="form-group">
+                <label>discountPercent</label>
+                <input th:value = "${product.discountPercent}" type="number" name="discountPercent" class="form-control discountPercent" placeholder="discountPercent">
+            </div>
+            <div class="form-group">
+                <label>Danh mục</label>
+                <input th:value = "${product.category}" type="text" name="category" class="form-control category" placeholder="Danh mục">
+            </div>
+            <div class="form-group">
+                <label>Nhà cung cấp</label>
+                <input th:value = "${product.suppilier}" type="text" name="suppilier" class="form-control suppilier" placeholder="Nhà cung cấp">
+            </div>
+            <div class="form-group">
+				<button class="btn btn-primary" type="submit">
+					Cập nhập Product
+				</button>
+			</div>
+        </form>
+
+        <script>
+            const updateFrom = document.querySelector("#updateProductForm")
+			updateFrom.addEventListener('submit', (e) => {
+				e.preventDefault();
+				const updateFormValue = formToObject("#updateProductForm")
+				const {productId} = updateFormValue;
+				put("/admin/api/v1/products/"+productId, updateFormValue)
+				.then(product => {
+					 window.location.href = '/admin/products/search'
+				})
+			})
+        </script>
+    </div>
+</body>
+</html>

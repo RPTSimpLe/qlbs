@@ -23,6 +23,7 @@ public class ProductConverter {
 
     public ProductDTO toDTO(ProductEntity productEntity){
         ProductDTO productDTO = new ProductDTO();
+        productDTO.setProductId(productEntity.getProductId());
         productDTO.setName(productEntity.getName());
         productDTO.setImportPrice(productEntity.getImportPrice());
         productDTO.setPrice(productEntity.getPrice());

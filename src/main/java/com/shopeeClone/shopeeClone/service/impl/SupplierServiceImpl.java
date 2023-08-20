@@ -40,9 +40,13 @@ public class SupplierServiceImpl implements SupplierService {
 	    SupplierDTO supplierDto = new SupplierDTO();
 	    supplierDto.setSupplierId(supplierEntity.getSupplierId());
 	    supplierDto.setName(supplierEntity.getName());
+	    supplierDto.setEmail(supplierEntity.getEmail());
 	    supplierDto.setPhone(supplierEntity.getPhone());
 	    supplierDto.setDescription(supplierEntity.getDescription());
-	    supplierDto.setEmail(supplierEntity.getEmail());
+	    supplierDto.setCreateBy(supplierEntity.getCreateBy());
+	    supplierDto.setCreateDate(supplierEntity.getCreateDate());
+	    supplierDto.setModifierBy(supplierEntity.getModifierBy());
+	    supplierDto.setModifierDate(supplierEntity.getModifierDate());
 	    return supplierDto;
 	}
 	

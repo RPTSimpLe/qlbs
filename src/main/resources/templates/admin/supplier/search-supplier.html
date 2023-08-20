@@ -27,7 +27,11 @@
 					<th scope="col">điện thoại</th>
 					<th scope="col">mô tả</th>
 					<th scope="col">email</th>
-					<th scope="col">thêm</th>
+					<th scope="col">createDate</th>
+					<th scope="col">modifierDate</th>
+					<th scope="col">createBy</th>
+					<th scope="col">email</th>
+					<th scope="col">modifierBy</th>
 				</tr>
 			</thead>
 			<tbody id="supplierList">
@@ -56,6 +60,7 @@
 			function renderSupplier(respond) {
 				let html = ``;
 				for (const a of respond.data) {
+					console.log(a)
 					html += `
 								<tr id="supplier_${a.supplierId}">
 									<td>${a.supplierId}</td>
@@ -63,6 +68,10 @@
 									<td>${a.phone}</td>
 									<td>${a.description}</td>
 									<td>${a.email}</td>
+									<td>${a.createDate}</td>
+									<td>${a.modifierDate}</td>
+									<td>${a.createBy}</td>
+									<td>${a.modifierBy}</td>
 									<td>
 										<a href="/admin/supplier/${a.supplierId}">
 											<button class="btn btn-primary">Cập nhật</button>

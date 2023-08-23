@@ -42,7 +42,7 @@
 				e.preventDefault();
 				const formValue = formToObject("#addSupplier")
 				const {phone} = formValue
-				if(phone.length > 11 || phone.length <9 || parseInt(phone)){
+				if(phone.length > 11 || phone.length <9 || parseInt(phone)==null){
 					document.getElementById("invalid-feedback").style.display= "block"
 					return;
 					}

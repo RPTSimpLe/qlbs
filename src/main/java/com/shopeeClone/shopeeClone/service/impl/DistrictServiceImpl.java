@@ -15,7 +15,6 @@ import com.shopeeClone.shopeeClone.entity.DistrictEntity;
 import com.shopeeClone.shopeeClone.repository.address.AddressRepository;
 import com.shopeeClone.shopeeClone.repository.address.DistrictRepository;
 import com.shopeeClone.shopeeClone.service.DistrictService;
-import com.shopeeClone.shopeeClone.utils.AppStringUtils;
 import com.shopeeClone.shopeeClone.utils.validate;
 
 @Service

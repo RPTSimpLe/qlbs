@@ -7,10 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.shopeeClone.shopeeClone.dto.CategoryDTO;
 import com.shopeeClone.shopeeClone.dto.PageDTO;
 import com.shopeeClone.shopeeClone.dto.SupplierDTO;
-import com.shopeeClone.shopeeClone.entity.CategoryEntity;
 import com.shopeeClone.shopeeClone.entity.SupplierEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
 import com.shopeeClone.shopeeClone.repository.SupplierRepository;
@@ -40,9 +38,13 @@ public class SupplierServiceImpl implements SupplierService {
 	    SupplierDTO supplierDto = new SupplierDTO();
 	    supplierDto.setSupplierId(supplierEntity.getSupplierId());
 	    supplierDto.setName(supplierEntity.getName());
+	    supplierDto.setEmail(supplierEntity.getEmail());
 	    supplierDto.setPhone(supplierEntity.getPhone());
 	    supplierDto.setDescription(supplierEntity.getDescription());
-	    supplierDto.setEmail(supplierEntity.getEmail());
+	    supplierDto.setCreateBy(supplierEntity.getCreateBy());
+	    supplierDto.setCreateDate(supplierEntity.getCreateDate());
+	    supplierDto.setModifierBy(supplierEntity.getModifierBy());
+	    supplierDto.setModifierDate(supplierEntity.getModifierDate());
 	    return supplierDto;
 	}
 	

@@ -12,7 +12,7 @@ import com.shopeeClone.shopeeClone.entity.ImageEntity;
 public class ImageConverter {
     public ImageDTO toDTO(ImageEntity imageEntity){
         ImageDTO imageDTO = new ImageDTO();
-        imageDTO.setImangeId(imageEntity.getImageId());
+        imageDTO.setImageId(imageEntity.getImageId());
         imageDTO.setUrl(imageEntity.getUrl());
         imageDTO.setDescription(imageEntity.getDescription());
         return null;

@@ -7,5 +7,5 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shopeeClone.shopeeClone.dto.ImageDTO;
 
 public interface ImageService {
-	ImageDTO saveImage(List<MultipartFile> multipartFiles);
+	List<ImageDTO> saveImage(List<MultipartFile> multipartFiles);
 }

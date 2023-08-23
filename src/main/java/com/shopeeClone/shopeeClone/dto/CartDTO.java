@@ -1,6 +1,5 @@
 package com.shopeeClone.shopeeClone.dto;
 
-import com.shopeeClone.shopeeClone.entity.ProductEntity;
 
 public class CartDTO {
 	private Long cartId;

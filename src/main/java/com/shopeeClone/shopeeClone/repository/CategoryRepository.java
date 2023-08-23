@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.shopeeClone.shopeeClone.entity.CategoryEntity;
-import com.shopeeClone.shopeeClone.entity.DistrictEntity;
 
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
 	Optional<CategoryEntity> findByName(String name);

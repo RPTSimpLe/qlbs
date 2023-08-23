@@ -2,13 +2,9 @@ package com.shopeeClone.shopeeClone.dto;
 
 import java.util.Date;
 
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.Column;
 
 public class CategoryDTO {
 	private Long categoryId;

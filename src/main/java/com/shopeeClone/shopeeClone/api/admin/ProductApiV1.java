@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,9 +28,25 @@ public class ProductApiV1 {
     @Autowired
     private ProductService productService;
 
-    @PostMapping
-    public ProductDTO createProduct(@RequestBody CreateProductDTO dto){
-        return productService.createProduct(dto);
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ProductDTO createProduct(@RequestParam("name") String name,
+                         @RequestParam("description") String description,
+                         @RequestParam("importPrice") Double importPrice,
+                         @RequestParam("price") Double price,
+                         @RequestParam("discountPercent") Integer discountPercent,
+                         @RequestParam("category") String category,
+                         @RequestParam("suppilier") String suppilier,
+                         @RequestPart(value = "multipartFiles",required = false) List<MultipartFile> multipartFiles){
+        CreateProductDTO createProductDTO = new CreateProductDTO();
+        createProductDTO.setName(name);
+        createProductDTO.setDescription(description);
+        createProductDTO.setImportPrice(importPrice);
+        createProductDTO.setPrice(price);
+        createProductDTO.setDiscountPercent(discountPercent);
+        createProductDTO.setCategory(category);
+        createProductDTO.setSuppilier(suppilier);
+        createProductDTO.addFiles(multipartFiles);
+        return productService.createProduct(createProductDTO);
     }
 
 

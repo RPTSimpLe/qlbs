@@ -1,6 +1,5 @@
 package com.shopeeClone.shopeeClone.utils;
 
-import com.shopeeClone.shopeeClone.exeption.ValidateException;
 
 public class AppStringUtils {
 	public static boolean hasText(String input) {

@@ -5,11 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.shopeeClone.shopeeClone.entity.RoleEntity;
 import com.shopeeClone.shopeeClone.entity.UserEntity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

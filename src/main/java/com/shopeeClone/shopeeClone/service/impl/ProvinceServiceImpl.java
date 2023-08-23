@@ -9,16 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shopeeClone.shopeeClone.converter.AddressConverter;
 import com.shopeeClone.shopeeClone.dto.ProvinceDTO;
-import com.shopeeClone.shopeeClone.dto.WardDTO;
 import com.shopeeClone.shopeeClone.entity.AddressEntity;
 import com.shopeeClone.shopeeClone.entity.ProvinceEntity;
-import com.shopeeClone.shopeeClone.entity.WardEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
-import com.shopeeClone.shopeeClone.entity.ProvinceEntity;
 import com.shopeeClone.shopeeClone.repository.address.AddressRepository;
 import com.shopeeClone.shopeeClone.repository.address.ProvinceRepository;
 import com.shopeeClone.shopeeClone.service.ProvinceService;
-import com.shopeeClone.shopeeClone.utils.AppStringUtils;
 import com.shopeeClone.shopeeClone.utils.validate;
 
 @Service

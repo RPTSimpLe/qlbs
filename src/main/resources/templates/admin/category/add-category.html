@@ -4,24 +4,25 @@
 
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
+	<title>Add Category</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<form id="addCategoryForm" class="addform">
+			<h1>Create Category</h1>
 			<div class="form-group">
-				<label>Tên danh mục</label>
-				<input name="name" class="form-control name" placeholder="tên danh mục">
+				<label>Category Name: </label>
+				<input name="name" class="form-control name" placeholder="Category Name" required>
 			</div>
 
 			<div class="form-group">
-				<label>Mô tả</label>
-				<input name="description" class="form-control description" placeholder="mô tả">
+				<label>Description: </label>
+				<input name="description" class="form-control description" placeholder="Description">
 			</div>
 			<div class="form-group">
 				<button class="btn btn-primary" type="submit">
-					Tạo danh mục
+					Create
 				</button>
 			</div>
 		</form>

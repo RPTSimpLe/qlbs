@@ -1,10 +1,12 @@
 package com.shopeeClone.shopeeClone.service.impl;
 
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -20,7 +22,8 @@ import com.shopeeClone.shopeeClone.service.ImageService;
 public class ImageServiceImpl implements ImageService {
 
 	@Override
-	public ImageDTO saveImage(List<MultipartFile> files) {
+	public List<ImageDTO> saveImage(List<MultipartFile> files) {
+		List<ImageDTO> imageDTOs = new ArrayList<>();
 		for(MultipartFile file : files){
 			String fileName = file.getOriginalFilename();
 			try {
@@ -35,8 +38,13 @@ public class ImageServiceImpl implements ImageService {
 			} catch (IOException e) {
 				throw new ValidateException("Server error");
 			}
+
+			ImageDTO imageDTO = new ImageDTO();
+			imageDTO.setUrl("/ProductImages/" + fileName);
+			imageDTOs.add(imageDTO);
+
 		}
-		return null;
+		return imageDTOs;
 	}
 
 }

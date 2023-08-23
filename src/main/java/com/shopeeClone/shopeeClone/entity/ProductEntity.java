@@ -43,6 +43,10 @@ public class ProductEntity extends BaseEntity {
 	@OneToMany(mappedBy = "product")
 	private List<ImageEntity> imageEntities = new ArrayList<>();
 
+	public void addImageEntity(ImageEntity imageEntity){
+		this.imageEntities.add(imageEntity);
+	}
+
 	public Long getProductId() {
 		return productId;
 	}

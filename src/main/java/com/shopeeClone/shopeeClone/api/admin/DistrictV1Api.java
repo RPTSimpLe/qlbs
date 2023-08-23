@@ -8,17 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shopeeClone.shopeeClone.dto.DistrictDTO;
-import com.shopeeClone.shopeeClone.dto.WardDTO;
-import com.shopeeClone.shopeeClone.entity.DistrictEntity;
-import com.shopeeClone.shopeeClone.entity.ProvinceEntity;
-import com.shopeeClone.shopeeClone.entity.WardEntity;
-import com.shopeeClone.shopeeClone.service.AddressService;
 import com.shopeeClone.shopeeClone.service.DistrictService;
 
 @RestController

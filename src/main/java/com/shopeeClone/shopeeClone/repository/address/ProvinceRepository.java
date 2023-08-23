@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.shopeeClone.shopeeClone.entity.ProductEntity;
 import com.shopeeClone.shopeeClone.entity.ProvinceEntity;
 
 public interface ProvinceRepository extends JpaRepository<ProvinceEntity, Long> {

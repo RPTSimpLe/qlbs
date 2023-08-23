@@ -24,6 +24,15 @@ function post(path, body) {
 	}).then(response => response.json())
 }
 
+function postProductFormData(path,formData){
+	var myHeaders = new Headers();
+	return fetch(path, {
+		method:'POST',
+		body: formData,
+		headers: myHeaders
+	}).then(response => response.json());
+}
+
 function put(path, body) {
 	var myHeaders = new Headers();
 	myHeaders.append('Content-Type', 'application/json');

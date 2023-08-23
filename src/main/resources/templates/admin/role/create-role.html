@@ -4,21 +4,22 @@
 
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
+	<title>Create Role</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
+		<h1>Create Role</h1>
 		<form id="createRole" class="addform">
 			<div class="form-group">
-				<label>tên</label>
-				<input name="name" class="form-control" placeholder="nhập tên">
+				<label>Role Name</label>
+				<input name="name" class="form-control" placeholder="Role Name" required>
 			</div>
 			<div class="form-group">
-				<label>mã role</label>
-				<input name="code" class="form-control" placeholder="nhập role">
+				<label>Code</label>
+				<input name="code" class="form-control" placeholder="Role Id" required>
 			</div>
-			<button type="submit" class="btn btn-primary">tạo role</button>
+			<button type="submit" class="btn btn-primary">Create</button>
 		</form>
 
 

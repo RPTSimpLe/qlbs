@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Show Category</title>
 
 </head>
 
@@ -12,12 +12,12 @@
 
 
 	<div layout:fragment="content">
-
+		<h1>Categories List</h1>
 		<form id="category-filter-form">
 			<div class="form-group">
-				<input class="form-control" name="name" placeholder="Tên danh mục" />
+				<input class="form-control" name="name" placeholder="Search by Category Name" />
 			</div>
-			<button class="btn btn-primary" type="submit">Tìm kiếm</button>
+			<button class="btn btn-primary" type="submit">Search</button>
 
 
 		</form>
@@ -26,13 +26,13 @@
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>Tên</th>
-					<th>Mô tả</th>
-					<th>Ngày tạo</th>
-					<th>Người tạo</th>
-					<th>Ngày chỉnh sửa</th>
-					<th>Người chỉnh sửa</th>
-					<th>Thao tác</th>
+					<th>Category Name</th>
+					<th>Description</th>
+					<th>created Date</th>
+					<th>Created By</th>
+					<th>Latest Date modified</th>
+					<th>Modifier By</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody id="categoryList">
@@ -73,16 +73,16 @@
 							<td>${category.categoryId}</td>						
 							<td>${category.name}</td>						
 							<td>${category.description}</td>						
-							<td>${category.createdDate}</td>						
+							<td>${category.createDate}</td>						
 							<td>${category.createBy}</td>						
 							<td>${category.modifierDate}</td>						
 							<td>${category.modifierBy}</td>		
 							<td>
 								<a href="/admin/categories/${category.categoryId}">
-									<button class="btn btn-primary">Cập nhật</button>
+									<button class="btn btn-primary">Update</button>
 									
 								</a>
-								<button onclick="deleteCategory(${category.categoryId})" class="btn btn-danger">xóa</button>
+								<button onclick="deleteCategory(${category.categoryId})" class="btn btn-danger">Delete</button>
 							</td>				
 						</tr>
 					`;
@@ -91,7 +91,7 @@
 			}
 
 			function deleteCategory(categoryId) {
-				const isConfirm = confirm('Bạn có chắc muốn xóa danh sách này không');
+				const isConfirm = confirm('Are you sure you want to delete this list?');
 				if (isConfirm) {
 					callDelete('/admin/api/v1/categories/' + categoryId)
 						.then(res => {

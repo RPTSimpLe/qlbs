@@ -10,10 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shopeeClone.shopeeClone.converter.UserConverter;
 import com.shopeeClone.shopeeClone.dto.PageDTO;
-import com.shopeeClone.shopeeClone.dto.SupplierDTO;
 import com.shopeeClone.shopeeClone.dto.UserDTO;
 import com.shopeeClone.shopeeClone.entity.RoleEntity;
-import com.shopeeClone.shopeeClone.entity.SupplierEntity;
 import com.shopeeClone.shopeeClone.entity.UserEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
 import com.shopeeClone.shopeeClone.repository.RoleRepository;

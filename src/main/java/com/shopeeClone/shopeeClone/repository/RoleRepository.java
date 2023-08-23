@@ -1,16 +1,12 @@
 package com.shopeeClone.shopeeClone.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.shopeeClone.shopeeClone.entity.AddressEntity;
-import com.shopeeClone.shopeeClone.entity.ProvinceEntity;
 import com.shopeeClone.shopeeClone.entity.RoleEntity;
-import com.shopeeClone.shopeeClone.entity.UserEntity;
 
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
 

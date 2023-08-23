@@ -23,7 +23,7 @@ public class CartEntity extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)
 	private ProductEntity product;
-		
+
 	private Integer quantity;
 
 	public Long getCartId() {
@@ -57,5 +57,7 @@ public class CartEntity extends BaseEntity {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+	
+	
 	
 }

@@ -2,7 +2,6 @@ package com.shopeeClone.shopeeClone.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shopeeClone.shopeeClone.converter.AddressConverter;
 import com.shopeeClone.shopeeClone.dto.AddressDTO;
-import com.shopeeClone.shopeeClone.dto.DistrictDTO;
 import com.shopeeClone.shopeeClone.entity.AddressEntity;
 import com.shopeeClone.shopeeClone.entity.DistrictEntity;
 import com.shopeeClone.shopeeClone.entity.ProvinceEntity;

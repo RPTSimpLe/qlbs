@@ -4,36 +4,34 @@
 
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
+	<title>Add Supplier</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
+		<h1>Create Supplier</h1>
 		<form id="addSupplier" class="addform">
 			<div class="form-group">
-				<label>tên</label>
-				<input name="name" class="form-control" placeholder="nhập tên" required>
+				<label>Supplier Name:</label>
+				<input name="name" class="form-control" placeholder="Supplier Name" required>
 			</div>
 			<div class="form-group">
-				<label>Số điện thoại</label>
-				<input name="phone" class="form-control" placeholder="nhập sdt">
+				<label>Phone: </label>
+				<input name="phone" class="form-control" placeholder="Phone">
 			</div>
 			<p id="invalid-feedback" style="color: red; display: none;">
-		        Số điện thoại phải là số và bao gồm 10 hoặc 11 số
+		        Phone numbers must be numeric and consist of 10 or 11 numbers.
 		      </p>
 			<div class="form-group">
-				<label>description</label>
-				<input name="description" class="form-control" placeholder="nhập description">
+				<label>Description: </label>
+				<input name="description" class="form-control" placeholder="Description">
 			</div>
 			<div class="form-group">
-				<label>email</label>
-				<input name="email" type="email" class="form-control" placeholder="nhập email" required>
+				<label>Email: </label>
+				<input name="email" type="email" class="form-control" placeholder="Email" required>
 			</div>
-			<button type="submit" class="btn btn-primary">Tạo supplier</button>
+			<button type="submit" class="btn btn-primary">Create</button>
 		</form>
-
-
-
 
 
 		<script>
@@ -53,7 +51,5 @@
 			})
 		</script>
 	</div>
-
 </body>
-
 </html>

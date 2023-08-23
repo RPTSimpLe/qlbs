@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
+	<title>Update Role</title>
 </head>
 
 <body>
@@ -13,11 +13,11 @@
 		<form id="updateRole" class="addform">
 			<input name="roleId" type="hidden" th:value="${a.roleId}">
 			<div class="form-group">
-				<label>tên</label>
+				<label>Role Name</label>
 				<input name="name" class="form-control" th:value="${a.name}" placeholder="nhập tên">
 			</div>
 			<div class="form-group">
-				<label>mã role</label>
+				<label>Code</label>
 				<input name="code" class="form-control" th:value="${a.code}" placeholder="nhập role">
 			</div>
 			<button type="submit" class="btn btn-primary">cập nhật</button>

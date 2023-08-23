@@ -4,17 +4,17 @@
 
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
+	<title>Show Suppliers List</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
-
+		<h1>Suppliers List</h1>
 		<form id="supplier-filter-form">
 			<div class="form-group">
-				<input class="form-control" name="name" placeholder="Tên nhà cung cấp" />
+				<input class="form-control" name="name" placeholder="Search by Supplier Name" />
 			</div>
-			<button class="btn btn-primary" type="submit">Tìm kiếm</button>
+			<button class="btn btn-primary" type="submit">Search</button>
 
 
 		</form>
@@ -23,15 +23,15 @@
 			<thead>
 				<tr>
 					<th scope="col">Id</th>
-					<th scope="col">Tên</th>
-					<th scope="col">điện thoại</th>
-					<th scope="col">mô tả</th>
-					<th scope="col">email</th>
-					<th scope="col">createDate</th>
+					<th scope="col">Supplier Name</th>
+					<th scope="col">Phone</th>
+					<th scope="col">Description</th>
+					<th scope="col">Email</th>
+					<th scope="col">Created Date</th>
 					<th scope="col">modifierDate</th>
-					<th scope="col">createBy</th>
+					<th scope="col">Created By</th>
 					<th scope="col">email</th>
-					<th scope="col">modifierBy</th>
+					<th scope="col">Latest Date Modified</th>
 				</tr>
 			</thead>
 			<tbody id="supplierList">
@@ -74,9 +74,9 @@
 									<td>${a.modifierBy}</td>
 									<td>
 										<a href="/admin/supplier/${a.supplierId}">
-											<button class="btn btn-primary">Cập nhật</button>
+											<button class="btn btn-primary">Update</button>
 										</a>
-										<button onclick="deleteSupplier(${a.supplierId})" class="btn btn-danger">xóa</button>
+										<button onclick="deleteSupplier(${a.supplierId})" class="btn btn-danger">Delete</button>
 									</td>
 								</tr>
 							`;

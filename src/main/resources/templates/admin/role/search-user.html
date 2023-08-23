@@ -4,11 +4,12 @@
 
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
+	<title>Show Roles</title>
 </head>
 
 <body>
 	<div class="user" layout:fragment="content">
+		<h1>Users List</h1>
 		<style>
 			.user {
 				padding: 70px 70px 70px 20px;
@@ -38,38 +39,40 @@
 		</style>
 
 		<div id="custom" class="customAddRole">
+			<h1>Users List</h1>
 			<div onclick="cancelAddRole()" class="x"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"
 					viewBox="0 0 24 24">
 					<path
 						d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
 				</svg></div>
 			<form id="addrole">
+				
 				<div class="form-group">
 					<input style="width: 80%;" class="form-control" id="updateId" name="userId" type="hidden">
 
-					<label style="font-weight: bold;">nhập role: </label>
+					<label style="font-weight: bold;">Create Role Name: </label>
 					<input style="width: 80%;" class="form-control" name="code">
 				</div>
-				<button onclick="updateRole()" type="submit" class="btn btn-primary">Thêm</button>
+				<button onclick="updateRole()" type="submit" class="btn btn-primary">Create</button>
 			</form>
 			
 			<form id="deleterole">
 				<div class="form-group">
 					<input style="width: 80%;" class="form-control" id="deleteId" name="userId" type="hidden">
 
-					<label style="font-weight: bold;">nhập role cần xóa: </label>
+					<label style="font-weight: bold;">Input Role to delete: </label>
 					<input style="width: 80%;" class="form-control" name="roleName">
 				</div>
-				<button onclick="getAndDeleteRoleName()" type="submit" class="btn btn-primary">Thêm</button>
+				<button onclick="getAndDeleteRoleName()" type="submit" class="btn btn-primary">Delete</button>
 			</form>
 		</div>
 
 		<form id="seacrch-filter-user">
 			<div class="form-group">
-				<label>nhập tên</label>
-				<input class="form-control" name="username">
+				<label></label>
+				<input class="form-control" name="username" placeholder="Search by Role Name">
 			</div>
-			<button type="submit" class="btn btn-primary">Tìm kiếm</button>
+			<button type="submit" class="btn btn-primary">Search</button>
 		</form>
 
 
@@ -78,15 +81,15 @@
 				<tr>
 					<th scope="col">Id</th>
 					<th scope="col">Username</th>
-					<th scope="col">Rolename</th>
-					<th scope="col">FirstName</th>
-					<th scope="col">Lastname</th>
-					<th scope="col">PhoneNumber</th>
-					<th scope="col">createdDate</th>
-					<th scope="col">modifierDate</th>
-					<th scope="col">createdBy</th>
-					<th scope="col">modifierBy</th>
-					<th scope="col">Thao tác</th>
+					<th scope="col">Role Name</th>
+					<th scope="col">First Name</th>
+					<th scope="col">Last Name</th>
+					<th scope="col">Phone Number</th>
+					<th scope="col">Created Date</th>
+					<th scope="col">ModifierDate</th>
+					<th scope="col">Created By</th>
+					<th scope="col">Latest Date Modified</th>
+					<th scope="col">Action</th>
 				</tr>
 			</thead>
 			<tbody id="list">
@@ -138,12 +141,12 @@
 							<th scope="col">${a.modifierBy}</th>
 						
 							<th scope="col">
-								<button  onclick="showAddRole(${a.userId})" class="btn btn-primary">Thêm role</button>
+								<button  onclick="showAddRole(${a.userId})" class="btn btn-primary">Add Role</button>
 								<div>
 								  <select onchange="selectDelete(${a.userId}, this)">
-								    <option value="0">Xóa:</option>
-								    <option value="1">xóa user</option>
-								    <option value="2">xóa role</option>
+								    <option value="0">Delete:</option>
+								    <option value="1">Delete User</option>
+								    <option value="2">Delete Role</option>
 								  </select>
 								</div>
 								</th>

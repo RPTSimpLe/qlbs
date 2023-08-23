@@ -4,19 +4,18 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>ShowProduct</title>
+	<title>Show Products List</title>
 
 </head>
 
 <body>
-
-
 	<div layout:fragment="content">
+		<h1>Users Products List</h1>
         <form id="product-filter-form">
 			<div class="form-group">
-				<input class="form-control" name="name" placeholder="Tên sản phẩm" />
+				<input class="form-control" name="name" placeholder="Search by Product Name" />
 			</div>
-			<button class="btn btn-primary" type="submit">Tìm kiếm</button>
+			<button class="btn btn-primary" type="submit">Search</button>
 
 
 		</form>
@@ -25,18 +24,18 @@
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>Tên</th>
-					<th>Mô tả</th>
-                    <th>Giá nhập</th>
-                    <th>Giá bán</th>
-                    <th>Giảm giá(%)</th>
-                    <th>Danh mục</th>
-                    <th>Nhà cung cấp</th>
-					<th>Ngày tạo</th>
-					<th>Người tạo</th>
-					<th>Ngày chỉnh sửa</th>
-					<th>Người chỉnh sửa</th>
-					<th>Thao tác</th>
+					<th>Product Name</th>
+					<th>Description</th>
+                    <th>Import Price</th>
+                    <th>Product Price</th>
+                    <th>Discount Percent(%)</th>
+                    <th>Category Name</th>
+                    <th>Supplier Name</th>
+					<th>Created Date</th>
+					<th>Created By</th>
+					<th>Latest Date Modified</th>
+					<th>Modifier By</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody id="productList">

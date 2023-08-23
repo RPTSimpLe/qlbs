@@ -19,41 +19,42 @@
 
 <body>
 	<div layout:fragment="content">
+		<h1>Create Product</h1>
         <h2 style="color: red;" th:if="${message != null}">
             <span th:text="${message}"></span>
         </h2>
         <form id="addProductForm" class="addform">
             <div class="form-group">
-                <label>Tên Product</label>
-                <input type="text" name="name" class="form-control name" placeholder="Tên Product">
+                <label>Product Name: </label>
+                <input type="text" name="name" class="form-control name" placeholder="Product Name">
             </div>
             <div class="form-group">
-                <label>Mô tả</label>
-                <input type="text" name="description" class="form-control description" placeholder="Mô tả">
+                <label>Description: </label>
+                <input type="text" name="description" class="form-control description" placeholder="Description">
             </div>
             <div class="form-group">
-                <label>Giá nhập</label>
-                <input type="number" name="importPrice" class="form-control importPrice" placeholder="Giá nhập">
+                <label>Import Price: </label>
+                <input type="number" name="importPrice" class="form-control importPrice" placeholder="Import Price">
             </div>
             <div class="form-group">
-                <label>Giá sản phẩm</label>
-                <input type="number" name="price" class="form-control price" placeholder="Giá nhập">
+                <label>Product Price: </label>
+                <input type="number" name="price" class="form-control price" placeholder="Product Price">
             </div>
             <div class="form-group">
-                <label>discountPercent</label>
-                <input type="number" name="discountPercent" class="form-control discountPercent" placeholder="discountPercent">
+                <label>Discount Percent: </label>
+                <input type="number" name="discountPercent" class="form-control discountPercent" placeholder="Discount Percent">
             </div>
             <div class="form-group">
-                <label>Danh mục</label>
-                <input type="text" name="category" class="form-control category" placeholder="Danh mục">
+                <label>Category Name: </label>
+                <input type="text" name="category" class="form-control category" placeholder="Category Name">
             </div>
             <div class="form-group">
-                <label>Nhà cung cấp</label>
-                <input type="text" name="suppilier" class="form-control suppilier" placeholder="Nhà cung cấp">
+                <label>Supplier Name: </label>
+                <input type="text" name="suppilier" class="form-control suppilier" placeholder="Supplier Name">
             </div>
             <div class="form-group">
 				<button class="btn btn-primary" type="submit">
-					Tạo Product
+					Create
 				</button>
 			</div>
 

@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shopeeClone.shopeeClone.converter.product.ProductConverter;
+import com.shopeeClone.shopeeClone.dto.CreateProductDTO;
 import com.shopeeClone.shopeeClone.dto.PageDTO;
 import com.shopeeClone.shopeeClone.dto.ProductDTO;
 import com.shopeeClone.shopeeClone.entity.ProductEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
 import com.shopeeClone.shopeeClone.repository.ProductRepository;
+import com.shopeeClone.shopeeClone.service.ImageService;
 import com.shopeeClone.shopeeClone.service.ProductService;
 import com.shopeeClone.shopeeClone.utils.AppStringUtils;
 import jakarta.persistence.EntityManager;
@@ -28,12 +30,15 @@ public class ProductServiceImpl implements ProductService {
     private EntityManager entityManager;
     @Autowired
     private ProductConverter productConverter;
+    @Autowired
+    private ImageService imageService;
     @Override
-    public ProductDTO createProduct(ProductDTO dto) {
+    public ProductDTO createProduct(CreateProductDTO dto) {
         String name = dto.getName();
         if(AppStringUtils.hasText(name)){
             throw new ValidateException("product cannot empty");
         }
+        imageService.saveImage(dto.getMultipartFiles());
         ProductEntity newProductEntity = productConverter.toEntity(dto);
         productRepository.save(newProductEntity);
         ProductDTO newProductDTO = productConverter.toDTO(newProductEntity);

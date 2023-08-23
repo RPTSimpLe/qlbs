@@ -22,7 +22,7 @@
         <h2 style="color: red;" th:if="${message != null}">
             <span th:text="${message}"></span>
         </h2>
-        <form id="addProductForm" class="addform" method="POST" action="/admin/products/add">
+        <form id="addProductForm" class="addform" method="POST" action="/admin/products/add" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Tên Product</label>
                 <input th:value = "${form.name}" type="text" name="name" class="form-control name" placeholder="Tên Product">
@@ -56,7 +56,10 @@
 					Tạo Product
 				</button>
 			</div>
-
+            <div>
+                <label for="fileInput">Thêm ảnh</label>
+                <input name="multipartFiles" class="form-control multipartFiles" type="file" id="fileInput" multiple />
+            </div>
             
         </form>
         <script>
@@ -67,7 +70,6 @@
                 console.log(formValue);
                 post('/admin/api/v1/products',formValue)
                 .then(response => {
-                    window.location.href = "/admin/products/search";
                 })
             })
         </script>

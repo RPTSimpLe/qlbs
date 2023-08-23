@@ -1,5 +1,6 @@
 package com.shopeeClone.shopeeClone.api.admin;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.shopeeClone.shopeeClone.dto.CreateProductDTO;
 import com.shopeeClone.shopeeClone.dto.PageDTO;
 import com.shopeeClone.shopeeClone.dto.ProductDTO;
 import com.shopeeClone.shopeeClone.service.ProductService;
@@ -24,7 +27,7 @@ public class ProductApiV1 {
     private ProductService productService;
 
     @PostMapping
-    public ProductDTO createProduct(@RequestBody ProductDTO dto){
+    public ProductDTO createProduct(@RequestBody CreateProductDTO dto){
         return productService.createProduct(dto);
     }
 

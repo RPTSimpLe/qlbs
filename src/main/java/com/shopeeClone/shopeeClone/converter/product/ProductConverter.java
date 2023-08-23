@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.shopeeClone.shopeeClone.converter.image.ImageConverter;
+import com.shopeeClone.shopeeClone.dto.CreateProductDTO;
 import com.shopeeClone.shopeeClone.dto.ProductDTO;
 import com.shopeeClone.shopeeClone.entity.ProductEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
@@ -20,6 +22,8 @@ public class ProductConverter {
     private CategoryRepository categoryRepository;
     @Autowired
     private SupplierRepository supplierRepository;
+    @Autowired
+    private ImageConverter imageConverter;
 
     public ProductDTO toDTO(ProductEntity productEntity){
         ProductDTO productDTO = new ProductDTO();
@@ -35,9 +39,10 @@ public class ProductConverter {
         productDTO.setCreateBy(productEntity.getCreateBy());
         productDTO.setModifierDate(productEntity.getModifierDate());
         productDTO.setModifierBy(productEntity.getModifierBy());
+        productDTO.setImageDTOs(imageConverter.toDTOs(productEntity.getImageEntities()));
         return productDTO;
     }
-    public ProductEntity toEntity(ProductDTO productDTO){
+    public ProductEntity toEntity(CreateProductDTO productDTO){
         ProductEntity productEntity = new ProductEntity();
         productEntity.setName(productDTO.getName());
         productEntity.setDescription(productDTO.getDescription());
@@ -63,9 +68,9 @@ public class ProductConverter {
         }
         return productDTOs;
     }
-    public List<ProductEntity> toEntityList(List<ProductDTO> productDTOs){
+    public List<ProductEntity> toEntityList(List<CreateProductDTO> productDTOs){
         List<ProductEntity> productEntities = new ArrayList<>();
-        for(ProductDTO productDTO : productDTOs){
+        for(CreateProductDTO productDTO : productDTOs){
             productEntities.add(toEntity(productDTO));
         }
         return productEntities;

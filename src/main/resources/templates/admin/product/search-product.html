@@ -69,10 +69,12 @@
 				currentPage: 1,
 				onPageClick: () => { }
 			})
+			
 
 			function renderProducts(products) {
 				let html = '';
 				for (const product of products) {
+					const ImageId = `images_${product.productId}`;
 					html += `
 						<tr id="product_${product.productId}">
 							<td>${product.productId}</td>						
@@ -89,15 +91,72 @@
 							<td>${product.modifierBy}</td>		
 							<td>
 								<a href="/admin/products/${product.productId}">
-									<button class="btn btn-primary">Cập nhật</button>
+									<button class="btn btn-primary">Update</button>
 									
 								</a>
-								<button onclick="deleteProduct(${product.productId})" class="btn btn-danger">xóa</button>
+								<button onclick="deleteProduct(${product.productId})" class="btn btn-danger">Delete</button>
+								<!-- Button trigger modal -->
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal_${ImageId}">
+								Image
+								</button>
+
+								<!-- Modal -->
+								<div class="modal fade" id="exampleModal_${ImageId}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+									<div class="modal-body">
+										<div id="carouselExampleControls_${ImageId}" class="carousel slide" data-ride="carousel">
+											<div class="carousel-inner images" id="${ImageId}" >
+												
+											</div>	
+											<a class="carousel-control-prev" href="#carouselExampleControls_${ImageId}" role="button" data-slide="prev">
+												<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+												<span class="sr-only">Previous</span>
+											</a>
+											<a class="carousel-control-next" href="#carouselExampleControls_${ImageId}" role="button" data-slide="next">
+												<span class="carousel-control-next-icon" aria-hidden="true"></span>
+												<span class="sr-only">Next</span>
+											</a>
+										</div>
+									</div>
+									</div>
+								</div>
+								</div>
 							</td>				
 						</tr>
 					`;
+					
+					
+					
+					
+
+
 				}
 				document.querySelector("#productList").innerHTML = html;
+			}
+			function renderImage(products){
+				for(const product of products){
+					const images = document.querySelector(`#images_${product.productId}`);
+					let insideHTML = '';
+					let index = 0;
+					for(const image of product.imageDTOs){
+						if(index === 0) {
+						insideHTML += `
+							 <div class="carousel-item active">
+						      <img class="d-block w-100" src="${image.url}">
+						    </div>
+						`;
+						} else {
+							insideHTML += `
+								<div class="carousel-item" style="width: 500px;">
+								<img class="d-block w-100" src="${image.url}">
+								</div>
+							`;
+						}
+						index++;
+					}
+					images.innerHTML = insideHTML;
+				}
 			}
 
 			function deleteProduct(productId) {
@@ -122,6 +181,7 @@
 					.then(pageDto => {
 						console.log(pageDto);
 						renderProducts(pageDto.data);
+						renderImage(pageDto.data);
 						_$("#demo").pagination("destroy");
 						const {page, totalItems, limit} = pageDto;
 						showPagination({
@@ -141,6 +201,8 @@
 				page: 1,
 				limit: limit
 			});
+			const images = document.querySelector(".images");
+			const imageDtos = [];
 
 		</script>
     </div>

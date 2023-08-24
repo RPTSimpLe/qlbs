@@ -22,4 +22,7 @@ public class ProductDTO {
 	private String createBy;
 	private String modifierBy;
     private List<ImageDTO> imageDTOs = new ArrayList<>();
+    public void addImageDTO(ImageDTO imageDTO){
+        this.imageDTOs.add(imageDTO);
+    }
 }

@@ -7,7 +7,7 @@ import com.shopeeClone.shopeeClone.entity.ProductEntity;
 public class CartDTO {
 	private Long cartId;
 	private Integer quantity;
-	private ProductEntity product;
+	private String productName;
 	private Date createDate;
 	private Date modifiDate;
 	
@@ -35,13 +35,11 @@ public class CartDTO {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	
-	public ProductEntity getProduct() {
-		return product;
+	public String getProductName() {
+		return productName;
 	}
-	public void setProduct(ProductEntity product) {
-		this.product = product;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
-	
 	
 }

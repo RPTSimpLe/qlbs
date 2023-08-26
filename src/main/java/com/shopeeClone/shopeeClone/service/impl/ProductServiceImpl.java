@@ -120,6 +120,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProductById(Long id) {
         ProductEntity productEntity = productRepository.findById(id).orElseThrow(() -> new ValidateException("Khong tim thay product"));
+        productEntity.setCategory(null);
+        productEntity.setSupplier(null);
         List<ImageEntity> imageEntities = productEntity.getImageEntities();
         imageService.deleteImage(imageEntities);
         productRepository.deleteById(id);

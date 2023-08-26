@@ -84,7 +84,6 @@
                 console.log(nameValue);
 
                 var fileInputs = formData.getAll('multipartFiles');
-                console.log(fileInputs);
                 postProductFormData('/admin/api/v1/products',formData)
                 .then(response => {
                     window.location.href = "/admin/products/search";

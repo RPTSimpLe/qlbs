@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import com.shopeeClone.shopeeClone.dto.cart.CartDTO;
 import com.shopeeClone.shopeeClone.dto.cart.CartRequestForm;
 import com.shopeeClone.shopeeClone.entity.CartEntity;
+import com.shopeeClone.shopeeClone.entity.ImageEntity;
+import com.shopeeClone.shopeeClone.entity.ProductEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
 import com.shopeeClone.shopeeClone.repository.ProductRepository;
 import com.shopeeClone.shopeeClone.repository.UserRepository;
@@ -26,7 +28,7 @@ public class CartConverter {
 		cartDTO.setQuantity(cartEntity.getQuantity());
 		cartDTO.setCreateDate(cartEntity.getCreateDate());
 		cartDTO.setModifiDate(cartEntity.getModifierDate());
-		cartDTO.setProduct(cartEntity.getProduct());
+		cartDTO.setProductName(cartEntity.getProduct().getName());
 		return cartDTO;
 	}
 	

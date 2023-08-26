@@ -38,7 +38,7 @@ public class CartV1Api {
 		cartService.multiDelete(cartIds);
 	}
 	
-	@PutMapping("{cartIds}")
+	@PutMapping("{id}")
 	public CartDTO update(@PathVariable Long id,@RequestBody UpdateCart cart ) {
 		return cartService.update(id, cart);
 	}

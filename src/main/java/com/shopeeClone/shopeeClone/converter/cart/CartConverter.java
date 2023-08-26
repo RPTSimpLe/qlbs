@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.shopeeClone.shopeeClone.converter.product.ProductConverter;
 import com.shopeeClone.shopeeClone.dto.cart.CartDTO;
 import com.shopeeClone.shopeeClone.dto.cart.CartRequestForm;
 import com.shopeeClone.shopeeClone.entity.CartEntity;
@@ -14,6 +15,7 @@ import com.shopeeClone.shopeeClone.entity.ProductEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
 import com.shopeeClone.shopeeClone.repository.ProductRepository;
 import com.shopeeClone.shopeeClone.repository.UserRepository;
+import com.shopeeClone.shopeeClone.service.ProductService;
 
 @Component
 public class CartConverter {
@@ -21,6 +23,8 @@ public class CartConverter {
 	private ProductRepository productRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private ProductConverter productConverter;
 	
 	public CartDTO toDTO(CartEntity cartEntity) {
 		CartDTO cartDTO = new CartDTO();
@@ -28,7 +32,7 @@ public class CartConverter {
 		cartDTO.setQuantity(cartEntity.getQuantity());
 		cartDTO.setCreateDate(cartEntity.getCreateDate());
 		cartDTO.setModifiDate(cartEntity.getModifierDate());
-		cartDTO.setProductName(cartEntity.getProduct().getName());
+		cartDTO.setProduct(productConverter.toDTO(cartEntity.getProduct()));
 		return cartDTO;
 	}
 	

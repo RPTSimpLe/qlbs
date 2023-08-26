@@ -2,12 +2,13 @@ package com.shopeeClone.shopeeClone.dto.cart;
 
 import java.util.Date;
 
+import com.shopeeClone.shopeeClone.dto.ProductDTO;
 import com.shopeeClone.shopeeClone.entity.ProductEntity;
 
 public class CartDTO {
 	private Long cartId;
 	private Integer quantity;
-	private String productName;
+	private ProductDTO product;
 	private Date createDate;
 	private Date modifiDate;
 	
@@ -35,11 +36,11 @@ public class CartDTO {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	public String getProductName() {
-		return productName;
+	public ProductDTO getProduct() {
+		return product;
 	}
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setProduct(ProductDTO product) {
+		this.product = product;
 	}
 	
 }

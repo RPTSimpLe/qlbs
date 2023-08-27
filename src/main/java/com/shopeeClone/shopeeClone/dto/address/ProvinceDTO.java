@@ -1,11 +1,11 @@
-package com.shopeeClone.shopeeClone.dto;
+package com.shopeeClone.shopeeClone.dto.address;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class DistrictDTO {
+public class ProvinceDTO {
 	private String name;
 	private String code;
 }

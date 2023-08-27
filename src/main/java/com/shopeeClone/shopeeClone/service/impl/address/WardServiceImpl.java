@@ -1,4 +1,4 @@
-package com.shopeeClone.shopeeClone.service.impl;
+package com.shopeeClone.shopeeClone.service.impl.address;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shopeeClone.shopeeClone.converter.AddressConverter;
-import com.shopeeClone.shopeeClone.dto.WardDTO;
+import com.shopeeClone.shopeeClone.dto.address.WardDTO;
 import com.shopeeClone.shopeeClone.entity.AddressEntity;
 import com.shopeeClone.shopeeClone.entity.WardEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
@@ -59,6 +59,7 @@ public class WardServiceImpl implements WardService {
 				addressRepository.save(addressEntity);
 			}			
 		}
+		ward.setDistrict(null);
 		wardRepository.delete(ward);
 	}
 	
@@ -70,5 +71,17 @@ public class WardServiceImpl implements WardService {
 		entity.setName(dto.getName());
 		wardRepository.save(entity);
 		return converter.toDTO(entity);
+	}
+
+	@Override
+	public List<WardDTO> getByProvinceWardId(Long districtId) {
+			List<WardEntity> entities = wardRepository.findByDistrictId(districtId);
+			List<WardDTO> dtos = new ArrayList<>();
+			for (WardEntity entity : entities) {
+				WardDTO dto = new WardDTO();
+				dto = converter.toDTO(entity);
+				dtos.add(dto);
+			}
+		return dtos;
 	}
 }

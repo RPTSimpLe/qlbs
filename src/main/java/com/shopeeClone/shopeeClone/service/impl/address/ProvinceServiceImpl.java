@@ -1,4 +1,4 @@
-package com.shopeeClone.shopeeClone.service.impl;
+package com.shopeeClone.shopeeClone.service.impl.address;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shopeeClone.shopeeClone.converter.AddressConverter;
-import com.shopeeClone.shopeeClone.dto.ProvinceDTO;
+import com.shopeeClone.shopeeClone.dto.address.ProvinceDTO;
 import com.shopeeClone.shopeeClone.entity.AddressEntity;
 import com.shopeeClone.shopeeClone.entity.ProvinceEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;

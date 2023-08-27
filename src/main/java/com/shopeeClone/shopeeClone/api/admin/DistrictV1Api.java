@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.shopeeClone.shopeeClone.dto.DistrictDTO;
+import com.shopeeClone.shopeeClone.dto.address.DistrictDTO;
 import com.shopeeClone.shopeeClone.service.DistrictService;
 
 @RestController
@@ -30,6 +30,11 @@ public class DistrictV1Api {
 	@GetMapping
 	public List<DistrictDTO> getAll(){
 		return districtService.getAll();
+	}
+	
+	@GetMapping("{privinceId}")
+	public List<DistrictDTO> getByProvinceId(@PathVariable Long provinceId){
+		return districtService.getByProvinceId(provinceId);
 	}
 	
 	@DeleteMapping("{id}")

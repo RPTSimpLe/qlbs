@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.shopeeClone.shopeeClone.dto.WardDTO;
+import com.shopeeClone.shopeeClone.dto.address.DistrictDTO;
+import com.shopeeClone.shopeeClone.dto.address.WardDTO;
 import com.shopeeClone.shopeeClone.service.WardService;
 
 
@@ -35,6 +36,11 @@ public class WardV1Api {
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable String id) {
 		wardService.delete(id);
+	}
+	
+	@GetMapping("{districtId}")
+	public List<WardDTO> getByWardId(@PathVariable Long districtId){
+		return wardService.getByProvinceWardId(districtId);
 	}
 	
 	@PatchMapping("{id}")

@@ -2,7 +2,7 @@ package com.shopeeClone.shopeeClone.service;
 
 import java.util.List;
 
-import com.shopeeClone.shopeeClone.dto.DistrictDTO;
+import com.shopeeClone.shopeeClone.dto.address.DistrictDTO;
 
 public interface DistrictService {
 
@@ -13,4 +13,6 @@ public interface DistrictService {
 	void delete(String id);
 
 	DistrictDTO update(DistrictDTO dto, String id);
+
+	List<DistrictDTO> getByProvinceId(Long provinceId);
 }

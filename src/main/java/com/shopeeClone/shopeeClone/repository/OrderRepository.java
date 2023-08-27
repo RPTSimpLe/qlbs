@@ -7,13 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.shopeeClone.shopeeClone.entity.AddressEntity;
-import com.shopeeClone.shopeeClone.entity.DistrictEntity;
 import com.shopeeClone.shopeeClone.entity.OrderEntity;
 import com.shopeeClone.shopeeClone.entity.OrderProductEntity;
 
-public interface OrderProductRepository  extends JpaRepository<OrderProductEntity, Long> {
-	@Query("select r from OrderProductEntity r join r.order q where q =: order")
-	List<OrderProductEntity> findByOrder(@Param ("order") OrderEntity order);	
-	
-	List<OrderProductEntity> findByOrderProductId(Long orderProductId);
+public interface OrderRepository extends JpaRepository<OrderEntity, Long>{
+	@Query("select r from OrderEntity r join r.address q where q =: address")
+	List<OrderEntity> findByAddress(@Param ("address") AddressEntity address);	
 }

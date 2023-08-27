@@ -1,4 +1,4 @@
-package com.shopeeClone.shopeeClone.service.impl;
+package com.shopeeClone.shopeeClone.service.impl.address;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shopeeClone.shopeeClone.converter.AddressConverter;
-import com.shopeeClone.shopeeClone.dto.DistrictDTO;
+import com.shopeeClone.shopeeClone.dto.address.DistrictDTO;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
 import com.shopeeClone.shopeeClone.entity.AddressEntity;
 import com.shopeeClone.shopeeClone.entity.DistrictEntity;
 import com.shopeeClone.shopeeClone.repository.address.AddressRepository;
 import com.shopeeClone.shopeeClone.repository.address.DistrictRepository;
+import com.shopeeClone.shopeeClone.repository.address.ProvinceRepository;
 import com.shopeeClone.shopeeClone.service.DistrictService;
 import com.shopeeClone.shopeeClone.utils.validate;
 
@@ -58,6 +59,7 @@ public class DistrictServiceImpl implements DistrictService {
 				addressRepository.save(addressEntity);
 			}			
 		}
+		entity.setProvince(null);
 		districtRepository.delete(entity);
 	}
 
@@ -69,6 +71,18 @@ public class DistrictServiceImpl implements DistrictService {
 		entity.setName(dto.getName());
 		districtRepository.save(entity);
 		return converter.toDTO(entity);
+	}
+
+	@Override
+	public List<DistrictDTO> getByProvinceId(Long provinceId) {
+		List<DistrictEntity> entities = districtRepository.findByProvinceId(provinceId);
+		List<DistrictDTO> dtos = new ArrayList<DistrictDTO>();
+		for (DistrictEntity entity : entities) {
+			DistrictDTO dto = new DistrictDTO();
+			dto = converter.toDTO(entity);
+			dtos.add(dto);
+		}
+		return dtos;
 	}
 
 

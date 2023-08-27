@@ -2,7 +2,7 @@ package com.shopeeClone.shopeeClone.service;
 
 import java.util.List;
 
-import com.shopeeClone.shopeeClone.dto.ProvinceDTO;
+import com.shopeeClone.shopeeClone.dto.address.ProvinceDTO;
 
 public interface ProvinceService {
 

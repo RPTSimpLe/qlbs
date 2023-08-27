@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="user-layout">
+<head>
+
+<meta charset="ISO-8859-1">
+<title>Products</title>
+</head>
+<body>
+	<div layout:fragment="content">
+
+		<form id="product-filter-form">
+			<div class="form-group">
+				<input class="form-control" name="name" placeholder="Product Name" />
+			</div>
+			<button class="btn btn-primary" type="submit">Search</button>
+		</form>
+		<div class="row">
+			<!-- single product -->
+			<div class="col-lg-3 col-md-6" th:each ="product, status : ${products}">
+				<div class="single-product" th:with="image = ${product.imageEntities}">
+					<img class="img-fluid" th:src="@{image.url}" alt="">
+					<div class="product-details">
+						<h6>[[@{product.name}]]</h6>
+						<div class="price">
+							<h6>[[@{product.price}*(100-@{product.discountPercent})]]</h6>
+							<h6 class="l-through">[[@{product.price}]]</h6>
+						</div>
+						<div class="prd-bottom" ><!-- th:with = cart = ${cart.} -->
+							<a href="" class="social-info">
+								<span class="ti-bag"></span>
+								<p class="hover-text">Add to cart</p>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			<div id="demo" style="display: flex; justify-content: flex-end;"></div>
+	
+			<script>
+				const searchForm = document.querySelector('#product-filter-form');
+				const limit = 5;
+				let formValue = {};
+	
+				searchForm.addEventListener('submit', (e) => {
+					e.preventDefault();
+					formValue = formToObject('#product-filter-form');
+					getProductAndRender({
+						page: 1,
+						limit: limit,
+					})
+	
+				})
+	
+				const _$ = $;
+	
+				showPagination({
+					totalItems: 1,
+					limit,
+					currentPage: 1,
+					onPageClick: () => { }
+				})
+				
+				function getProductsAndRender({page, limit}) {
+					get(`/admin/api/v1/categories`, {
+						page,
+						limit,
+						...formValue
+					})
+						.then(pageDto => {
+							renderProducts(pageDto.data);
+							_$("#demo").pagination("destroy");
+							const {page, totalItems, limit} = pageDto;
+	
+							showPagination({
+								totalItems,
+								limit,
+								currentPage: page,
+								onPageClick: function (pageNumber) {
+									getCategoriesAndRender({page: pageNumber, limit})
+									console.log(pageNumber)
+								}
+							})
+						})
+				}
+	
+	
+				getProductAndRender({
+					page: 1,
+					limit: limit
+				});
+	
+	
+	
+			</script>
+	
+
+	</div>
+</body>
+</html>

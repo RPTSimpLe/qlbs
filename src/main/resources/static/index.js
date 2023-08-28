@@ -32,6 +32,13 @@ function postProductFormData(path,formData){
 		headers: myHeaders
 	}).then(response => response.json());
 }
+function deleteImage(path) {
+    var myHeaders = new Headers();
+    return fetch(path, {
+        method: 'DELETE',
+        headers: myHeaders
+    });
+}
 
 function put(path, body) {
 	var myHeaders = new Headers();

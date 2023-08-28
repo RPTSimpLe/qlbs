@@ -63,4 +63,14 @@ public class ImageServiceImpl implements ImageService {
 		}
 	}
 
+	@Override
+	public void deleteEachImage(Long imageId) {
+		ImageEntity imageEntity = imageRepository.findById(imageId).orElseThrow(() -> new ValidateException("khong tim thay anh"));
+		File deleteImage = new File("src/main/resources/static" + imageEntity.getUrl());
+		System.out.println(imageEntity.getUrl());
+		deleteImage.delete();
+		imageRepository.deleteById(imageEntity.getImageId());
+
+	}
+
 }

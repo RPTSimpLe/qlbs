@@ -14,6 +14,13 @@
         label{
             width: 200px;
         }
+        img{
+            width: 200px;
+            height: 200px;
+            border-radius: 20px;
+            border: 3px solid black;
+            margin: 0px 10px 0px 0px;
+        }
     </style>
 </head>
 
@@ -51,12 +58,42 @@
             </div>
             <div class="form-group">
 				<button class="btn btn-primary" type="submit">
-					Update Product
+					save
 				</button>
 			</div>
         </form>
+        <h3>Update Ảnh</h3>
+        <form id="updateImageForm" enctype="multipart/form-data">
+            <div id="previewImages"></div>
+        </form>
+        
 
-        <script>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            const product = /*[[${product}]]*/ null;
+            /*]]>*/
+
+            //render image
+            const previewImages = document.querySelector('#previewImages');
+            for (const image of product.imageDTOs) {
+                const img = document.createElement('img');
+                img.src = image.url;
+                img.className = 'image_' + image.imageId;
+                previewImages.appendChild(img);
+                const btn_delete = document.createElement('button');
+                btn_delete.textContent = 'X';
+                btn_delete.className = 'btn';
+                btn_delete.id = image.imageId;
+                btn_delete.classList.add('btn-danger');
+                btn_delete.classList.add('delete_image');
+                btn_delete.classList.add('image_' + image.imageId);
+                btn_delete.style.position = 'relative';
+                btn_delete.style.right = '50px';
+                btn_delete.style.bottom = '83px';
+                btn_delete.style.scale = '0.7';
+                previewImages.appendChild(btn_delete);
+            }
+            //update form
             const updateFrom = document.querySelector("#updateProductForm")
 			updateFrom.addEventListener('submit', (e) => {
 				e.preventDefault();
@@ -64,9 +101,30 @@
 				const {productId} = updateFormValue;
 				put("/admin/api/v1/products/"+productId, updateFormValue)
 				.then(product => {
-					 window.location.href = '/admin/products/search'
+					 
 				})
 			})
+            //delete event
+            const deleteImageButtons = document.querySelectorAll('.delete_image');
+            deleteImageButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const clickedButtonId = e.target.id;
+                    console.log(clickedButtonId);
+
+                    deleteImage('/admin/api/v1/products/deleteImage/'+clickedButtonId)
+                    .then(res => {
+                        const deleteImageElement = document.querySelectorAll('.image_'+ clickedButtonId);
+                        deleteImageElement.forEach(a => {
+                            a.remove();
+                        })
+
+                    }
+                    )
+                });
+            });
+            
+            
         </script>
     </div>
 </body>

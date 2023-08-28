@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shopeeClone.shopeeClone.dto.CreateProductDTO;
 import com.shopeeClone.shopeeClone.dto.PageDTO;
 import com.shopeeClone.shopeeClone.dto.ProductDTO;
+import com.shopeeClone.shopeeClone.service.ImageService;
 import com.shopeeClone.shopeeClone.service.ProductService;
 
 @RestController
@@ -27,6 +28,8 @@ import com.shopeeClone.shopeeClone.service.ProductService;
 public class ProductApiV1 {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ImageService imageService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ProductDTO createProduct(@RequestParam("name") String name,
@@ -54,6 +57,10 @@ public class ProductApiV1 {
     public ProductDTO updateProduct(@PathVariable (value = "productId") Long productId,
     @RequestBody ProductDTO dto){
         return productService.updateProduct(productId, dto);
+    }
+    @DeleteMapping("/deleteImage/{imageId}")
+    public void deleteImage(@PathVariable (value = "imageId") Long imageId){
+        imageService.deleteEachImage(imageId);
     }
 
     @DeleteMapping("{productId}")

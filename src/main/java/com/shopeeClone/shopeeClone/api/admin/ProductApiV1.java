@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shopeeClone.shopeeClone.dto.CreateProductDTO;
+import com.shopeeClone.shopeeClone.dto.ImageDTO;
 import com.shopeeClone.shopeeClone.dto.PageDTO;
 import com.shopeeClone.shopeeClone.dto.ProductDTO;
 import com.shopeeClone.shopeeClone.service.ImageService;
@@ -61,6 +62,11 @@ public class ProductApiV1 {
     @DeleteMapping("/deleteImage/{imageId}")
     public void deleteImage(@PathVariable (value = "imageId") Long imageId){
         imageService.deleteEachImage(imageId);
+    }
+    @PostMapping(path = "/addImages",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ProductDTO addImages(@RequestParam("productId") Long productId,
+    @RequestPart(value = "multipartFiles",required = false) List<MultipartFile> multipartFiles){
+        return imageService.addImages(productId, multipartFiles);
     }
 
     @DeleteMapping("{productId}")

@@ -15,9 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shopeeClone.shopeeClone.dto.ImageDTO;
+import com.shopeeClone.shopeeClone.dto.ProductDTO;
 import com.shopeeClone.shopeeClone.entity.ImageEntity;
+import com.shopeeClone.shopeeClone.entity.ProductEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
 import com.shopeeClone.shopeeClone.repository.ImageRepository;
+import com.shopeeClone.shopeeClone.repository.ProductRepository;
 import com.shopeeClone.shopeeClone.service.ImageService;
 
 @Service
@@ -25,6 +28,8 @@ import com.shopeeClone.shopeeClone.service.ImageService;
 public class ImageServiceImpl implements ImageService {
 	@Autowired
 	private ImageRepository imageRepository;
+	@Autowired
+	private ProductRepository productRepository;
 	@Override
 	public List<ImageDTO> saveImage(List<MultipartFile> files) {
 		List<ImageDTO> imageDTOs = new ArrayList<>();
@@ -71,6 +76,37 @@ public class ImageServiceImpl implements ImageService {
 		deleteImage.delete();
 		imageRepository.deleteById(imageEntity.getImageId());
 
+	}
+
+	@Override
+	public ProductDTO addImages(Long productId, List<MultipartFile> multipartFiles) {
+		ProductEntity productEntity = productRepository.findById(productId)
+		.orElseThrow(() -> new ValidateException("Khong tim thay product"));
+		for(MultipartFile file : multipartFiles){
+			ImageEntity imageEntity = new ImageEntity();
+			String fileName = file.getOriginalFilename();
+			try {
+				// Lưu file
+				InputStream inputStream = file.getInputStream();
+				byte[] buffer = new byte[inputStream.available()];
+				inputStream.read(buffer);
+				File newFile = new File("src/main/resources/static/ProductImages/" + fileName);
+				OutputStream outputStream
+					= new FileOutputStream(newFile);
+				outputStream.write(buffer);
+			} catch (IOException e) {
+				throw new ValidateException("Server error");
+			}
+			imageEntity.setUrl("/ProductImages/" + fileName);
+			imageEntity.setProduct(productEntity);
+			imageRepository.save(imageEntity);
+			productEntity.addImageEntity(imageEntity);
+			
+
+		}
+		productRepository.save(productEntity);
+		
+		return null;
 	}
 
 }

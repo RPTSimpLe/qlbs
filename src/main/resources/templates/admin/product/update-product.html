@@ -19,7 +19,7 @@
             height: 200px;
             border-radius: 20px;
             border: 3px solid black;
-            margin: 0px 10px 0px 0px;
+            margin: 0px 10px 10px 0px;
         }
     </style>
 </head>
@@ -65,10 +65,25 @@
         <h3>Update Ảnh</h3>
         <form id="updateImageForm" enctype="multipart/form-data">
             <div id="previewImages"></div>
+            <label for="addImage" style="font-size: 30px;">Thêm ảnh</label>
+            <input type="file" multiple id="addImage" style="margin-top: 40px;">
+            <div id="imagePreview" style="display: flex; flex-wrap: wrap;"></div>
+            <button type="submit" class="btn btn-dark">Save</button>
         </form>
         
 
         <script th:inline="javascript">
+            //update form
+            const updateFrom = document.querySelector("#updateProductForm")
+			updateFrom.addEventListener('submit', (e) => {
+				e.preventDefault();
+				const updateFormValue = formToObject("#updateProductForm")
+				const {productId} = updateFormValue;
+				put("/admin/api/v1/products/"+productId, updateFormValue)
+				.then(product => {
+					 
+				})
+			})
             /*<![CDATA[*/
             const product = /*[[${product}]]*/ null;
             /*]]>*/
@@ -93,17 +108,7 @@
                 btn_delete.style.scale = '0.7';
                 previewImages.appendChild(btn_delete);
             }
-            //update form
-            const updateFrom = document.querySelector("#updateProductForm")
-			updateFrom.addEventListener('submit', (e) => {
-				e.preventDefault();
-				const updateFormValue = formToObject("#updateProductForm")
-				const {productId} = updateFormValue;
-				put("/admin/api/v1/products/"+productId, updateFormValue)
-				.then(product => {
-					 
-				})
-			})
+            
             //delete event
             const deleteImageButtons = document.querySelectorAll('.delete_image');
             deleteImageButtons.forEach(button => {
@@ -123,6 +128,41 @@
                     )
                 });
             });
+            //render new Images
+            const inputNewImages = document.getElementById('addImage');
+            inputNewImages.addEventListener('change', function(event) {
+                const imagePreviewDiv = document.getElementById('imagePreview');
+                imagePreviewDiv.innerHTML = ''; // Xóa bỏ các ảnh trước đó
+
+                const files = event.target.files;
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    img.style.width = '150px';
+                    img.style.height = '150px';
+                    img.style.margin = '10px';
+                    imagePreviewDiv.appendChild(img);
+                }
+            });
+            //add image 
+            const form = document.querySelector('#updateImageForm');
+            form.addEventListener('submit',(e) => {
+                e.preventDefault();
+                alert('Images Added');
+                const fileInput = document.querySelector('#addImage');
+                const formData = new FormData();
+                formData.append('productId',product.productId);
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    formData.append('multipartFiles', fileInput.files[i]);
+                }
+                postProductFormData('/admin/api/v1/products/addImages',formData)
+                .then(response => {
+
+                })
+            })
+
+
             
             
         </script>

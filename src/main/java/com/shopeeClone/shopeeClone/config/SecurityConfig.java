@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,8 +48,19 @@ public class SecurityConfig {
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/login"))
 				.formLogin(httpLogin ->
-				httpLogin.loginPage("/login").usernameParameter("email").failureHandler(authenticationFailureHandler())
-						.permitAll())
+			    httpLogin.loginPage("/login")
+			        .usernameParameter("email")
+			        .failureHandler(authenticationFailureHandler())
+			        .permitAll()
+			        .successHandler((request, response, authentication) -> {
+			            for (GrantedAuthority authority : authentication.getAuthorities()) {
+			                if (authority.getAuthority().equals("ADMIN")) {
+			                    response.sendRedirect("/admin");
+			                    return;
+			                }
+			            }
+			            response.sendRedirect("/");
+			        }))
 				.rememberMe(
 						rememberMe -> rememberMe.rememberMeServices(rememberMeServices(userDetailsService)
 						))

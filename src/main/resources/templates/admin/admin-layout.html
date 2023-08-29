@@ -31,7 +31,9 @@
 
 		<div>
 			<a href="#">
-				User info
+				<form th:action="@{/logout}" th:method="post">
+					<button type="submit" class="btn" style="font-size: inherit;color: #fff;">Logout</button>
+				</form>
 			</a>
 		</div>
 	</nav>

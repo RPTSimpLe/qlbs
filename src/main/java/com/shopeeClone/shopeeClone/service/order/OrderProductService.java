@@ -8,6 +8,6 @@ public interface OrderProductService {
 
 	void delete(List<Long> ids);
 
-	List<OrderProductDTO> getByCartId(Long cartId);
+	List<OrderProductDTO> getall();
 
 }

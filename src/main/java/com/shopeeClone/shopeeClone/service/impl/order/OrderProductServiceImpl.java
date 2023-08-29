@@ -35,19 +35,20 @@ public class OrderProductServiceImpl implements OrderProductService {
 			OrderEntity orderEntity = orderRepository.findById(entity.getOrder().getOrderId()).orElseThrow();
 			orderEntity.setUser(null);
 			orderEntity.setAddress(null);
-			orderRepository.save(orderEntity);
-			orderRepository.delete(orderEntity);
-			
 			entity.setOrder(null);
 			entity.setProduct(null);
+			
 			repository.save(entity);
 			repository.delete(entity);
+
+			orderRepository.save(orderEntity);
+			orderRepository.delete(orderEntity);
 		}
 	}
 
 	@Override
-	public List<OrderProductDTO> getByCartId(Long cartId) {
-		List<OrderProductEntity> entities = repository.findByOrderProductId(cartId);
+	public List<OrderProductDTO> getall() {
+		List<OrderProductEntity> entities = repository.findAll();
 		List<OrderProductDTO> dtos = new ArrayList<OrderProductDTO>();
 		for (OrderProductEntity orderProductEntity : entities) {
 			OrderProductDTO dto = new OrderProductDTO();

@@ -33,9 +33,9 @@ public class OrderV1Api {
 	
 	
 	//orderproduct
-	@GetMapping("{cartId}")
-	public List<OrderProductDTO> getByCartId(@PathVariable Long cartId) {
-		return service.getByCartId(cartId);
+	@GetMapping()
+	public List<OrderProductDTO> getAll() {
+		return service.getall();
 	}
 	
 	@DeleteMapping("{ids}")

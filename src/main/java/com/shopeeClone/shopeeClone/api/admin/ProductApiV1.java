@@ -82,6 +82,10 @@ public class ProductApiV1 {
     public PageDTO<ProductDTO> getProducts(@RequestParam Map<String,String> params){
         return productService.getProducts(params);
     }
+    @GetMapping("/userproduct")
+    public List<ProductDTO> getProducts(){
+        return productService.getProducts();
+    }
 
 }
 

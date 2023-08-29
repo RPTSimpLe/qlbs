@@ -56,7 +56,17 @@ public class ProductServiceImpl implements ProductService {
         }
         productRepository.save(newProductEntity);
         ProductDTO newProductDTO = productConverter.toDTO(newProductEntity);
+        
         return newProductDTO;
+    }
+    @Override
+    public List<ProductDTO> getProducts() {
+        StringBuilder selectQueryBuilder = new StringBuilder("Select c from ProductEntity c ");
+        TypedQuery<ProductEntity> selectQuery = entityManager.createQuery(selectQueryBuilder.toString(),
+				ProductEntity.class);
+        List<ProductEntity> productEntities = selectQuery.getResultList();
+        List<ProductDTO> productDTOs = productConverter.toDTOList(productEntities);
+        return productDTOs;
     }
 
     @Override
@@ -131,5 +141,7 @@ public class ProductServiceImpl implements ProductService {
 
         return productConverter.toDTO(productEntity);
     }
+
+    
     
 }

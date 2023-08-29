@@ -5,6 +5,12 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Show Products List</title>
+	<style>
+		img{
+			width: 200px;
+			height: 350px;
+		}
+	</style>
 
 </head>
 
@@ -154,6 +160,9 @@
 							`;
 						}
 						index++;
+					}
+					if(insideHTML == ''){
+						insideHTML += '<h4>This product have no Image</h4>'
 					}
 					images.innerHTML = insideHTML;
 				}

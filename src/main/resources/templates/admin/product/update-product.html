@@ -18,8 +18,8 @@
             width: 200px;
             height: 200px;
             border-radius: 20px;
-            border: 3px solid black;
-            margin: 0px 10px 10px 0px;
+            margin-right: 3px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -57,19 +57,27 @@
                 <input th:value = "${product.suppilier}" type="text" name="suppilier" class="form-control suppilier" placeholder="Supplier Name">
             </div>
             <div class="form-group">
-				<button class="btn btn-primary" type="submit">
+				<button class="btn btn-dark" type="submit">
 					save
 				</button>
 			</div>
         </form>
-        <h3>Update Ảnh</h3>
+        <h3 style="font-weight:600;">Update Image</h3>
         <form id="updateImageForm" enctype="multipart/form-data">
             <div id="previewImages"></div>
-            <label for="addImage" style="font-size: 30px;">Thêm ảnh</label>
-            <input type="file" multiple id="addImage" style="margin-top: 40px;">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupFileAddon01">Add Images</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" aria-describedby="inputGroupFileAddon01" class="custom-file-input" multiple id="addImage" style="margin-top: 40px;">
+                  <label class="custom-file-label" for="addImage">Choose Image</label>
+                </div>
+            </div>
             <div id="imagePreview" style="display: flex; flex-wrap: wrap;"></div>
             <button type="submit" class="btn btn-dark">Save</button>
         </form>
+        <a style="color: rgb(0, 17, 255); font-size: 30px;margin-top: 20px;" href="/admin/products/search">Back to List -></a>
         
 
         <script th:inline="javascript">
@@ -81,7 +89,7 @@
 				const {productId} = updateFormValue;
 				put("/admin/api/v1/products/"+productId, updateFormValue)
 				.then(product => {
-					 
+					 alert("Update successfully")
 				})
 			})
             /*<![CDATA[*/
@@ -149,7 +157,6 @@
             const form = document.querySelector('#updateImageForm');
             form.addEventListener('submit',(e) => {
                 e.preventDefault();
-                alert('Images Added');
                 const fileInput = document.querySelector('#addImage');
                 const formData = new FormData();
                 formData.append('productId',product.productId);
@@ -158,8 +165,11 @@
                 }
                 postProductFormData('/admin/api/v1/products/addImages',formData)
                 .then(response => {
-
+                    
                 })
+                setTimeout(function() {
+                    window.location.reload();
+                }, 500);
             })
 
 

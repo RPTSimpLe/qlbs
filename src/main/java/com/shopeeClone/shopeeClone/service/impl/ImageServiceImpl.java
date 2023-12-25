@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +34,17 @@ public class ImageServiceImpl implements ImageService {
 	@Override
 	public List<ImageDTO> saveImage(List<MultipartFile> files) {
 		List<ImageDTO> imageDTOs = new ArrayList<>();
+		int i = 0;
 		for(MultipartFile file : files){
 			String fileName = file.getOriginalFilename();
 			try {
+				LocalDateTime currentTime = LocalDateTime.now();
+				int hour = currentTime.getHour();
+				int minute = currentTime.getMinute();
+				
+				String fileExtension = fileName.substring(fileName.lastIndexOf("."));
+				fileName+= "S"+i+"H"+hour+"M"+minute+""+fileExtension;
+				i++;
 				// Lưu file
 				InputStream inputStream = file.getInputStream();
 				byte[] buffer = new byte[inputStream.available()];

@@ -11,8 +11,6 @@ import com.shopeeClone.shopeeClone.entity.RoleEntity;
 import com.shopeeClone.shopeeClone.entity.UserEntity;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-//	@Query("SELECT r FROM UserEntity r WHERE r.username = :username")
-//	List<UserEntity> findByUserName(@Param(value ="username") String username);
 	
 	@Query("SELECT r FROM UserEntity r WHERE r.username = :username")
 	Optional<UserEntity> findByUserName(@Param(value ="username") String username);

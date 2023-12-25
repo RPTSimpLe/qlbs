@@ -13,7 +13,7 @@ function formToObject(formSelector) {
 
 	return obj;
 }
-console.log("js")
+
 function post(path, body) {
 	var myHeaders = new Headers();
 	myHeaders.append('Content-Type', 'application/json');

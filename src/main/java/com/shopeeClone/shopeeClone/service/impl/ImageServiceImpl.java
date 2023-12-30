@@ -41,7 +41,7 @@ public class ImageServiceImpl implements ImageService {
 				LocalDateTime currentTime = LocalDateTime.now();
 				int hour = currentTime.getHour();
 				int minute = currentTime.getMinute();
-				
+
 				String fileExtension = fileName.substring(fileName.lastIndexOf("."));
 				fileName+= "S"+i+"H"+hour+"M"+minute+""+fileExtension;
 				i++;
@@ -50,11 +50,12 @@ public class ImageServiceImpl implements ImageService {
 				byte[] buffer = new byte[inputStream.available()];
 				inputStream.read(buffer);
 				File newFile = new File("src/main/resources/static/ProductImages/" + fileName);
+
 				OutputStream outputStream
-					= new FileOutputStream(newFile);
+						= new FileOutputStream(newFile);
 				outputStream.write(buffer);
 			} catch (IOException e) {
-				throw new ValidateException("Server error");
+				throw new RuntimeException(e);
 			}
 
 			ImageDTO imageDTO = new ImageDTO();

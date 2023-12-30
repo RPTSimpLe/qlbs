@@ -44,6 +44,12 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
+	public List<CategoryDTO> getAll() {
+		List<CategoryEntity> categoryEntities =categoryRepository.findAll();
+		return categoryConverter.toDTOList(categoryEntities);
+	}
+
+	@Override
 	public CategoryDTO updateCategory(Long categoryId, CategoryDTO categoryDTO) {
 		CategoryEntity categoryEntity = categoryRepository.findById(categoryId)
 				.orElseThrow(() -> new ValidateException("category not found"));

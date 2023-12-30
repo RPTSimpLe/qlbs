@@ -2,6 +2,7 @@ package com.shopeeClone.shopeeClone.api.user;
 
 import java.util.Map;
 
+import com.shopeeClone.shopeeClone.dto.user.CreateUserform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shopeeClone.shopeeClone.dto.PageDTO;
-import com.shopeeClone.shopeeClone.dto.UserDTO;
+import com.shopeeClone.shopeeClone.dto.user.UserDTO;
 import com.shopeeClone.shopeeClone.entity.UserEntity;
 import com.shopeeClone.shopeeClone.service.UserService;
 
@@ -30,7 +31,10 @@ public class UserV1Api {
 	public UserDTO createUser(@RequestBody UserEntity entity) {
 		return service.createUser(entity);
 	}
-	
+	@PostMapping("/admin/createUser")
+	public UserDTO createUserByAdmin(@RequestBody CreateUserform userform) {
+		return service.createUserByAdmin(userform);
+	}
 	@GetMapping("/admin/getAll")
 	public PageDTO<UserDTO> getUs(@RequestParam Map<String, String>params) {
 		return service.getUs(params);
@@ -46,9 +50,9 @@ public class UserV1Api {
 		service.deleteById(id);
 	}
 	
-	@DeleteMapping("/admin/deleteRole/{id}/{roleName}")
-	public void deleteRole(@PathVariable Long id, @PathVariable String roleName) {
-		service.deleteRole(id, roleName);
+	@DeleteMapping("/admin/deleteRole/{id}/{roleId}")
+	public void deleteRole(@PathVariable Long id, @PathVariable String roleId) {
+		service.deleteRole(id, roleId);
 	}
 	
 	@PutMapping("{id}")
@@ -56,8 +60,8 @@ public class UserV1Api {
 		return service.updateByPatch(id, dto);
 	}
 	
-	@PatchMapping("/admin/{id}/{code}")
-	public UserDTO updateRole(@PathVariable String id, @PathVariable String code) {
-		return service.updateRole(id, code);
+	@PatchMapping("/admin/{id}/{roleId}")
+	public UserDTO updateRole(@PathVariable String id, @PathVariable String roleId) {
+		return service.updateRole(id, roleId);
 	}
 }

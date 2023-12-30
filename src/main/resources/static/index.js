@@ -11,6 +11,12 @@ function formToObject(formSelector) {
 		obj[name] = value;
 	}
 
+	const selects = form.querySelectorAll("select")
+	for (const select of selects) {
+		const name = select.getAttribute('name');
+		const value = select.value;
+		obj[name] = value;
+	}
 	return obj;
 }
 

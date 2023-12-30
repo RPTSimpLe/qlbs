@@ -42,13 +42,4 @@ public class UserEntity extends BaseEntity {
 	@ManyToMany(mappedBy = "users")
 	private List<RoleEntity> roles = new ArrayList<>();
 
-	@Override
-	public String toString() {
-		return "UserEntity [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", address=" + address
-				+ ", roles=" + roles + "]";
-	}
-	
-	
-	
 }

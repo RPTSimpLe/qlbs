@@ -18,8 +18,8 @@ public class CreateProductDTO {
     private Double price;
     private Integer discountPercent;
     private String description;
-    private String category;  // Sử dụng String cho category
-    private String suppilier;
+    private String categoryId;  // Sử dụng String cho category
+    private String suppilierId;
     private List<MultipartFile> multipartFiles = new ArrayList<>();
     public void addFiles(List<MultipartFile> multipartFiles){
         for(MultipartFile multipartFile : multipartFiles){
@@ -34,4 +34,5 @@ public class CreateProductDTO {
 	private String createBy;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private String modifierBy;
+
 }

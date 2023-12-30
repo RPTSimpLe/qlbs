@@ -49,8 +49,8 @@ public class ProductConverter {
         productEntity.setImportPrice(productDTO.getImportPrice());
         productEntity.setPrice(productDTO.getPrice());
         productEntity.setDiscountPercent(productDTO.getDiscountPercent());
-        productEntity.setCategory(categoryRepository.findByName(productDTO.getCategory()).orElseThrow(() -> new ValidateException("Khong tim thay category")));
-        productEntity.setSupplier(supplierRepository.findByName(productDTO.getSuppilier()).orElseThrow(() -> new ValidateException("Khong tim thay suppilier")));
+        productEntity.setCategory(categoryRepository.findById(Long.valueOf(productDTO.getCategoryId())).orElseThrow(() -> new ValidateException("Khong tim thay category")));
+        productEntity.setSupplier(supplierRepository.findById(Long.valueOf(productDTO.getSuppilierId())).orElseThrow(() -> new ValidateException("Khong tim thay suppilier")));
         return productEntity;
     }
     public ProductEntity toEntity(ProductEntity productEntity,ProductDTO productDTO){

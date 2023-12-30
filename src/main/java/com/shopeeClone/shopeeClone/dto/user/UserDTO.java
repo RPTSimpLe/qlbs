@@ -1,4 +1,4 @@
-package com.shopeeClone.shopeeClone.dto;
+package com.shopeeClone.shopeeClone.dto.user;
 
 import java.util.ArrayList;
 import java.util.Date;

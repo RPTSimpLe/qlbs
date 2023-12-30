@@ -37,6 +37,7 @@ public class ProductServiceImpl implements ProductService {
     private ImageService imageService;
     @Autowired
     private ImageRepository imageRepository;
+
     @Override
     public ProductDTO createProduct(CreateProductDTO dto) {
         String name = dto.getName();
@@ -44,7 +45,6 @@ public class ProductServiceImpl implements ProductService {
             throw new ValidateException("product cannot empty");
         }
         ProductEntity newProductEntity = productConverter.toEntity(dto);
-
         List<ImageDTO> imageDTOs = imageService.saveImage(dto.getMultipartFiles());
         productRepository.save(newProductEntity);
         for(ImageDTO imageDTO : imageDTOs){
@@ -56,7 +56,6 @@ public class ProductServiceImpl implements ProductService {
         }
         productRepository.save(newProductEntity);
         ProductDTO newProductDTO = productConverter.toDTO(newProductEntity);
-        
         return newProductDTO;
     }
     @Override

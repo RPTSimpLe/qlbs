@@ -3,9 +3,11 @@ package com.shopeeClone.shopeeClone.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.shopeeClone.shopeeClone.dto.address.CreateAddressForm;
+import com.shopeeClone.shopeeClone.dto.user.CreateUserform;
 import org.springframework.stereotype.Component;
 
-import com.shopeeClone.shopeeClone.dto.UserDTO;
+import com.shopeeClone.shopeeClone.dto.user.UserDTO;
 import com.shopeeClone.shopeeClone.entity.RoleEntity;
 import com.shopeeClone.shopeeClone.entity.UserEntity;
 
@@ -21,7 +23,15 @@ public class UserConverter {
 		entity.setUsername(dto.getUsername());
 		return entity;
 	}
-	
+	public UserEntity toEntity(CreateUserform createUserform) {
+		UserEntity entity = new UserEntity();
+		entity.setFirstName(createUserform.getFirstName());
+		entity.setLastName(createUserform.getLastName());
+		entity.setPhoneNumber(createUserform.getPhoneNumber());
+		entity.setUsername(createUserform.getUsername());
+		entity.setPassword(createUserform.getPassword());
+		return entity;
+	}
 	public UserDTO toDTO(UserEntity entity) {
 		UserDTO dto = new UserDTO();
 		dto.setCreatedDate(entity.getCreateDate());

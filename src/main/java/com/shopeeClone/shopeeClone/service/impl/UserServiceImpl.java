@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.shopeeClone.shopeeClone.dto.user.CreateUserform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shopeeClone.shopeeClone.converter.UserConverter;
 import com.shopeeClone.shopeeClone.dto.PageDTO;
-import com.shopeeClone.shopeeClone.dto.UserDTO;
+import com.shopeeClone.shopeeClone.dto.user.UserDTO;
 import com.shopeeClone.shopeeClone.entity.RoleEntity;
 import com.shopeeClone.shopeeClone.entity.UserEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
@@ -50,7 +51,20 @@ public class UserServiceImpl implements UserService{
 		
 		return converter.toDTO(entity);
 	}
-	
+	public UserDTO createUserByAdmin(CreateUserform createUserform) {
+		Optional<RoleEntity> roleEntities = roleRepository.findById(Long.parseLong(createUserform.getRoleId()));
+		RoleEntity roleEntity = roleEntities.get();
+
+		UserEntity entity = converter.toEntity(createUserform);
+		entity.getRoles().add(roleEntity);
+		repository.save(entity);
+
+		validateEntity(entity);
+		roleEntity.getUsers().add(entity);
+		roleRepository.save(roleEntity);
+
+		return converter.toDTO(entity);
+	}
 	private void validateEntity(UserEntity entity) {
 	    if (entity.getUsername() == null || entity.getUsername().isEmpty()) {
 	        throw new ValidateException("Username is required");
@@ -107,10 +121,10 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserDTO updateRole(String id, String code) {
+	public UserDTO updateRole(String id, String roleId) {
 		Long id1 = validate.validateId(id);
 		UserEntity userEntity = getUserByName(id1);
-		RoleEntity roleEntity = roleRepository.findByCode(code)
+		RoleEntity roleEntity = roleRepository.findById(Long.valueOf(roleId))
 				.orElseThrow(() -> new ValidateException("Không tìm thấy role"));
 		userEntity.getRoles().add(roleEntity);
 		roleEntity.getUsers().add(userEntity);
@@ -160,8 +174,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void deleteRole(Long id, String roleName) {
-		RoleEntity roleEntity = roleRepository.findByCode(roleName).orElseThrow();
+	public void deleteRole(Long id, String roleId) {
+		RoleEntity roleEntity = roleRepository.findById(Long.valueOf(roleId)).orElseThrow();
 		UserEntity userEntity = repository.findById(id).orElseThrow();
 		userEntity.getRoles().remove(roleEntity);
 		roleEntity.getUsers().remove(userEntity);

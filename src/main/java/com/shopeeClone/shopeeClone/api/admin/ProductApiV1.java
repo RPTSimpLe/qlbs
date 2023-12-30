@@ -38,8 +38,8 @@ public class ProductApiV1 {
                          @RequestParam("importPrice") Double importPrice,
                          @RequestParam("price") Double price,
                          @RequestParam("discountPercent") Integer discountPercent,
-                         @RequestParam("category") String category,
-                         @RequestParam("suppilier") String suppilier,
+                         @RequestParam("category") String categoryId,
+                         @RequestParam("suppilier") String suppilierId,
                          @RequestPart(value = "multipartFiles",required = false) List<MultipartFile> multipartFiles){
         CreateProductDTO createProductDTO = new CreateProductDTO();
         createProductDTO.setName(name);
@@ -47,8 +47,8 @@ public class ProductApiV1 {
         createProductDTO.setImportPrice(importPrice);
         createProductDTO.setPrice(price);
         createProductDTO.setDiscountPercent(discountPercent);
-        createProductDTO.setCategory(category);
-        createProductDTO.setSuppilier(suppilier);
+        createProductDTO.setCategoryId(categoryId);
+        createProductDTO.setSuppilierId(suppilierId);
         createProductDTO.addFiles(multipartFiles);
         return productService.createProduct(createProductDTO);
     }

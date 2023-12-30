@@ -33,7 +33,13 @@ public class SupplierServiceImpl implements SupplierService {
 		repository.save(entity);
 		return convertToDto(entity);
 	}
-	
+
+	@Override
+	public List<SupplierDTO> getAll() {
+		List<SupplierEntity> supplierEntities =repository.findAll();
+		return convertToDto(supplierEntities);
+	}
+
 	public SupplierDTO convertToDto(SupplierEntity supplierEntity) {
 	    SupplierDTO supplierDto = new SupplierDTO();
 	    supplierDto.setSupplierId(supplierEntity.getSupplierId());

@@ -1,5 +1,10 @@
 package com.shopeeClone.shopeeClone.controller;
 
+import com.shopeeClone.shopeeClone.entity.SupplierEntity;
+import com.shopeeClone.shopeeClone.repository.CategoryRepository;
+import com.shopeeClone.shopeeClone.repository.SupplierRepository;
+import com.shopeeClone.shopeeClone.service.CategoryService;
+import com.shopeeClone.shopeeClone.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +20,8 @@ import com.shopeeClone.shopeeClone.dto.ProductDTO;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
 import com.shopeeClone.shopeeClone.service.ProductService;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("admin/products")
 public class ProductController {
@@ -22,9 +29,14 @@ public class ProductController {
 	private ProductService productService;
 	@Autowired
 	private ProductConverter productConverter;
-	
+	@Autowired
+	private CategoryService categoryService;
+	@Autowired
+	private SupplierService supplierService;
 	@GetMapping("add")
 	public String showAddProductPage(Model model) {
+		model.addAttribute("suppliers", supplierService.getAll());
+		model.addAttribute("categoris", categoryService.getAll());
 		model.addAttribute("form", new ProductDTO());
 		return "admin/product/add-product";
 	}

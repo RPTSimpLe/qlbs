@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.shopeeClone</groupId>
-	<artifactId>shopeeClone</artifactId>
+	<artifactId>qlbs</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>shopeeClone</name>
 	<description>Viet nam Shopee clone </description>

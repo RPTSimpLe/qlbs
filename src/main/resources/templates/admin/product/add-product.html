@@ -46,11 +46,17 @@
             </div>
             <div class="form-group">
                 <label>Category Name: </label>
-                <input th:value = "${form.category}" type="text" name="category" class="form-control category" placeholder="Category Name">
+<!--                <input th:value = "${form.category}" type="text" name="category" class="form-control category" placeholder="Category Name">-->
+                <select name="category" class="form-control category">
+                    <option th:each="category : ${categoris}" th:text="${category.getName()}" th:value="${category.getCategoryId()}"></option>
+                </select>
             </div>
             <div class="form-group">
                 <label>Supplier Name: </label>
-                <input th:value = "${form.suppilier}" type="text" name="suppilier" class="form-control suppilier" placeholder="Supplier Name">
+<!--                <input th:value = "${form.suppilier}" type="text" name="suppilier" class="form-control suppilier" placeholder="Supplier Name">-->
+                <select name="suppilier" class="form-control suppilier">
+                    <option th:each="supplier : ${suppliers}" th:text="${supplier.getName()}" th:value="${supplier.getSupplierId()}"></option>
+                </select>
             </div>
             <div>
                 <label for="fileInput">Image(max : 10Mb)</label>
@@ -100,7 +106,6 @@
                     formData.append('multipartFiles', fileInput.files[i]);
                 }
                 var nameValue = formData.get('name');
-                console.log(nameValue);
 
                 var fileInputs = formData.getAll('multipartFiles');
                 console.log(fileInputs);
@@ -109,6 +114,7 @@
                     window.location.href = "/admin/products/search";
                 }).catch()
             })
+
         </script>
     </div>
 </body>

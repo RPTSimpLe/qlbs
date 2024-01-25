@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/user-layout">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div class="user-content" layout:fragment="content">
+        <!-- Single Page Header start -->
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Cart</h1>
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item active text-white">Cart</li>
+            </ol>
+        </div>
+        <!-- Single Page Header End -->
+
+        <!-- Cart Page Start -->
+        <div class="container-fluid py-5">
+            <div class="container py-5">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Products</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                        </thead>
+                        <tbody class="carts" th:each="cart : ${cartDTOS}">
+                            <tr th:id="'cart_'+${cart.cartId}">
+                                <th scope="row">
+                                    <div class="d-flex align-items-center">
+                                        <img th:src="${cart.product.imageDTOs[0].url}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                    </div>
+                                </th>
+                                <td>
+                                    <p class="mb-0 mt-4" th:text="${cart.product.name}"></p>
+                                </td>
+                                <td>
+                                    <p class="mb-0 mt-4 price" th:text="${cart.product.price}"></p>
+                                </td>
+                                <td>
+                                    <div class="input-group quantity mt-4" style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <button th:onclick="'updateQuantity(\'-\','+${cart.cartId}+')'" class="desbtn btn btn-sm btn-minus rounded-circle bg-light border">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <input type="number" class="form-control form-control-sm text-center border-0 quantityCart" th:id="'quantity_'+${cart.cartId}" th:value="${cart.quantity}" min="1" readonly>
+                                        <div class="input-group-btn">
+                                            <button th:onclick="'updateQuantity(\'+\','+${cart.cartId}+')'" class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="mb-0 mt-4 toTal"></p>
+                                </td>
+                                <td>
+                                    <button class="btn btn-md rounded-circle bg-light border mt-4 " th:onclick="'deleteCart('+${cart.cartId}+')'" >
+                                        <i class="fa fa-times text-danger"></i>
+                                    </button>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-5">
+                </div>
+                <div class="row g-4 justify-content-end">
+                    <div class="col-8"></div>
+                    <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
+                        <div class="bg-light rounded">
+                            <div class="p-4">
+                                <h3 class="mb-4">Cart <span class="fw-normal">Total</span></h3>
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h5 class="mb-0 me-4">Subtotal:</h5>
+                                    <p class="mb-0 subTotal">$96.00</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="mb-0 me-4">Shipping</h5>
+                                    <div class="">
+                                        <p class="mb-0">$1.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                                <h5 class="mb-0 ps-4 me-4">Total</h5>
+                                <p class="mb-0 pe-4 totalOrder">$99.00</p>
+                            </div>
+                            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Cart Page End -->
+    </div>
+<div class="jsContent" layout:fragment="jsContent">
+    <script>
+
+        function totalPrice(){
+           let quantiies = document.querySelectorAll(".quantityCart")
+           let prices = document.querySelectorAll(".price")
+           let totals = document.querySelectorAll(".toTal")
+           let subTotal=0
+            for (let i = 0; i < totals.length; i++) {
+                let quantity = parseInt(quantiies[i].value)
+                let price = parseInt(prices[i].innerHTML)
+                let total= quantity*price
+
+                totals[i].innerHTML=total
+                subTotal+= total
+            }
+            document.querySelector(".subTotal").innerHTML= "$"+subTotal
+            document.querySelector(".totalOrder").innerHTML= "$"+(subTotal+1)
+        }
+        totalPrice()
+        function deleteCart(id){
+            const isConfirm = confirm('Are you sure you want to delete this cart?');
+            if (isConfirm) {
+                callDelete("/api/v1/carts/"+id)
+                    .then(res => {
+                        const categoryElement = document.querySelector('#cart_' + id);
+                        categoryElement.remove();
+                    })
+                totalPrice()
+                alert("Delete successfull!")
+                getCountCart()
+            }
+        }
+        function updateQuantity(action,id){
+            let oldQuantity = document.getElementById("quantity_"+id).value
+            switch (action) {
+                case "+":
+                    put("/api/v1/carts/"+id,{quantity: 1})
+                    totalPrice()
+                    break
+                case "-":
+                    if(oldQuantity>1){
+                        put("/api/v1/carts/"+id,{quantity: -1})
+                        totalPrice()
+                    }
+                    break
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

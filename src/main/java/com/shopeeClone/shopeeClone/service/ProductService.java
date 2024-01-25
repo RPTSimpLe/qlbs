@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.shopeeClone.shopeeClone.dto.CreateProductDTO;
 import com.shopeeClone.shopeeClone.dto.PageDTO;
-import com.shopeeClone.shopeeClone.dto.ProductDTO;
+import com.shopeeClone.shopeeClone.dto.product.ProductDTO;
 
 public interface ProductService {
     ProductDTO createProduct(CreateProductDTO dto);
@@ -14,4 +14,5 @@ public interface ProductService {
     ProductDTO updateProduct(Long productId,ProductDTO productDTO);
     void deleteProductById(Long id);
     ProductDTO getProductByProductId(Long productId);
+    List<ProductDTO>getAll();
 }

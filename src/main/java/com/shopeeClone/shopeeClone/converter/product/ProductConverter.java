@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.shopeeClone.shopeeClone.converter.image.ImageConverter;
 import com.shopeeClone.shopeeClone.dto.CreateProductDTO;
-import com.shopeeClone.shopeeClone.dto.ProductDTO;
+import com.shopeeClone.shopeeClone.dto.product.ProductDTO;
 import com.shopeeClone.shopeeClone.entity.ProductEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
 import com.shopeeClone.shopeeClone.repository.CategoryRepository;

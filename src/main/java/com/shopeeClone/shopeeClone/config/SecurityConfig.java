@@ -42,8 +42,10 @@ public class SecurityConfig {
 				.authorizeHttpRequests(http -> http
 				.requestMatchers("/admin**").hasAnyAuthority("ADMIN")
 				.requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-				.requestMatchers("/login","/css/**","/img/**","/fonts/**","/js/**","/scss/**","/signUp").permitAll()
-				.requestMatchers("/").permitAll()			
+				.requestMatchers("/login","/index.js","/auth/**","/css/**","/img/**","/fonts/**","/js/**","/scss/**").permitAll()
+				.requestMatchers("/","/user/**").permitAll()
+				.requestMatchers("/signUp","/api/v1/users/signUp","/api/v1/users/getUser").permitAll()
+				.requestMatchers("/jquery.simplePagination.min.js","/ProductImages/**","/paginiation/**").permitAll()
 				.anyRequest().authenticated()).logout(httpLogout -> httpLogout
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/login"))

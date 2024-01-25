@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.shopeeClone.shopeeClone.dto.CategoryDTO;
+import com.shopeeClone.shopeeClone.dto.category.CategoryDTO;
 import com.shopeeClone.shopeeClone.entity.CategoryEntity;
 
 @Component

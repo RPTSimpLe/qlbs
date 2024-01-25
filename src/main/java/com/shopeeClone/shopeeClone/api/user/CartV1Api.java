@@ -3,6 +3,7 @@ package com.shopeeClone.shopeeClone.api.user;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,10 +28,13 @@ public class CartV1Api {
 	public CartDTO create(@RequestBody CartRequestForm requestForm) {
 		return cartService.create(requestForm);
 	}
-	
-	@GetMapping
-	public List<CartDTO> getAll() {
-		return cartService.getAll();
+	@GetMapping("/countCart")
+	public Long countCart(@Param(value = "uId") Long uId){
+		return cartService.countCart(uId);
+	}
+	@GetMapping("/{uId}")
+	public List<CartDTO> getAllByUId(@PathVariable Long uId) {
+		return cartService.getAllByUId(uId);
 	}
 	
 	@DeleteMapping("{cartIds}")

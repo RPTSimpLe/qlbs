@@ -6,6 +6,9 @@ import java.util.Optional;
 
 import com.shopeeClone.shopeeClone.dto.user.CreateUserform;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,9 +46,9 @@ public class UserServiceImpl implements UserService{
 		Optional<RoleEntity> roleEntities = roleRepository.findByCode("USER");
 		RoleEntity roleEntity = roleEntities.get();
 		entity.getRoles().add(roleEntity);
+		validateEntity(entity);
 		repository.save(entity);
 
-		validateEntity(entity);
 		roleEntity.getUsers().add(entity);
 		roleRepository.save(roleEntity);
 		
@@ -64,6 +67,17 @@ public class UserServiceImpl implements UserService{
 		roleRepository.save(roleEntity);
 
 		return converter.toDTO(entity);
+	}
+	public UserDTO getUser(){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication.getPrincipal() instanceof UserDetails) {
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			String username = userDetails.getUsername();
+			UserDTO userDTO = UserConverter.toDTOUs(repository.findByUserName(username).get());
+			return userDTO;
+		}
+		UserDTO userDTO = new UserDTO();
+		return userDTO;
 	}
 	private void validateEntity(UserEntity entity) {
 	    if (entity.getUsername() == null || entity.getUsername().isEmpty()) {

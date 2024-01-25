@@ -1,4 +1,4 @@
-package com.shopeeClone.shopeeClone.dto;
+package com.shopeeClone.shopeeClone.dto.category;
 
 import java.util.Date;
 

@@ -26,7 +26,7 @@ public class UserV1Api {
 	
 	@Autowired
 	private UserService service;
-	
+
 	@PostMapping
 	public UserDTO createUser(@RequestBody UserEntity entity) {
 		return service.createUser(entity);
@@ -39,12 +39,14 @@ public class UserV1Api {
 	public PageDTO<UserDTO> getUs(@RequestParam Map<String, String>params) {
 		return service.getUs(params);
 	}
-	
 	@GetMapping("{name}")
 	public UserDTO findByName(@PathVariable String name){
 		return service.findAllByName(name);
 	}
-	
+	@GetMapping("/getUser")
+	public UserDTO getUser(){
+		return service.getUser();
+	}
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable Long id) {
 		service.deleteById(id);
@@ -63,5 +65,9 @@ public class UserV1Api {
 	@PatchMapping("/admin/{id}/{roleId}")
 	public UserDTO updateRole(@PathVariable String id, @PathVariable String roleId) {
 		return service.updateRole(id, roleId);
+	}
+	@PostMapping("signUp")
+	public UserDTO signUp(@RequestBody UserEntity entity){
+		return service.createUser(entity);
 	}
 }

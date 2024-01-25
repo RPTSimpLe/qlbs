@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shopeeClone.shopeeClone.dto.ImageDTO;
-import com.shopeeClone.shopeeClone.dto.ProductDTO;
+import com.shopeeClone.shopeeClone.dto.product.ProductDTO;
 import com.shopeeClone.shopeeClone.entity.ImageEntity;
 import com.shopeeClone.shopeeClone.entity.ProductEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;

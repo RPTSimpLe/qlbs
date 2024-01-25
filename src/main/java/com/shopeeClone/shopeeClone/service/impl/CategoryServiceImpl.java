@@ -1,14 +1,16 @@
 package com.shopeeClone.shopeeClone.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.shopeeClone.shopeeClone.dto.category.GetCountAndCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shopeeClone.shopeeClone.converter.category.CategoryConverter;
-import com.shopeeClone.shopeeClone.dto.CategoryDTO;
+import com.shopeeClone.shopeeClone.dto.category.CategoryDTO;
 import com.shopeeClone.shopeeClone.dto.PageDTO;
 import com.shopeeClone.shopeeClone.entity.CategoryEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
@@ -47,6 +49,20 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<CategoryDTO> getAll() {
 		List<CategoryEntity> categoryEntities =categoryRepository.findAll();
 		return categoryConverter.toDTOList(categoryEntities);
+	}
+
+	@Override
+	public GetCountAndCategory getAllInUser() {
+		List<CategoryEntity> categoryEntities =categoryRepository.findAll();
+		List<CategoryDTO> dtos = categoryConverter.toDTOList(categoryEntities);
+
+		List<Integer> counts = new ArrayList<>();
+		for(CategoryEntity categoryEntity: categoryEntities){
+			Integer count = categoryRepository.countProductByCate(categoryEntity).get();
+			counts.add(count);
+		}
+
+		return new GetCountAndCategory(dtos, counts);
 	}
 
 	@Override

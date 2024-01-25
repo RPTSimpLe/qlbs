@@ -48,10 +48,22 @@ public class UserConverter {
 		for (RoleEntity roleEntity : roleEntities) {
 			dto.getRoleName().add(roleEntity.getCode());
 		};
-		
+
 		return dto;
 	}
-	
+	public static UserDTO toDTOUs(UserEntity entity) {
+		UserDTO dto = new UserDTO();
+		dto.setCreatedDate(entity.getCreateDate());
+		dto.setModifierDate(entity.getModifierDate());
+		dto.setCreatedBy(entity.getCreateBy());
+		dto.setModifierBy(entity.getModifierBy());
+		dto.setFirstName(entity.getFirstName());
+		dto.setLastName(entity.getLastName());
+		dto.setPhoneNumber(entity.getPhoneNumber());
+		dto.setUserId(entity.getUserId());
+		dto.setUsername(entity.getUsername());
+		return dto;
+	}
 	public List<UserDTO> toDTO(List<UserEntity> entities) {
 		List<UserDTO> dtos = new ArrayList<UserDTO>();
 		for (UserEntity entity : entities) {

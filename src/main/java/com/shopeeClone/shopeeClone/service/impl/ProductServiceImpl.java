@@ -11,7 +11,7 @@ import com.shopeeClone.shopeeClone.converter.product.ProductConverter;
 import com.shopeeClone.shopeeClone.dto.CreateProductDTO;
 import com.shopeeClone.shopeeClone.dto.ImageDTO;
 import com.shopeeClone.shopeeClone.dto.PageDTO;
-import com.shopeeClone.shopeeClone.dto.ProductDTO;
+import com.shopeeClone.shopeeClone.dto.product.ProductDTO;
 import com.shopeeClone.shopeeClone.entity.ImageEntity;
 import com.shopeeClone.shopeeClone.entity.ProductEntity;
 import com.shopeeClone.shopeeClone.exeption.ValidateException;
@@ -70,9 +70,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public PageDTO<ProductDTO> getProducts(Map<String, String> params) {
-        // hql
-		// http://localhost:8080/admin/api/v1/products?page=1?limit=10
-		System.out.println(params);
 		String pageStr = params.get("page");
 		String limitStr = params.get("limit");
 		Integer page = 1;
@@ -94,6 +91,16 @@ public class ProductServiceImpl implements ProductService {
 			selectQueryBuilder.append(" Where c.name like :name");
 			countQueryBuilder.append(" Where c.name like :name");
 		}
+        String categoryId = params.get("categoryId");
+        if (AppStringUtils.hasTextAnd(categoryId)) {
+            selectQueryBuilder.append("join c.category q where q.categoryId = :categoryId");
+            countQueryBuilder.append("join c.category q where q.categoryId = :categoryId");
+        }
+        String price = params.get("price");
+        if (AppStringUtils.hasTextAnd(price)) {
+            selectQueryBuilder.append(" ORDER BY c.price "+price);
+            countQueryBuilder.append(" ORDER BY c.price "+price);
+        }
 
 		TypedQuery<ProductEntity> selectQuery = entityManager.createQuery(selectQueryBuilder.toString(),
 				ProductEntity.class);
@@ -105,6 +112,10 @@ public class ProductServiceImpl implements ProductService {
 			selectQuery.setParameter("name", "%"+name+"%");
 			countQuery.setParameter("name", "%"+name+"%");
 		}
+        if (AppStringUtils.hasTextAnd(categoryId)) {
+            selectQuery.setParameter("categoryId",categoryId);
+            countQuery.setParameter("categoryId",categoryId);
+        }
 
 		selectQuery.setFirstResult(firstItems);
 		selectQuery.setMaxResults(limit);
@@ -133,14 +144,16 @@ public class ProductServiceImpl implements ProductService {
         imageService.deleteImage(imageEntities);
         productRepository.deleteById(id);
     }
-
     @Override
     public ProductDTO getProductByProductId(Long productId) {
         ProductEntity productEntity = productRepository.findById(productId).orElseThrow(() -> new ValidateException("Khong tim thay product"));
 
         return productConverter.toDTO(productEntity);
     }
-
-    
-    
+    @Override
+    public List<ProductDTO> getAll() {
+        List<ProductEntity> productEntities = productRepository.findAllProAndImg();
+        List<ProductDTO>dtos = productConverter.toDTOList(productEntities);
+        return dtos;
+    }
 }

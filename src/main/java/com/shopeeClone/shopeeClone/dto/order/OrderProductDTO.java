@@ -1,12 +1,6 @@
 package com.shopeeClone.shopeeClone.dto.order;
 
-import com.shopeeClone.shopeeClone.dto.ProductDTO;
-import com.shopeeClone.shopeeClone.entity.OrderEntity;
-import com.shopeeClone.shopeeClone.entity.ProductEntity;
-
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.shopeeClone.shopeeClone.dto.product.ProductDTO;
 
 public class OrderProductDTO {
 	

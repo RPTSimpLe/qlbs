@@ -18,9 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shopeeClone.shopeeClone.dto.CreateProductDTO;
-import com.shopeeClone.shopeeClone.dto.ImageDTO;
 import com.shopeeClone.shopeeClone.dto.PageDTO;
-import com.shopeeClone.shopeeClone.dto.ProductDTO;
+import com.shopeeClone.shopeeClone.dto.product.ProductDTO;
 import com.shopeeClone.shopeeClone.service.ImageService;
 import com.shopeeClone.shopeeClone.service.ProductService;
 

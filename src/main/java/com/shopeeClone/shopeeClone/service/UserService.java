@@ -14,9 +14,8 @@ public interface UserService {
 	UserDTO findAllByName(String name);
 	UserDTO createUserByAdmin(CreateUserform createUserform);
 	UserDTO updateByPatch(String id, UserDTO dto);
-
 	void deleteById(Long id);
-
+	UserDTO getUser();
 	UserDTO updateRole(String id, String code);
 
 	PageDTO<UserDTO> getUs(Map<String, String> params);

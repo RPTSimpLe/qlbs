@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shopeeClone.shopeeClone.dto.ImageDTO;
-import com.shopeeClone.shopeeClone.dto.ProductDTO;
+import com.shopeeClone.shopeeClone.dto.product.ProductDTO;
 import com.shopeeClone.shopeeClone.entity.ImageEntity;
 
 public interface ImageService {

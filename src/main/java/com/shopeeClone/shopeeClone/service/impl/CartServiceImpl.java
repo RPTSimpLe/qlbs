@@ -28,7 +28,18 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public CartDTO create(CartRequestForm requestForm) {
 		CartEntity cartEntity = cartConverter.toEntity(requestForm);
-		cartRepository.save(cartEntity);
+		List<CartEntity> cartEntities = cartRepository.findAll();
+		int count=0;
+		for (CartEntity cart : cartEntities){
+			UpdateCart updateCart = new UpdateCart(cartEntity.getQuantity());
+			if (cart.getProduct()==cartEntity.getProduct()){
+				update(cart.getCartId(),updateCart);
+				count++;
+			}
+		}
+		if (count==0){
+			cartRepository.save(cartEntity);
+		}
 		return cartConverter.toDTO(cartEntity);
 	}
 
@@ -54,13 +65,24 @@ public class CartServiceImpl implements CartService {
 		}
 		
 	}
-
+	@Override
+	public List<CartDTO> getAllByUId(Long uId) {
+		List<CartEntity>cartEntities = cartRepository.findAllByUId(uId);
+		List<CartDTO>cartDTOS = cartConverter.toDTO(cartEntities);
+		return cartDTOS;
+	}
 	@Override
 	public CartDTO update(Long id, UpdateCart cart) {
 		CartEntity cartEntity = cartRepository.findById(id).orElseThrow(() -> new ValidateException("không tìm thấy cart"));
-		cartEntity.setQuantity(cart.getQuantity());
+		Integer newQuantity =cart.getQuantity()+cartEntity.getQuantity();
+
+		cartEntity.setQuantity(newQuantity);
 		cartRepository.save(cartEntity);
 		return cartConverter.toDTO(cartEntity);
 	}
-	
+
+	@Override
+	public Long countCart(Long uId) {
+		return cartRepository.countCart(uId);
+	}
 }

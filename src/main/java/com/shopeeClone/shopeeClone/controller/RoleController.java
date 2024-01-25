@@ -1,6 +1,5 @@
 package com.shopeeClone.shopeeClone.controller;
 
-import com.shopeeClone.shopeeClone.dto.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.shopeeClone.shopeeClone.dto.RoleDTO;
 import com.shopeeClone.shopeeClone.service.RoleService;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin/role")

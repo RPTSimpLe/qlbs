@@ -3,11 +3,6 @@ package com.shopeeClone.shopeeClone.dto.order;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.shopeeClone.shopeeClone.dto.ProductDTO;
-import com.shopeeClone.shopeeClone.dto.address.AddressDTO;
-
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 public class OrderDTO {
 	

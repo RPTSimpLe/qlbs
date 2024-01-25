@@ -18,4 +18,7 @@ public interface CartService {
 
 	CartDTO update(Long id, UpdateCart cart);
 
+    List<CartDTO> getAllByUId(Long uId);
+
+    Long countCart(Long uId);
 }

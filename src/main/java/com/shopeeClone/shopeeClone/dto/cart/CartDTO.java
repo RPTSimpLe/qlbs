@@ -2,8 +2,7 @@ package com.shopeeClone.shopeeClone.dto.cart;
 
 import java.util.Date;
 
-import com.shopeeClone.shopeeClone.dto.ProductDTO;
-import com.shopeeClone.shopeeClone.entity.ProductEntity;
+import com.shopeeClone.shopeeClone.dto.product.ProductDTO;
 
 public class CartDTO {
 	private Long cartId;
@@ -42,5 +41,4 @@ public class CartDTO {
 	public void setProduct(ProductDTO product) {
 		this.product = product;
 	}
-	
 }

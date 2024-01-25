@@ -1,4 +1,4 @@
-package com.shopeeClone.shopeeClone.dto;
+package com.shopeeClone.shopeeClone.dto.product;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import com.shopeeClone.shopeeClone.dto.ImageDTO;
 import lombok.Data;
 
 @Data

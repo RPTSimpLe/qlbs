@@ -80,7 +80,21 @@ function showPagination({
 			onPageClick: onPageClick
 		});
 }
-
+function showPaginationInUser({
+							totalItems,
+							limit,
+							currentPage,
+							onPageClick
+						}) {
+	_$("#pagi").pagination({
+		items: totalItems,
+		itemsOnPage: limit,
+		currentPage,
+		prevText: "&laquo;",
+		nextText: "&raquo;",
+		onPageClick: onPageClick
+	});
+}
 function callDelete(path, body = {}) {
 	var myHeaders = new Headers();
 	myHeaders.append('Content-Type', 'application/json');

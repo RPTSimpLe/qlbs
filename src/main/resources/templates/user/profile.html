@@ -1,0 +1,184 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/user-layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div class="user-content" layout:fragment="content">
+
+    <!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">Contact</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active text-white">Profile</li>
+        </ol>
+    </div>
+    <!-- Single Page Header End -->
+
+
+    <!-- Contact Start -->
+    <div class="container-fluid contact py-5">
+        <div class="container py-5">
+            <div class="p-5 bg-light rounded">
+                <div class="row g-4">
+                    <div class="col-lg-5">
+                        <form id="formProfile">
+                            <input type="number" class="w-100 form-control border-0 mb-4" name="userId" th:value="${userDTO.getUserId()}" hidden>
+                            <label>Username: </label>
+                            <input type="text" class="w-100 form-control border-0 mb-4" name="username" th:value="${userDTO.getUsername()}">
+                            <label>Firstname: </label>
+                            <input type="text" class="w-100 form-control border-0 mb-4" name="firstName" th:value="${userDTO.getFirstName()}">
+                            <label>Lastname: </label>
+                            <input type="text" class="w-100 form-control border-0 mb-4" name="lastName" th:value="${userDTO.getLastName()}">
+                            <label>Telephone: </label>
+                            <input type="text" class="w-100 form-control border-0 mb-4" name="phoneNumber" th:value="${userDTO.getPhoneNumber()}">
+                            <button style="margin-left: 67%;" class="col-4 btn border-secondary bg-white text-primary " type="submit" onclick="updateProfile()">Update</button>
+                        </form>
+
+                        <form id="formPass">
+                            <input type="number" class="w-100 form-control border-0 mb-4" name="userId" th:value="${userDTO.getUserId()}" hidden>
+                            <label>Old password: </label>
+                            <input type="text" class="w-100 form-control border-0 mb-4" name="oldPassword">
+                            <label>New password: </label>
+                            <input type="text" class="w-100 form-control border-0 mb-4" name="newPassword">
+                            <label>Confirm password: </label>
+                            <input type="text" class="w-100 form-control border-0 mb-4" name="confirmPassword">
+                            <button style="margin-left: 67%;" class="col-4 btn border-secondary bg-white text-primary " type="submit" onclick="updatePass()">Change password</button>
+                        </form>
+                    </div>
+                    <div class="col-lg-7">
+                        <label class="ps-1">Address: </label>
+                        <form id="createAddress">
+                            <div class="row">
+                                <div class="ps-3 py-1 col-4 rounded d-flex justify-content-between mb-4">
+                                    <label>Province:</label>
+                                    <select id="province" name="provinceId" class="border-0 form-select-sm me-3" th:onchange="'renderDistrict(this)'">
+                                        <option value="">Choose province</option>
+                                        <option  th:each="province : ${provinceDTOS}" th:value="${province.getId()}" th:text="${province.getName()}"></option>
+                                    </select>
+                                </div>
+                                <div class="ps-3 py-1 col-4 rounded d-flex justify-content-between mb-4">
+                                    <label >District:</label>
+                                    <select id="district" name="districtId" class="border-0 form-select-sm me-3" th:onchange="'renderWard(this)'">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                                <div class="ps-3 py-1 col-4 rounded d-flex justify-content-between mb-4">
+                                    <label >Ward:</label>
+                                    <select id="ward" name="wardId" class="border-0 form-select-sm me-3">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="text" class="w-100 form-control border-0 mb-4" name="description" placeholder="House Number,village">
+                            <button style="margin-left: 67%;" class="col-4 btn border-secondary bg-white text-primary " th:onclick="'addAddress()'">Add address</button>
+                        </form>
+                        <div class="table-responsive" >
+                            <table class="table">
+                                <tbody class="addresses" >
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+</div>
+<div class="jsContent" layout:fragment="jsContent">
+    <script>
+        function renderDistrict(provice){
+            get("/api/v1/districts/"+provice.value)
+                .then(districts =>{
+                    let html=`<option value="">Choose district</option>`
+                    for (const district of districts) {
+                        html+=`<option value="${district.id}">${district.name}</option>`
+                    }
+                    document.getElementById("district").innerHTML=html
+                    document.getElementById("ward").innerHTML=`<option value=""></option>`
+                })
+        }
+        function renderWard(ward){
+            get("/api/v1/wards/"+ward.value)
+                .then(wards =>{
+                    let html=`<option value="">Choose ward</option>`
+                    for (const ward of wards) {
+                        html+=`<option value="${ward.id}">${ward.name}</option>`
+                    }
+                    document.getElementById("ward").innerHTML=html
+                })
+
+        }
+        function addAddress(){
+            event.preventDefault()
+            let formValue = formToObject("#createAddress")
+            get("/api/v1/users/getUser")
+                .then(user =>{
+                    post("/api/v1/addresses/"+user.userId,formValue)
+                        .then(dakada=>{
+                            renderAddresses()
+                        })
+                })
+        }
+        function updatePass(){
+
+        }
+       function renderAddresses(){
+           get("/api/v1/users/getUser")
+               .then(user =>{
+                   get("/api/v1/addresses/"+user.userId)
+                       .then(addresses => {
+                           let html=``
+                           for (const address of addresses) {
+                               html+=` <tr id="address_${address.id}">
+                                        <td >
+                                            <p class="mb-0 mt-4">${address.address}</p>
+                                        </td>
+                                        <td style="text-align: right">
+                                            <button class="btn btn-md rounded-circle bg-light border mt-4 " onclick="deleteAddress(${address.id},${user.userId})">
+                                                <i class="fa fa-times text-danger" ></i>
+                                            </button>
+                                        </td>
+                                     </tr>`
+                           }
+                           document.querySelector(".addresses").innerHTML=html
+                       })
+               })
+       }
+       renderAddresses()
+
+       function deleteAddress(addId,uId){
+            callDelete("/api/v1/addresses/"+addId+"/"+uId)
+                .then(res=>{
+                    document.getElementById("address_"+addId).remove();
+                })
+       }
+       function updateProfile(){
+           event.preventDefault()
+           let formValue = formToObject("#formProfile")
+           pat("/api/v1/users/"+formValue.userId,formValue)
+               .then(res=>{
+                   alert("Update successfull!")
+               })
+       }
+        function updatePass(){
+            event.preventDefault()
+            let formValue = formToObject("#formPass")
+            pat("/api/v1/users/updatePass/"+formValue.userId,formValue)
+                .then(res=>{
+                    alert("Change password successfull!")
+                    console.log(res.message)
+                })
+        }
+    </script>
+</div>
+</body>
+</html>

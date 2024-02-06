@@ -3,6 +3,7 @@ package com.shopeeClone.shopeeClone.service;
 import java.util.Map;
 
 import com.shopeeClone.shopeeClone.dto.PageDTO;
+import com.shopeeClone.shopeeClone.dto.user.ChangePassword;
 import com.shopeeClone.shopeeClone.dto.user.CreateUserform;
 import com.shopeeClone.shopeeClone.dto.user.UserDTO;
 import com.shopeeClone.shopeeClone.entity.UserEntity;
@@ -10,7 +11,7 @@ import com.shopeeClone.shopeeClone.entity.UserEntity;
 public interface UserService {
 
 	UserDTO createUser(UserEntity entity);
-
+	void updatePass(long id, ChangePassword changePassword);
 	UserDTO findAllByName(String name);
 	UserDTO createUserByAdmin(CreateUserform createUserform);
 	UserDTO updateByPatch(String id, UserDTO dto);

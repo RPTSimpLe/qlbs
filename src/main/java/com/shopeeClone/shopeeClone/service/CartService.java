@@ -13,6 +13,7 @@ public interface CartService {
 	List<CartDTO> getAll();
 
 	void delete(Long cartId);
+	void deleteAll(Long uId);
 
 	void multiDelete(List<Long> cartIds);
 

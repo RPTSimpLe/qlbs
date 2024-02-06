@@ -37,11 +37,15 @@ public class CartV1Api {
 		return cartService.getAllByUId(uId);
 	}
 	
-	@DeleteMapping("{cartIds}")
-	public void delete(@PathVariable List<Long> cartIds) {
-		cartService.multiDelete(cartIds);
+	@DeleteMapping("{cartId}")
+	public void delete(@PathVariable Long cartId) {
+		cartService.delete(cartId);
 	}
-	
+
+	@DeleteMapping("/deleteAll/{uId}")
+	public void deleteAll(@PathVariable Long uId) {
+		cartService.deleteAll(uId);
+	}
 	@PutMapping("{id}")
 	public CartDTO update(@PathVariable Long id,@RequestBody UpdateCart cart ) {
 		return cartService.update(id, cart);

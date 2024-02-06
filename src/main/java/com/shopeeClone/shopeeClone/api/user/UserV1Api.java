@@ -1,9 +1,14 @@
 package com.shopeeClone.shopeeClone.api.user;
 
+import java.util.List;
 import java.util.Map;
 
+import com.shopeeClone.shopeeClone.dto.RoleDTO;
+import com.shopeeClone.shopeeClone.dto.user.ChangePassword;
 import com.shopeeClone.shopeeClone.dto.user.CreateUserform;
+import com.shopeeClone.shopeeClone.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,7 +31,6 @@ public class UserV1Api {
 	
 	@Autowired
 	private UserService service;
-
 	@PostMapping
 	public UserDTO createUser(@RequestBody UserEntity entity) {
 		return service.createUser(entity);
@@ -57,7 +61,7 @@ public class UserV1Api {
 		service.deleteRole(id, roleId);
 	}
 	
-	@PutMapping("{id}")
+	@PatchMapping("{id}")
 	public UserDTO update(@PathVariable String id, @RequestBody UserDTO dto) {
 		return service.updateByPatch(id, dto);
 	}
@@ -65,6 +69,10 @@ public class UserV1Api {
 	@PatchMapping("/admin/{id}/{roleId}")
 	public UserDTO updateRole(@PathVariable String id, @PathVariable String roleId) {
 		return service.updateRole(id, roleId);
+	}
+	@PatchMapping("/updatePass/{id}")
+	public void updatePass(@PathVariable Long id, @RequestBody ChangePassword changePassword) {
+		service.updatePass(id,changePassword);
 	}
 	@PostMapping("signUp")
 	public UserDTO signUp(@RequestBody UserEntity entity){

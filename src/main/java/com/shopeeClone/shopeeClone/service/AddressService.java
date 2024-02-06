@@ -10,7 +10,7 @@ public interface AddressService {
 
 	AddressDTO create(CreateAddressForm form, Long userId);
 
-	List<AddressDTO> getAll();
+	List<AddressDTO> getAll(Long userId);
 
 	void delete(String id, Long userId);
 

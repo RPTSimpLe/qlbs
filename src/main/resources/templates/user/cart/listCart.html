@@ -21,7 +21,7 @@
         <!-- Cart Page Start -->
         <div class="container-fluid py-5">
             <div class="container py-5">
-                <div class="table-responsive">
+                <div class="table-responsive" >
                     <table class="table">
                         <thead>
                         <tr>
@@ -34,7 +34,7 @@
                         </tr>
                         </thead>
                         <tbody class="carts" th:each="cart : ${cartDTOS}">
-                            <tr th:id="'cart_'+${cart.cartId}">
+                            <tr th:id="'cart_'+${cart.cartId}" class="cart_items">
                                 <th scope="row">
                                     <div class="d-flex align-items-center">
                                         <img th:src="${cart.product.imageDTOs[0].url}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
@@ -49,20 +49,20 @@
                                 <td>
                                     <div class="input-group quantity mt-4" style="width: 100px;">
                                         <div class="input-group-btn">
-                                            <button th:onclick="'updateQuantity(\'-\','+${cart.cartId}+')'" class="desbtn btn btn-sm btn-minus rounded-circle bg-light border">
+                                            <button th:onclick="'updateQuantity(\'-\','+${cart.cartId}+','+${cart.product.price}+')'" th:id="'desc_'+${cart.cartId}" class="desbtn btn btn-sm btn-minus rounded-circle bg-light border">
                                                 <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
                                         <input type="number" class="form-control form-control-sm text-center border-0 quantityCart" th:id="'quantity_'+${cart.cartId}" th:value="${cart.quantity}" min="1" readonly>
                                         <div class="input-group-btn">
-                                            <button th:onclick="'updateQuantity(\'+\','+${cart.cartId}+')'" class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                            <button th:onclick="'updateQuantity(\'+\','+${cart.cartId}+','+${cart.product.price}+')'" class="btn btn-sm btn-plus rounded-circle bg-light border">
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <p class="mb-0 mt-4 toTal"></p>
+                                    <p class="mb-0 mt-4 toTal" th:id="'totalPro_'+${cart.cartId}"></p>
                                 </td>
                                 <td>
                                     <button class="btn btn-md rounded-circle bg-light border mt-4 " th:onclick="'deleteCart('+${cart.cartId}+')'" >
@@ -73,15 +73,16 @@
                             </tr>
                         </tbody>
                     </table>
+                    <button class="btn btn-danger" style="margin-left: 87%;" onclick="deleteAllCart(this)" th:if="${!(#lists.isEmpty(cartDTOS))}">Delete all cart</button>
                 </div>
                 <div class="mt-5">
                 </div>
                 <div class="row g-4 justify-content-end">
                     <div class="col-8"></div>
                     <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                        <div class="bg-light rounded">
+                        <div class="bg-light rounded" id="cartTotal" th:style="${#lists.isEmpty(cartDTOS)} ? 'display: none;' : ''">
                             <div class="p-4">
-                                <h3 class="mb-4">Cart <span class="fw-normal">Total</span></h3>
+                                <h3 class="mb-4">Cart <span class="fw-normal" >Total</span></h3>
                                 <div class="d-flex justify-content-between mb-4">
                                     <h5 class="mb-0 me-4">Subtotal:</h5>
                                     <p class="mb-0 subTotal">$96.00</p>
@@ -107,7 +108,43 @@
     </div>
 <div class="jsContent" layout:fragment="jsContent">
     <script>
+        let countCart = document.querySelector(".countCart")
+        totalPrice()
+        function deleteCart(id){
+            const isConfirm = confirm('Are you sure you want to delete this cart?');
+            if (isConfirm) {
+                let total = document.getElementById("totalPro_"+id).innerHTML
+                let subTotal =  document.querySelector(".subTotal").innerHTML.substring(1)
+                let count = parseInt(countCart.innerHTML)-1
+                countCart.innerHTML = count
 
+                document.querySelector(".subTotal").innerHTML= "$"+(parseInt(subTotal)-parseInt(total))
+                document.querySelector(".totalOrder").innerHTML= "$"+(parseInt(subTotal)-parseInt(total)+1)
+                callDelete("/api/v1/carts/"+id)
+                    .then(res => {
+                        const categoryElement = document.querySelector('#cart_' + id);
+                        categoryElement.remove();
+                    })
+            }
+        }
+        function deleteAllCart(button){
+            get("/api/v1/users/getUser")
+                .then(user =>{
+                    const isConfirm = confirm('Are you sure you want to delete all cart?');
+                    if (isConfirm) {
+                        callDelete("/api/v1/carts/deleteAll/" + user.userId)
+                            .then(res =>{
+                                let cartItems = document.querySelectorAll(".cart_items")
+                                for (const cartItem of cartItems) {
+                                    cartItem.remove()
+                                }
+                            })
+                        countCart.innerHTML="0"
+                        button.style.display="none"
+                        document.getElementById("cartTotal").style.display="none"
+                    }
+                })
+        }
         function totalPrice(){
            let quantiies = document.querySelectorAll(".quantityCart")
            let prices = document.querySelectorAll(".price")
@@ -124,32 +161,35 @@
             document.querySelector(".subTotal").innerHTML= "$"+subTotal
             document.querySelector(".totalOrder").innerHTML= "$"+(subTotal+1)
         }
-        totalPrice()
-        function deleteCart(id){
-            const isConfirm = confirm('Are you sure you want to delete this cart?');
-            if (isConfirm) {
-                callDelete("/api/v1/carts/"+id)
-                    .then(res => {
-                        const categoryElement = document.querySelector('#cart_' + id);
-                        categoryElement.remove();
-                    })
-                totalPrice()
-                alert("Delete successfull!")
-                getCountCart()
+        let desBtns=document.querySelectorAll(".desbtn")
+        let quantityCarts =document.querySelectorAll(".quantityCart")
+        for (let i=0;i<desBtns.length; i++) {
+            if (quantityCarts[i].value==1){
+                desBtns[i].style.display="none"
             }
         }
-        function updateQuantity(action,id){
+        function updateQuantity(action,id,price){
+            let total = document.getElementById("totalPro_"+id)
             let oldQuantity = document.getElementById("quantity_"+id).value
+            let subTotal =  document.querySelector(".subTotal").innerHTML.substring(1)
+
             switch (action) {
                 case "+":
+                    total.innerHTML= parseInt(total.innerHTML)+price
+                    document.getElementById("desc_"+id).style.display="block"
+                    document.querySelector(".subTotal").innerHTML= "$"+(parseInt(subTotal)+price)
+                    document.querySelector(".totalOrder").innerHTML= "$"+(parseInt(subTotal)+price+1)
                     put("/api/v1/carts/"+id,{quantity: 1})
-                    totalPrice()
                     break
                 case "-":
-                    if(oldQuantity>1){
-                        put("/api/v1/carts/"+id,{quantity: -1})
-                        totalPrice()
+                    oldQuantity = parseInt(oldQuantity)-1
+                    if(oldQuantity==1) {
+                        document.getElementById("desc_"+id).style.display="none"
                     }
+                    total.innerHTML= parseInt(total.innerHTML)-price
+                    document.querySelector(".subTotal").innerHTML= "$"+(parseInt(subTotal)-price)
+                    document.querySelector(".totalOrder").innerHTML= "$"+(parseInt(subTotal)-price+1)
+                    put("/api/v1/carts/"+id,{quantity: -1})
                     break
             }
         }

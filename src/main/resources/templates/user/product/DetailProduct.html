@@ -75,54 +75,6 @@
                                 <div class="tab-content mb-5">
                                     <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
                                         <p th:text="${productDTO.getDescription()}"></p>
-<!--                                        <p>Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic-->
-<!--                                            icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.</p>-->
-<!--                                        <div class="px-2">-->
-<!--                                            <div class="row g-4">-->
-<!--                                                <div class="col-6">-->
-<!--                                                    <div class="row bg-light align-items-center text-center justify-content-center py-2">-->
-<!--                                                        <div class="col-6">-->
-<!--                                                            <p class="mb-0">Weight</p>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="col-6">-->
-<!--                                                            <p class="mb-0">1 kg</p>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="row text-center align-items-center justify-content-center py-2">-->
-<!--                                                        <div class="col-6">-->
-<!--                                                            <p class="mb-0">Country of Origin</p>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="col-6">-->
-<!--                                                            <p class="mb-0">Agro Farm</p>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="row bg-light text-center align-items-center justify-content-center py-2">-->
-<!--                                                        <div class="col-6">-->
-<!--                                                            <p class="mb-0">Quality</p>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="col-6">-->
-<!--                                                            <p class="mb-0">Organic</p>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="row text-center align-items-center justify-content-center py-2">-->
-<!--                                                        <div class="col-6">-->
-<!--                                                            <p class="mb-0">Сheck</p>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="col-6">-->
-<!--                                                            <p class="mb-0">Healthy</p>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="row bg-light text-center align-items-center justify-content-center py-2">-->
-<!--                                                        <div class="col-6">-->
-<!--                                                            <p class="mb-0">Min Weight</p>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="col-6">-->
-<!--                                                            <p class="mb-0">250 Kg</p>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
                                     </div>
                                     <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                                         <div class="d-flex">
@@ -191,13 +143,14 @@
                                     <div class="col-lg-12">
                                         <div class="d-flex justify-content-between py-3 mb-5">
                                             <div class="d-flex align-items-center">
+                                                <input name="star" id="starRate">
                                                 <p class="mb-0 me-3">Please rate:</p>
                                                 <div class="d-flex align-items-center" style="font-size: 12px;">
-                                                    <i class="fa fa-star text-muted"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star star_1" onclick="ratee(1)"></i>
+                                                    <i class="fa fa-star star_2" onclick="ratee(2)"></i>
+                                                    <i class="fa fa-star star_3" onclick="ratee(3)"></i>
+                                                    <i class="fa fa-star star_4" onclick="ratee(4)"></i>
+                                                    <i class="fa fa-star star_5" onclick="ratee(5)"></i>
                                                 </div>
                                             </div>
                                             <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</a>
@@ -460,6 +413,16 @@
                 }
             }
         });
+        function ratee(a){
+            for (let i=1;i<=5;i++){
+                if(i<=a){
+                    document.querySelector(".star_"+i).style.color= "yellow"
+                }else {
+                    document.querySelector(".star_"+i).style.color= "#747D88"
+                }
+                document.getElementById("starRate").value=a
+            }
+        }
     </script>
 </div>
 </body>

@@ -51,15 +51,16 @@ public class AddressServiceImpl implements AddressService {
 		AddressEntity addressEntity  = addressConverter.toEntity(form);
 		UserEntity userEntity = userRepository.findById(userId)
 				.orElseThrow(() -> new ValidateException("user not found"));
+		addressEntity.setUser(userEntity);
 		addressRepository.save(addressEntity);
 		
 		return addressConverter.toDto(addressEntity);
 	}
 	
 	@Override
-	public List<AddressDTO> getAll() {
+	public List<AddressDTO> getAll(Long userId) {
 		
-		List<AddressEntity> addressEntities = addressRepository.findAll();
+		List<AddressEntity> addressEntities = addressRepository.findAllByUid(userId);
 		List<AddressDTO> addressDTOs = new ArrayList<AddressDTO>();
 		for (AddressEntity addressEntity : addressEntities) {
 			AddressDTO addressDTO = addressConverter.toDto(addressEntity);

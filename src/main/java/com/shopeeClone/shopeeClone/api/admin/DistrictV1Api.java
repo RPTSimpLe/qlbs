@@ -16,13 +16,13 @@ import com.shopeeClone.shopeeClone.dto.address.DistrictDTO;
 import com.shopeeClone.shopeeClone.service.DistrictService;
 
 @RestController
-@RequestMapping("admin/api/v1/districts")
+@RequestMapping("/api/v1/districts")
 public class DistrictV1Api {
 	
 	@Autowired
 	private DistrictService districtService;
 	
-	@PostMapping
+	@PostMapping("/admin")
 	public DistrictDTO create(@RequestBody DistrictDTO dto) {
 		return districtService.create(dto);
 	}
@@ -32,17 +32,17 @@ public class DistrictV1Api {
 		return districtService.getAll();
 	}
 	
-	@GetMapping("{privinceId}")
+	@GetMapping("{provinceId}")
 	public List<DistrictDTO> getByProvinceId(@PathVariable Long provinceId){
 		return districtService.getByProvinceId(provinceId);
 	}
 	
-	@DeleteMapping("{id}")
+	@DeleteMapping("/admin/{id}")
 	public void delete(@PathVariable String id) {
 		districtService.delete(id);
 	}
 	
-	@PatchMapping("{id}")
+	@PatchMapping("/admin/{id}")
 	public DistrictDTO update(@RequestBody DistrictDTO dto, @PathVariable String id) {
 		return districtService.update(dto, id);
 	}

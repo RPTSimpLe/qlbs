@@ -18,7 +18,8 @@ public interface AddressRepository extends JpaRepository<AddressEntity, Long> {
 	
 	@Query("select a from AddressEntity a join a.district w where w = :district")
 	List<AddressEntity> findByDistrict(@Param("district") DistrictEntity district);
-	
+	@Query("select a from AddressEntity a where a.user.userId = :userId")
+	List<AddressEntity> findAllByUid(@Param("userId") Long userId);
 	@Query("select a from AddressEntity a join a.province w where w = :province")
 	List<AddressEntity> findByProvince(@Param("province") ProvinceEntity province);
 }

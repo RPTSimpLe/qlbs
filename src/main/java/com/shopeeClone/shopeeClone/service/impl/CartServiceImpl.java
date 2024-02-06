@@ -52,10 +52,15 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public void delete(Long cartId) {
 		CartEntity cartEntity = cartRepository.findById(cartId).orElseThrow(() -> new ValidateException("không tìm thấy cart"));
-		cartEntity.setUser(null);
-		cartEntity.setProduct(null);
-		cartRepository.save(cartEntity);
 		cartRepository.delete(cartEntity);
+	}
+
+	@Override
+	public void deleteAll(Long uId) {
+		List<CartEntity>cartEntities = cartRepository.findAllByUId(uId);
+		for (CartEntity cartEntity: cartEntities){
+			cartRepository.delete(cartEntity);
+		}
 	}
 
 	@Override

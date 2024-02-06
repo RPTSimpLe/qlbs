@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.shopeeClone.shopeeClone.dto.user.ChangePassword;
 import com.shopeeClone.shopeeClone.dto.user.CreateUserform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -40,7 +41,17 @@ public class UserServiceImpl implements UserService{
 	private RoleRepository roleRepository;
 	@Autowired
 	private EntityManager entityManager;
-	
+
+	@Override
+	public void updatePass(long id, ChangePassword changePassword) {
+		UserEntity userEntity = getUserByName(id);
+		if (!changePassword.getOldPassword().equals(userEntity.getPassword()) || !changePassword.getNewPassword().equals(changePassword.getConfirmPassword())){
+			throw new ValidateException("Wrong Password!");
+		}else {
+			userEntity.setPassword(changePassword.getNewPassword());
+		}
+	}
+
 	@Override
 	public UserDTO createUser(UserEntity entity) {
 		Optional<RoleEntity> roleEntities = roleRepository.findByCode("USER");
@@ -129,6 +140,9 @@ public class UserServiceImpl implements UserService{
 	public UserDTO updateByPatch(String id, UserDTO dto) {
 		Long id1 = validate.validateId(id);
 		UserEntity userEntity = getUserByName(id1);
+		userEntity.setFirstName(dto.getFirstName());
+		userEntity.setLastName(dto.getLastName());
+		userEntity.setPhoneNumber(dto.getPhoneNumber());
 		userEntity.setUsername(dto.getUsername());
 		repository.save(userEntity);
 		return converter.toDTO(userEntity);

@@ -28,9 +28,9 @@ public class AddressV1Api {
 		return addressService.create(form, userId);
 	}
 	
-	@GetMapping
-	public List<AddressDTO> getAll(){
-		return addressService.getAll();
+	@GetMapping("/{userId}")
+	public List<AddressDTO> getAll(@PathVariable Long userId){
+		return addressService.getAll(userId);
 	}
 	
 	@DeleteMapping("{id}/{userId}")

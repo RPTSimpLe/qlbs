@@ -32,7 +32,8 @@ public class AddressConverter {
 	
 	public AddressDTO toDto(AddressEntity addressEntity) {
 		AddressDTO addressDTO = new AddressDTO();
-		addressDTO.setAddress(addressEntity.getDescription()+"-"+addressEntity.getWard().getName()+"-"+addressEntity.getDistrict().getName()+"-"+addressEntity.getProvince().getName());
+		addressDTO.setId(addressEntity.getAddressId());
+		addressDTO.setAddress(addressEntity.getDescription()+" - "+addressEntity.getWard().getName()+" - "+addressEntity.getDistrict().getName()+" - "+addressEntity.getProvince().getName());
 		return addressDTO;
 	}
 	
@@ -81,24 +82,27 @@ public class AddressConverter {
 	
 	public ProvinceDTO toDTO(ProvinceEntity entity) {
 		ProvinceDTO provinceDTO = new ProvinceDTO();
+		provinceDTO.setId(entity.getProvinceId());
 		provinceDTO.setName(entity.getName());
 		provinceDTO.setCode(entity.getCode());
 		return provinceDTO;
 	}
 	
-	public WardDTO toDTO(WardEntity dto) {
+	public WardDTO toDTO(WardEntity entity) {
 		WardDTO wardDTO = new WardDTO();
-		wardDTO.setDistrictId(dto.getDistrict().getDistrictId());
-		wardDTO.setName(dto.getName());
-		wardDTO.setCode(dto.getCode());
+		wardDTO.setId(entity.getWardId());
+		wardDTO.setDistrictId(entity.getDistrict().getDistrictId());
+		wardDTO.setName(entity.getName());
+		wardDTO.setCode(entity.getCode());
 		return wardDTO;
 	}
 	
-	public DistrictDTO toDTO(DistrictEntity dto) {
+	public DistrictDTO toDTO(DistrictEntity entity) {
 		DistrictDTO districtDTO = new DistrictDTO();
-		districtDTO.setProvinceId(dto.getProvince().getProvinceId());
-		districtDTO.setName(dto.getName());
-		districtDTO.setCode(dto.getCode());
+		districtDTO.setId(entity.getDistrictId());
+		districtDTO.setProvinceId(entity.getProvince().getProvinceId());
+		districtDTO.setName(entity.getName());
+		districtDTO.setCode(entity.getCode());
 		return districtDTO;
 	}
 }

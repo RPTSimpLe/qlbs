@@ -226,7 +226,6 @@
     function logout(){
         document.getElementById("logout").submit()
     }
-    let uId
     let authMenu = document.querySelector(".authMenu")
     get("/api/v1/users/getUser")
         .then(user =>{
@@ -235,7 +234,8 @@
                 html = ` <a href="/login" class="dropdown-item">Login</a>
                              <a href="/signUp" class="dropdown-item">Sign up</a>`
             }else {
-                html =`<form action="/logout" id="logout" method="post">
+                html =`<a class="dropdown-item" href="/profile" ">Profile</a>
+                        <form action="/logout" id="logout" method="post">
                             <a class="dropdown-item" onclick="logout()">Logout</a>
                                     </form>`
             }

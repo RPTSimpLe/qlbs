@@ -18,12 +18,12 @@ import com.shopeeClone.shopeeClone.service.WardService;
 
 
 @RestController
-@RequestMapping("admin/api/v1/wards")
+@RequestMapping("api/v1/wards")
 public class WardV1Api {
 	@Autowired
 	private WardService wardService;
 	
-	@PostMapping
+	@PostMapping("admin")
 	public WardDTO create(@RequestBody WardDTO dto) {
 		return wardService.create(dto);
 	}
@@ -33,7 +33,7 @@ public class WardV1Api {
 		return wardService.getAll();
 	}
 	
-	@DeleteMapping("{id}")
+	@DeleteMapping("/admin/{id}")
 	public void delete(@PathVariable String id) {
 		wardService.delete(id);
 	}
@@ -43,7 +43,7 @@ public class WardV1Api {
 		return wardService.getByProvinceWardId(districtId);
 	}
 	
-	@PatchMapping("{id}")
+	@PatchMapping("admin/{id}")
 	public WardDTO update(@RequestBody WardDTO dto, @PathVariable String id) {
 		return wardService.update(dto, id);
 	}

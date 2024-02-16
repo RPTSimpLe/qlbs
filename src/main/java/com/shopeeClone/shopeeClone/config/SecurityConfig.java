@@ -45,7 +45,7 @@ public class SecurityConfig {
 				.requestMatchers("/login","/index.js","/auth/**","/css/**","/img/**","/fonts/**","/js/**","/scss/**").permitAll()
 				.requestMatchers("/","/user/**").permitAll()
 				.requestMatchers("/signUp","/api/v1/users/signUp","/api/v1/users/getUser").permitAll()
-				.requestMatchers("/jquery.simplePagination.min.js","/ProductImages/**","/paginiation/**").permitAll()
+				.requestMatchers("/jquery.simplePagination.min.js","/ProductImages/**","/paginiation/**","/api/v1/rates/getRatesByProductId/**","/api/v1/rates/create").permitAll()
 				.anyRequest().authenticated()).logout(httpLogout -> httpLogout
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/login"))

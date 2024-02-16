@@ -15,6 +15,7 @@ public class RateDTO {
     private String telephone;
     private Integer star;
     private String feedBack;
+    private ProductDTO productDTO;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private Date createDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")

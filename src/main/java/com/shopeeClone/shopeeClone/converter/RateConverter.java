@@ -17,6 +17,8 @@ import java.util.List;
 public class RateConverter {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private ProductConverter productConverter;
     public RateEntity toEntity(CreateRateDTO createRateDTO){
         ProductEntity productEntity = productRepository.findById(createRateDTO.getProductId())
                 .orElseThrow(()-> new ValidateException("Product not found!"));
@@ -39,6 +41,7 @@ public class RateConverter {
         rateDTO.setCreateBy(rateEntity.getCreateBy());
         rateDTO.setModifierBy(rateEntity.getModifierBy());
         rateDTO.setModifierDate(rateEntity.getModifierDate());
+        rateDTO.setProductDTO(productConverter.toDTO(rateEntity.getEntity()));
         return rateDTO;
     }
     public List<RateDTO> rateDTOList(List<RateEntity> rateEntities){

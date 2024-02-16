@@ -17,6 +17,12 @@ function formToObject(formSelector) {
 		const value = select.value;
 		obj[name] = value;
 	}
+	const textareas = form.querySelectorAll("textarea")
+	for (const textarea of textareas) {
+		const name = textarea.getAttribute('name');
+		const value = textarea.value;
+		obj[name] = value;
+	}
 	return obj;
 }
 

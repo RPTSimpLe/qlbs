@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/admin-layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Rate</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Rates List</h1>
+    <form id="rate-filter-form">
+        <div class="form-group">
+            <input class="form-control" name="username" placeholder="Search by Username" />
+        </div>
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Username</th>
+            <th>Phone</th>
+            <th>Description</th>
+            <th>Created Date</th>
+            <th>Created By</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="rateList">
+
+        </tbody>
+    </table>
+    <div id="demo" style="display: flex; justify-content: flex-end;"></div>
+
+    <script>
+        const searchForm = document.querySelector('#rate-filter-form');
+        const limit = 2;
+        let formValue = {};
+
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            formValue = formToObject('#rate-filter-form');
+            getRatesAndRender({
+                page: 1,
+                limit: limit,
+            })
+
+        })
+
+        const _$ = $;
+
+        showPagination({
+            totalItems: 1,
+            limit,
+            currentPage: 1,
+            onPageClick: () => { }
+        })
+        function renderRates(rates) {
+            let html = '';
+            for (const rate of rates) {
+                html += `
+						<tr id="rate_${rate.id}">
+							<td><img style="width: 60px; height: 60px;" src="${rate.productDTO.imageDTOs[0].url}" alt="">${rate.productDTO.name}</td>
+							<td>${rate.name}</td>
+							<td>${rate.telephone}</td>
+							<td>${rate.feedBack}</td>
+							<td>${rate.star}</td>
+							<td>${rate.createDate}</td>
+							<td>${rate.createBy}</td>
+							<td>
+								<button onclick="deleteRate(${rate.id})" class="btn btn-danger">Delete</button>
+							</td>
+						</tr>
+					`;
+                console.log(rate)
+            }
+            document.querySelector("#rateList").innerHTML = html;
+        }
+
+        function deleteRate(rateId) {
+            const isConfirm = confirm('Are you sure you want to delete this list?');
+            if (isConfirm) {
+                callDelete('/api/v1/rates/admin/delete/' + rateId)
+                    .then(res => {
+                        const categoryElement = document.querySelector('#rate_' + rateId);
+                        categoryElement.remove();
+                    })
+            }
+        }
+
+        function getRatesAndRender({page, limit}) {
+            get(`/api/v1/rates`, {
+                page,
+                limit,
+                ...formValue
+            })
+                .then(pageDto => {
+                    renderRates(pageDto.data);
+                    _$("#demo").pagination("destroy");
+                    const {page, totalItems, limit} = pageDto;
+
+                    showPagination({
+                        totalItems,
+                        limit,
+                        currentPage: page,
+                        onPageClick: function (pageNumber) {
+                            getRatesAndRender({page: pageNumber, limit})
+                        }
+                    })
+                })
+        }
+
+
+        getRatesAndRender({
+            page: 1,
+            limit: limit
+        });
+
+
+
+    </script>
+</div>

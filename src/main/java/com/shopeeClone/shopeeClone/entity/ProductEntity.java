@@ -35,12 +35,12 @@ public class ProductEntity extends BaseEntity {
 	private Integer discountPercent;
 	private String description;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id", nullable = false)
 	private CategoryEntity category;
 	
-	@ManyToOne
-	@JoinColumn(name = "supplier_id", nullable = false )
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "supplier_id", nullable = false)
 	private SupplierEntity suppilier;
 	
 	@OneToMany(mappedBy = "product")

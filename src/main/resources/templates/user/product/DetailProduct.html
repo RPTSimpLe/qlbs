@@ -8,6 +8,11 @@
 </head>
 <body>
     <div class="user-content" layout:fragment="content">
+        <style>
+            .yellow{
+                color: yellow;
+            }
+        </style>
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">Shop Detail</h1>
@@ -77,73 +82,37 @@
                                         <p th:text="${productDTO.getDescription()}"></p>
                                     </div>
                                     <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
-                                        <div class="d-flex">
-                                            <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
-                                            <div class="">
-                                                <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-                                                <div class="d-flex justify-content-between">
-                                                    <h5>Jason Smith</h5>
-                                                    <div class="d-flex mb-3">
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                                <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic
-                                                    words etc. Susp endisse ultricies nisi vel quam suscipit </p>
-                                            </div>
+                                        <div id="ratesList">
+
                                         </div>
-                                        <div class="d-flex">
-                                            <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
-                                            <div class="">
-                                                <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-                                                <div class="d-flex justify-content-between">
-                                                    <h5>Sam Peters</h5>
-                                                    <div class="d-flex mb-3">
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                                <p class="text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic
-                                                    words etc. Susp endisse ultricies nisi vel quam suscipit </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="nav-vision" role="tabpanel">
-                                        <p class="text-dark">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                                            amet diam et eos labore. 3</p>
-                                        <p class="mb-0">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore.
-                                            Clita erat ipsum et lorem et sit</p>
+                                        <div id="pagi" class="pagination d-flex justify-content-center mt-5"></div>
                                     </div>
                                 </div>
                             </div>
-                            <form action="#">
+                            <form action="#" id="rateForm">
                                 <h4 class="mb-5 fw-bold">Leave a Reply</h4>
                                 <div class="row g-4">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 notLogin">
                                         <div class="border-bottom rounded">
-                                            <input type="text" class="form-control border-0 me-4" placeholder="Your Name *">
+                                            <input type="text" class="form-control border-0 me-4" name="name" placeholder="Your Name *">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 notLogin">
                                         <div class="border-bottom rounded">
-                                            <input type="email" class="form-control border-0" placeholder="Your Email *">
+                                            <input type="text" class="form-control border-0" name="telephone" placeholder="Your phone *">
                                         </div>
                                     </div>
+                                    <input th:value="${productId}" id="productId" name="productId" class="d-none"></input>
+                                    <input id="uId" name="id" class="d-none"></input>
                                     <div class="col-lg-12">
                                         <div class="border-bottom rounded my-4">
-                                            <textarea name="" id="" class="form-control border-0" cols="30" rows="8" placeholder="Your Review *" spellcheck="false"></textarea>
+                                            <textarea name="feedBack" id="" class="form-control border-0" cols="30" rows="8" placeholder="Your Review *" spellcheck="false"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="d-flex justify-content-between py-3 mb-5">
                                             <div class="d-flex align-items-center">
-                                                <input name="star" id="starRate">
+                                                <input name="star" id="starRate" hidden>
                                                 <p class="mb-0 me-3">Please rate:</p>
                                                 <div class="d-flex align-items-center" style="font-size: 12px;">
                                                     <i class="fa fa-star star_1" onclick="ratee(1)"></i>
@@ -153,7 +122,7 @@
                                                     <i class="fa fa-star star_5" onclick="ratee(5)"></i>
                                                 </div>
                                             </div>
-                                            <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</a>
+                                            <button class="btn border border-secondary text-primary rounded-pill px-4 py-3" type="submit"> Post Comment</button>
                                         </div>
                                     </div>
                                 </div>
@@ -387,6 +356,16 @@
     </div>
 <div class="jsContent" layout:fragment="jsContent">
     <script>
+        const notLgoins = document.querySelectorAll(".notLogin")
+        get("/api/v1/users/getUser")
+            .then(user =>{
+                if (user.userId!=null){
+                    for (const notLgoin of notLgoins) {
+                        notLgoin.setAttribute("hidden","true")
+                    }
+                    document.getElementById("uId").value=user.userId
+                }
+            })
         get("/user/api/v1/categories/getAll")
             .then(categories => {
                 let html=``;
@@ -410,9 +389,11 @@
             responsive: {
                 0:{
                     items:1
-                }
-            }
+        }
+        }
         });
+        const limit = 2;
+        const _$=$;
         function ratee(a){
             for (let i=1;i<=5;i++){
                 if(i<=a){
@@ -423,6 +404,68 @@
                 document.getElementById("starRate").value=a
             }
         }
+        const pId= document.getElementById("productId").value
+        function getRates({page, limit}) {
+            get("/api/v1/rates/getRatesByProductId/"+pId,{
+                page,
+                limit,
+            })
+                .then(products =>{
+                    renderRates(products)
+                    $("#pagi").pagination("destroy")
+                    const {page,totalItems, limit } = products
+                    showPaginationInUser(
+                        {totalItems: totalItems,
+                            limit,
+                            currentPage: page,
+                            onPageClick: function getPageNumber(pageNumber){
+                                getRates({page: pageNumber,limit: limit})
+                            }
+                        }
+                    )
+                })
+        }
+        function renderRates(rates){
+            let html=``
+            for (const rate of rates.data) {
+                let rateStar=``;
+                for (let i=0;i<5;i++){
+                    if((i+1)<=parseInt(rate.star)){
+                        rateStar += `  <i class="fa fa-star text-secondary yellow"></i>`
+                    }else {
+                        rateStar += `  <i class="fa fa-star text-secondary"></i>`
+                    }
+                }
+                html+=`
+                          <div class="d-flex">
+                                                <div class="">
+                                                    <p class="mb-2" style="font-size: 14px;">${rate.createDate}</p>
+                                                    <div class="d-flex justify-content-between">
+                                                        <h5>${rate.name}</h5>
+                                                       <div class="d-flex mb-3">`
+                                                        +rateStar+
+                                                       `</div>
+                                                    </div>
+                                                    <p>${rate.feedBack}</p>
+                                                </div>
+                                            </div>`
+            }
+            document.querySelector("#ratesList").innerHTML = html
+        }
+        showPaginationInUser({totalItems: 1,
+            limit,
+            currentPage: 1,
+            onPageClick: () => { }
+        })
+        getRates({page: 1, limit:limit})
+
+        const rateForm = document.getElementById("rateForm")
+        rateForm.addEventListener("submit",(e)=>{
+            e.preventDefault();
+            let formValue = formToObject("#rateForm")
+            post("/api/v1/rates/create",formValue)
+                .then(rate=>console.log(rate))
+        })
     </script>
 </div>
 </body>

@@ -17,6 +17,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +39,8 @@ public class RateServiceImpl implements RateService {
     private ProductRepository productRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
     @Override
     public RateDTO createRate(CreateRateDTO createRateDTO) {
         if (createRateDTO.getId()!=null){
@@ -48,29 +51,21 @@ public class RateServiceImpl implements RateService {
             rateRepository.save(rateEntity);
             return rateConverter.toDto(rateEntity);
         }
-//        if (createRateDTO.getId()==null){
-//            RateEntity rateEntity = rateConverter.toEntity(createRateDTO);
-//            Calendar cal = Calendar.getInstance();
-//            Date date = cal.getTime();
-//            rateEntity.setCreateBy("null");
-//            rateEntity.setCreateDate(date);
-//            rateEntity.setModifierBy("null");
-//            rateEntity.setModifierDate(date);
-//            String insertHql = "INSERT INTO RateEntity (name, telephone, star, feedBack, createDate, modifierDate, createBy, modifierBy, entity) " +
-//                    "VALUES (:name, :telephone, :star, :feedBack, :createDate, :modifierDate, :createBy, :modifierBy, :entity)";
-//            Query selectQuery = entityManager.createQuery(insertHql);
-//            selectQuery.setParameter("name", rateEntity.getName());
-//            selectQuery.setParameter("telephone", rateEntity.getTelephone());
-//            selectQuery.setParameter("star", rateEntity.getStar());
-//            selectQuery.setParameter("feedBack", rateEntity.getFeedBack());
-//            selectQuery.setParameter("createDate", rateEntity.getCreateDate());
-//            selectQuery.setParameter("modifierDate", rateEntity.getModifierDate());
-//            selectQuery.setParameter("createBy", rateEntity.getCreateBy());
-//            selectQuery.setParameter("modifierBy", rateEntity.getModifierBy());
-//            selectQuery.setParameter("entity", rateEntity.getEntity());
-//            selectQuery.executeUpdate();
-//            return rateConverter.toDto(rateEntity);
-//        }
+        if (createRateDTO.getId()==null){
+            RateEntity rateEntity = rateConverter.toEntity(createRateDTO);
+            Calendar cal = Calendar.getInstance();
+            Date date = cal.getTime();
+            rateEntity.setCreateBy("null");
+            rateEntity.setCreateDate(date);
+            rateEntity.setModifierBy("null");
+            rateEntity.setModifierDate(date);
+            String insertSQL = "INSERT INTO rate (name, telephone, star, feedBack, createDate, modifierDate, createBy, modifierBy,product_id) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            jdbcTemplate.update(insertSQL, rateEntity.getName(), rateEntity.getTelephone(),rateEntity.getStar(),rateEntity.getFeedBack()
+                    ,rateEntity.getCreateDate(),rateEntity.getModifierDate(),rateEntity.getCreateBy(),rateEntity.getModifierBy(),rateEntity.getEntity().getProductId());
+            return rateConverter.toDto(rateEntity);
+        }
         return null;
     }
 

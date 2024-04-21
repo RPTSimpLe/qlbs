@@ -35,6 +35,8 @@ class RateV1Api {
     }
     @GetMapping("/getRatesByProductId/{productId}")
     public PageDTO<RateDTO> getRatesByProductId(@RequestParam Map<String,String> params,@PathVariable("productId") Long productId){
+
         return rateService.getRatesByProductId(params,productId);
     }
+
 }

@@ -234,6 +234,7 @@
                 html = ` <a href="/login" class="dropdown-item">Login</a>
                              <a href="/signUp" class="dropdown-item">Sign up</a>`
             }else {
+                getCountCart()
                 html =`<a class="dropdown-item" href="/profile" ">Profile</a>
                         <form action="/logout" id="logout" method="post">
                             <a class="dropdown-item" onclick="logout()">Logout</a>
@@ -251,7 +252,7 @@
             })
 
     }
-    getCountCart()
+
 </script>
 <div class="jsContent" layout:fragment="jsContent">
 </div>

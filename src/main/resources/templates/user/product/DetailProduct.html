@@ -464,7 +464,19 @@
             e.preventDefault();
             let formValue = formToObject("#rateForm")
             post("/api/v1/rates/create",formValue)
-                .then(rate=>console.log(rate))
+                .then(rate=> {
+                    // const form = document.querySelector("#rateForm");
+                    //
+                    // const inputs = form.querySelectorAll('input');
+                    // for (const input of inputs) {
+                    //     input.value=""
+                    // }
+                    // const stars = form.querySelectorAll("fa-star")
+                    // for (const star of stars) {
+                    //     star.style.color= "#747D88"
+                    // }
+                    location.reload()
+                })
         })
     </script>
 </div>

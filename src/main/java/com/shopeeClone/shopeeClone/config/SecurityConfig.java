@@ -67,8 +67,6 @@ public class SecurityConfig {
 						rememberMe -> rememberMe.rememberMeServices(rememberMeServices(userDetailsService)
 						))
 				.userDetailsService(userDetailsService)
-				.httpBasic()
-				.and()
 				.build();
 	}
 	

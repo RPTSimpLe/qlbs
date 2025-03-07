@@ -51,20 +51,20 @@
                                 </div>
                                 <p class="mb-4" th:text="${productDTO.getDescription()}"></p>
 <!--                                <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>-->
-                                <div class="input-group quantity mb-5" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+<!--                                <div class="input-group quantity mb-5" style="width: 100px;">-->
+<!--                                    <div class="input-group-btn">-->
+<!--                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border" >-->
+<!--                                            <i class="fa fa-minus"></i>-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                    <input type="text" class="form-control form-control-sm text-center border-0" value="1">-->
+<!--                                    <div class="input-group-btn">-->
+<!--                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">-->
+<!--                                            <i class="fa fa-plus"></i>-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <button th:onclick="|addToCart('${productDTO.getProductId()}')|" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
                             </div>
                             <div class="col-lg-12">
                                 <nav>
@@ -410,10 +410,10 @@
                 page,
                 limit,
             })
-                .then(products =>{
-                    renderRates(products)
+                .then(rates =>{
+                    renderRates(rates)
                     $("#pagi").pagination("destroy")
-                    const {page,totalItems, limit } = products
+                    const {page,totalItems, limit } = rates
                     showPaginationInUser(
                         {totalItems: totalItems,
                             limit,
@@ -427,13 +427,14 @@
         }
         function renderRates(rates){
             let html=``
+            console.log(rates)
             for (const rate of rates.data) {
                 let rateStar=``;
                 for (let i=0;i<5;i++){
                     if((i+1)<=parseInt(rate.star)){
                         rateStar += `  <i class="fa fa-star text-secondary yellow"></i>`
                     }else {
-                        rateStar += `  <i class="fa fa-star text-secondary"></i>`
+                        rateStar += `  <i class="fa fa-star "></i>`
                     }
                 }
                 html+=`
@@ -465,19 +466,21 @@
             let formValue = formToObject("#rateForm")
             post("/api/v1/rates/create",formValue)
                 .then(rate=> {
-                    // const form = document.querySelector("#rateForm");
-                    //
-                    // const inputs = form.querySelectorAll('input');
-                    // for (const input of inputs) {
-                    //     input.value=""
-                    // }
-                    // const stars = form.querySelectorAll("fa-star")
-                    // for (const star of stars) {
-                    //     star.style.color= "#747D88"
-                    // }
                     location.reload()
                 })
         })
+        async function addToCart(productId) {
+            event.preventDefault();
+            const user = await checklogin()
+            const  userId = user.userId
+            if (userId == null) {
+                window.location.href = "/login"
+            } else {
+                post("/api/v1/carts", {quantity: 1, userId: userId, productId: productId}).then(response=>console.log(response))
+                alert("Add to cart successfull!")
+                getCountCart(userId)
+            }
+        }
     </script>
 </div>
 </body>

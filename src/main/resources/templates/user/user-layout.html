@@ -227,32 +227,36 @@
         document.getElementById("logout").submit()
     }
     let authMenu = document.querySelector(".authMenu")
-    get("/api/v1/users/getUser")
-        .then(user =>{
+    async function checklogin() {
+        const user = await get("/api/v1/users/getUser")
+        return user
+    }
+    async function renderheader(){
+            const user = await checklogin()
             let html = ``
             if(user.userId==null){
                 html = ` <a href="/login" class="dropdown-item">Login</a>
                              <a href="/signUp" class="dropdown-item">Sign up</a>`
             }else {
-                getCountCart()
+                getCountCart(user.userId)
                 html =`<a class="dropdown-item" href="/profile" ">Profile</a>
                         <form action="/logout" id="logout" method="post">
                             <a class="dropdown-item" onclick="logout()">Logout</a>
                                     </form>`
             }
             authMenu.innerHTML=html
-        })
-    function getCountCart(){
+        }
+    function getCountCart(userId){
         get("/api/v1/users/getUser")
             .then(user =>{
-                get("/api/v1/carts/countCart",{uId : user.userId})
+                get("/api/v1/carts/countCart",{uId : userId})
                     .then(count =>{
                         document.querySelector(".countCart").innerHTML=count
                     })
             })
 
     }
-
+    renderheader()
 </script>
 <div class="jsContent" layout:fragment="jsContent">
 </div>

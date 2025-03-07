@@ -28,7 +28,7 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public CartDTO create(CartRequestForm requestForm) {
 		CartEntity cartEntity = cartConverter.toEntity(requestForm);
-		List<CartEntity> cartEntities = cartRepository.findAll();
+		List<CartEntity> cartEntities = cartRepository.findAllByUId(requestForm.getUserId());
 		int count=0;
 		for (CartEntity cart : cartEntities){
 			UpdateCart updateCart = new UpdateCart(cartEntity.getQuantity());
@@ -38,9 +38,10 @@ public class CartServiceImpl implements CartService {
 			}
 		}
 		if (count==0){
-			cartRepository.save(cartEntity);
+			CartEntity  cartEntity1 = cartRepository.save(cartEntity);
+			return cartConverter.toDTO(cartEntity1);
 		}
-		return cartConverter.toDTO(cartEntity);
+		return null;
 	}
 
 	@Override

@@ -74,6 +74,16 @@
                         </tbody>
                     </table>
                     <button class="btn btn-danger" style="margin-left: 87%;" onclick="deleteAllCart(this)" th:if="${!(#lists.isEmpty(cartDTOS))}">Delete all cart</button>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Address</label>
+                        <select class="form-control addresses"  >
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Description</label>
+                        <textarea type="email" class="form-control description" id="exampleInputEmail1" aria-describedby="emailHelp"></textarea>
+                    </div>
                 </div>
                 <div class="mt-5">
                 </div>
@@ -98,7 +108,7 @@
                                 <h5 class="mb-0 ps-4 me-4">Total</h5>
                                 <p class="mb-0 pe-4 totalOrder">$99.00</p>
                             </div>
-                            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                            <button onclick="payment()" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                         </div>
                     </div>
                 </div>
@@ -143,6 +153,19 @@
                         button.style.display="none"
                         document.getElementById("cartTotal").style.display="none"
                     }
+                })
+        }
+        function renderAddresses(){
+            get("/api/v1/users/getUser")
+                .then(user =>{
+                    get("/api/v1/addresses/"+user.userId)
+                        .then(addresses => {
+                            let html=``
+                            for (const address of addresses) {
+                                html+=` <option value="${address.id}">${address.address}</option>`
+                            }
+                            document.querySelector(".addresses").innerHTML=html
+                        })
                 })
         }
         function totalPrice(){
@@ -193,6 +216,16 @@
                     break
             }
         }
+        function payment(){
+            let description  = document.querySelector(".description").innerHTML
+            let address = document.querySelector(".addresses").value
+            let totalOrder = document.querySelector(".totalOrder").innerHTML.slice(1)
+            get("/api/v1/payment/vn-pay",{amount:totalOrder,bankCode:"NCB",address: address,description: description})
+                .then(res=>{
+                    window.location.href=res.paymentUrl
+                })
+        }
+        renderAddresses()
     </script>
 </div>
 </body>

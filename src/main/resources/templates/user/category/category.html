@@ -171,20 +171,17 @@
         })
         getProducts({page: 1, limit:limit})
 
-        function addToCart(productId) {
+        async function addToCart(productId) {
             event.preventDefault();
-            let userId
-            get("/api/v1/users/getUser")
-                .then(user => {
-                    if (user.userId == null) {
-                        window.location.href = "/login"
-                    } else {
-                        userId = user.userId;
-                        post("/api/v1/carts", {quantity: 1, userId: userId, productId: productId})
-                        alert("Add to cart successfull!")
-                        getCountCart()
-                    }
-                })
+            const user = await checklogin()
+            const  userId = user.userId
+            if (userId == null) {
+                window.location.href = "/login"
+            } else {
+                post("/api/v1/carts", {quantity: 1, userId: userId, productId: productId}).then(response=>console.log(response))
+                alert("Add to cart successfull!")
+               getCountCart(userId)
+            }
         }
     </script>
 </div>

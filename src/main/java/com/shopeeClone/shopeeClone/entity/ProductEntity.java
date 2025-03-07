@@ -33,6 +33,7 @@ public class ProductEntity extends BaseEntity {
 	@Column(nullable = false)
 	private Double price;
 	private Integer discountPercent;
+	@Column(length = 2000)
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

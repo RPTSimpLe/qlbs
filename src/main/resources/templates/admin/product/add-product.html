@@ -19,58 +19,55 @@
 
 <body>
 	<div layout:fragment="content">
-		<h1>Create Product</h1>
+        <h1>Thêm sản phẩm</h1>
         <h2 style="color: red;" th:if="${message != null}">
             <span th:text="${message}"></span>
         </h2>
         <form id="addProductForm" class="addform" enctype="multipart/form-data">
             <div class="form-group">
-                <label>Product Name: </label>
-                <input th:value = "${form.name}" type="text" name="name" class="form-control name" placeholder="Product Name">
+                <label>Tên sản phẩm: </label>
+                <input th:value="${form.name}" type="text" name="name" class="form-control name" placeholder="Nhập tên sản phẩm">
             </div>
             <div class="form-group">
-                <label>Description: </label>
-                <input th:value = "${form.description}" type="text" name="description" class="form-control description" placeholder="Description">
+                <label>Mô tả: </label>
+                <input th:value="${form.description}" type="text" name="description" class="form-control description" placeholder="Nhập mô tả">
             </div>
             <div class="form-group">
-                <label>Import Price: </label>
-                <input th:value = "${form.importPrice}" type="number" name="importPrice" class="form-control importPrice" placeholder="Import Price">
+                <label>Giá nhập: </label>
+                <input th:value="${form.importPrice}" type="number" name="importPrice" class="form-control importPrice" placeholder="Nhập giá nhập">
             </div>
             <div class="form-group">
-                <label>Product Price: </label>
-                <input th:value = "${form.price}" type="number" name="price" class="form-control price" placeholder="Product Price">
+                <label>Giá bán: </label>
+                <input th:value="${form.price}" type="number" name="price" class="form-control price" placeholder="Nhập giá bán">
             </div>
             <div class="form-group">
-                <label>Discount Percent: </label>
-                <input th:value = "${form.discountPercent}" type="number" name="discountPercent" class="form-control discountPercent" placeholder="Discount Percent">
+                <label>Giảm giá (%): </label>
+                <input th:value="${form.discountPercent}" type="number" name="discountPercent" class="form-control discountPercent" placeholder="Nhập % giảm giá">
             </div>
             <div class="form-group">
-                <label>Category Name: </label>
-<!--                <input th:value = "${form.category}" type="text" name="category" class="form-control category" placeholder="Category Name">-->
+                <label>Danh mục: </label>
                 <select name="category" class="form-control category">
                     <option th:each="category : ${categoris}" th:text="${category.getName()}" th:value="${category.getCategoryId()}"></option>
                 </select>
             </div>
             <div class="form-group">
-                <label>Supplier Name: </label>
-<!--                <input th:value = "${form.suppilier}" type="text" name="suppilier" class="form-control suppilier" placeholder="Supplier Name">-->
+                <label>Nhà cung cấp: </label>
                 <select name="suppilier" class="form-control suppilier">
                     <option th:each="supplier : ${suppliers}" th:text="${supplier.getName()}" th:value="${supplier.getSupplierId()}"></option>
                 </select>
             </div>
             <div>
-                <label for="fileInput">Image(max : 10Mb)</label>
+                <label for="fileInput">Hình ảnh (tối đa: 10MB)</label>
                 <input name="multipartFiles" class="form-control multipartFiles" type="file" id="fileInput" multiple />
                 <div id="imagePreview" style="display: flex; flex-wrap: wrap;"></div>
             </div>
             <div class="form-group">
-				<button class="btn btn-primary" type="submit">
-					Create
-				</button>
-			</div>
-            
-            
+                <button class="btn btn-primary" type="submit">
+                    Thêm mới
+                </button>
+            </div>
         </form>
+
         <script>
             const uploadImage = document.querySelector('.multipartFiles');
             uploadImage.addEventListener('change', function(event) {

@@ -25,12 +25,12 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">Products</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col"></th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Tiền</th>
+                            <th scope="col">Xóa</th>
                         </tr>
                         </thead>
                         <tbody class="carts" th:each="cart : ${cartDTOS}">
@@ -73,15 +73,15 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button class="btn btn-danger" style="margin-left: 87%;" onclick="deleteAllCart(this)" th:if="${!(#lists.isEmpty(cartDTOS))}">Delete all cart</button>
+                    <button class="btn btn-danger" style="margin-left: 87%;" onclick="deleteAllCart(this)" th:if="${!(#lists.isEmpty(cartDTOS))}">Xóa tất cả</button>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Address</label>
+                        <label for="exampleInputEmail1">Địa chỉ</label>
                         <select class="form-control addresses"  >
                             <option></option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Description</label>
+                        <label for="exampleInputEmail1">Mô tả</label>
                         <textarea type="email" class="form-control description" id="exampleInputEmail1" aria-describedby="emailHelp"></textarea>
                     </div>
                 </div>
@@ -92,25 +92,26 @@
                     <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
                         <div class="bg-light rounded" id="cartTotal" th:style="${#lists.isEmpty(cartDTOS)} ? 'display: none;' : ''">
                             <div class="p-4">
-                                <h3 class="mb-4">Cart <span class="fw-normal" >Total</span></h3>
+                                <h3 class="mb-4">Giỏ hàng <span class="fw-normal">Tổng cộng</span></h3>
                                 <div class="d-flex justify-content-between mb-4">
-                                    <h5 class="mb-0 me-4">Subtotal:</h5>
+                                    <h5 class="mb-0 me-4">Tạm tính:</h5>
                                     <p class="mb-0 subTotal">$96.00</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <h5 class="mb-0 me-4">Shipping</h5>
+                                    <h5 class="mb-0 me-4">Phí vận chuyển</h5>
                                     <div class="">
-                                        <p class="mb-0">$1.00</p>
+                                        <p class="mb-0">10000VND</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                                <h5 class="mb-0 ps-4 me-4">Total</h5>
+                                <h5 class="mb-0 ps-4 me-4">Tổng cộng</h5>
                                 <p class="mb-0 pe-4 totalOrder">$99.00</p>
                             </div>
-                            <button onclick="payment()" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                            <button onclick="payment()" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Tiến hành thanh toán</button>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -123,13 +124,13 @@
         function deleteCart(id){
             const isConfirm = confirm('Are you sure you want to delete this cart?');
             if (isConfirm) {
-                let total = document.getElementById("totalPro_"+id).innerHTML
-                let subTotal =  document.querySelector(".subTotal").innerHTML.substring(1)
+                let total = document.getElementById("totalPro_"+id).innerHTMLslice(0, -3)
+                let subTotal =  document.querySelector(".subTotal").innerHTML.slice(0, -3)
                 let count = parseInt(countCart.innerHTML)-1
                 countCart.innerHTML = count
 
-                document.querySelector(".subTotal").innerHTML= "$"+(parseInt(subTotal)-parseInt(total))
-                document.querySelector(".totalOrder").innerHTML= "$"+(parseInt(subTotal)-parseInt(total)+1)
+                document.querySelector(".subTotal").innerHTML= (parseInt(subTotal)-parseInt(total))+"VND"
+                document.querySelector(".totalOrder").innerHTML= (parseInt(subTotal)-parseInt(total)+1)+"VND"
                 callDelete("/api/v1/carts/"+id)
                     .then(res => {
                         const categoryElement = document.querySelector('#cart_' + id);
@@ -162,7 +163,7 @@
                         .then(addresses => {
                             let html=``
                             for (const address of addresses) {
-                                html+=` <option value="${address.id}">${address.address}</option>`
+                                html+=` <option class="cartId" value="${address.id}">${address.address}</option>`
                             }
                             document.querySelector(".addresses").innerHTML=html
                         })
@@ -181,8 +182,8 @@
                 totals[i].innerHTML=total
                 subTotal+= total
             }
-            document.querySelector(".subTotal").innerHTML= "$"+subTotal
-            document.querySelector(".totalOrder").innerHTML= "$"+(subTotal+1)
+            document.querySelector(".subTotal").innerHTML= subTotal+"VND"
+            document.querySelector(".totalOrder").innerHTML= (subTotal+10000)+"VND"
         }
         let desBtns=document.querySelectorAll(".desbtn")
         let quantityCarts =document.querySelectorAll(".quantityCart")
@@ -194,14 +195,14 @@
         function updateQuantity(action,id,price){
             let total = document.getElementById("totalPro_"+id)
             let oldQuantity = document.getElementById("quantity_"+id).value
-            let subTotal =  document.querySelector(".subTotal").innerHTML.substring(1)
+            let subTotal =  document.querySelector(".subTotal").innerHTML.slice(0, -3)
 
             switch (action) {
                 case "+":
                     total.innerHTML= parseInt(total.innerHTML)+price
                     document.getElementById("desc_"+id).style.display="block"
-                    document.querySelector(".subTotal").innerHTML= "$"+(parseInt(subTotal)+price)
-                    document.querySelector(".totalOrder").innerHTML= "$"+(parseInt(subTotal)+price+1)
+                    document.querySelector(".subTotal").innerHTML= (parseInt(subTotal)+price)+"VND"
+                    document.querySelector(".totalOrder").innerHTML= (parseInt(subTotal)+price+10000)+"VND"
                     put("/api/v1/carts/"+id,{quantity: 1})
                     break
                 case "-":
@@ -210,20 +211,34 @@
                         document.getElementById("desc_"+id).style.display="none"
                     }
                     total.innerHTML= parseInt(total.innerHTML)-price
-                    document.querySelector(".subTotal").innerHTML= "$"+(parseInt(subTotal)-price)
-                    document.querySelector(".totalOrder").innerHTML= "$"+(parseInt(subTotal)-price+1)
+                    document.querySelector(".subTotal").innerHTML= (parseInt(subTotal)-price)+"VND"
+                    document.querySelector(".totalOrder").innerHTML= (parseInt(subTotal)-price+10000)+"VND"
                     put("/api/v1/carts/"+id,{quantity: -1})
                     break
             }
         }
         function payment(){
-            let description  = document.querySelector(".description").innerHTML
+            let description  = document.querySelector(".description").value
             let address = document.querySelector(".addresses").value
-            let totalOrder = document.querySelector(".totalOrder").innerHTML.slice(1)
-            get("/api/v1/payment/vn-pay",{amount:totalOrder,bankCode:"NCB",address: address,description: description})
-                .then(res=>{
-                    window.location.href=res.paymentUrl
+            let totalOrder = document.querySelector(".totalOrder").innerHTML.slice(0, -3)
+            let  formValue ={
+                cartIds: [],
+                userId: 0,
+                addressId: address,
+                description: description,
+                productIds: [],
+                quantities: [],
+                totalOrder: totalOrder
+            }
+
+            post("/api/v1/orders",formValue)
+                .then(response=>{
+                    get("/api/v1/payment/vn-pay",{amount:totalOrder,bankCode:"NCB",address: address,description: description})
+                        .then(res=>{
+                            window.location.href=res.paymentUrl
+                        })
                 })
+
         }
         renderAddresses()
     </script>

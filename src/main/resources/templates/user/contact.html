@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="user/user-layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Liên hệ</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <style>
+        .contact-container {
+            max-width: 800px;
+            margin: 50px auto;
+            margin-top: 217px;
+            padding: 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+        .form-control {
+            border-radius: 8px;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            padding: 10px 20px;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="user-content" layout:fragment="content">
+    <div class="container">
+        <div class="contact-container">
+            <h2 class="text-center mb-4">Liên Hệ Chúng Tôi</h2>
+            <form th:action="@{/contact}" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Họ và Tên</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nhập họ và tên" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Tin nhắn</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" placeholder="Nhập tin nhắn của bạn" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-custom w-100">Gửi tin nhắn</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

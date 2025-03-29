@@ -19,7 +19,7 @@ public class VNPAYConfig {
     @Getter
     @Value("https://sandbox.vnpayment.vn/paymentv2/vpcpay.html")
     private String vnp_PayUrl;
-    @Value("http://localhost:8080/api/v1/payment/vn-pay-callback")
+    @Value("http://localhost:8080/order/view")
     private String vnp_ReturnUrl;
     @Value("N3AB31WQ")
     private String vnp_TmnCode ;

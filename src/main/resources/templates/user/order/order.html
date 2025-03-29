@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="user/user-layout">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Show Products List</title>
+	<style>
+		img{
+			width: 200px;
+			height: 350px;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<h1>Users Products List</h1>
+		<div class="container-fluid page-header py-5">
+			<h1 class="text-center text-white display-6">Order</h1>
+			<ol class="breadcrumb justify-content-center mb-0">
+				<li class="breadcrumb-item"><a href="#">Home</a></li>
+				<li class="breadcrumb-item active text-white">Order</li>
+			</ol>
+		</div>
+		<div class="container">
+			<div class="order_details_table">
+			<h2>Đơn hàng</h2>
+			<div class="table-responsive">
+
+			</div>
+		</div>
+		</div>
+    </div>
+	<div class="jsContent" layout:fragment="jsContent">
+		<script>
+			get("/api/v1/orders/findByUser")
+					.then(response=>{
+						let html=``
+						for (const order of response){
+							html+=`
+						<table class="table">
+						<thead>
+							<tr >
+							<th style="width: 60%" scope="col">Sản Phẩm</th>
+							<th scope="col">Số lượng</th>
+							<th scope="col">Tiền hàng</th>
+							</tr>
+							</thead>
+							<tbody>
+							`
+							+
+							renderProduct(order.orderProductDTOS)
+							+
+									`
+							<tr>
+								<td>
+									<h6>Phí ship</h6>
+								</td>
+								<td>
+									<h5></h5>
+								</td>
+								<td>
+									<p>10000đ</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h6>Tổng tiền</h6>
+								</td>
+								<td>
+									<h5></h5>
+								</td>
+								<td>
+									<p>${order.totalOrder}đ</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h6>Hình thức thanh toán</h6>
+								</td>
+								<td>
+									<h5></h5>
+								</td>
+								<td>
+									<p>Vnpay</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h5>Tên:</h5>
+								</td>
+								<td>
+									<h5></h5>
+								</td>
+								<td>
+									<p>${order.user.username}</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h6>Địa chỉ:</h6>
+								</td>
+								<td>
+									<h5></h5>
+								</td>
+								<td>
+								<p>${order.address}</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h5>Mô tả:</h5>
+								</td>
+								<td>
+									<h5></h5>
+								</td>
+								<td>
+									<p>${order.description}</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h6>Ngày tạo</h6>
+								</td>
+								<td>
+									<h5></h5>
+								</td>
+								<td>
+									<p>${order.createDate}</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					`
+						}
+						document.querySelector(".table-responsive").innerHTML = html
+					})
+
+			function renderProduct(products){
+				let html= ``
+				for (const product of products){
+					html+= `
+						<tr>
+							<td style="width: 60%">
+								<p>${product.dto.name}</p>
+							</td>
+							<td>
+								<h5>x ${product.quantity}</h5>
+							</td>
+							<td>
+								<p>${parseInt(product.dto.price)*parseInt(product.quantity)}đ</p>
+							</td>
+						</tr>
+					`
+				}
+				return html
+			}
+		</script>
+	</div>
+
+</body>
+</html>

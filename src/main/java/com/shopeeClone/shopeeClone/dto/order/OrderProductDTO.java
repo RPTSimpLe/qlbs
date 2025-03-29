@@ -7,7 +7,6 @@ public class OrderProductDTO {
 	private Long orderProductId;
 	private Integer quantity;
 	private ProductDTO dto;
-	private String address;
 
 	public Long getOrderProductId() {
 		return orderProductId;
@@ -26,11 +25,5 @@ public class OrderProductDTO {
 	}
 	public void setDto(ProductDTO dto) {
 		this.dto = dto;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
 	}
 }

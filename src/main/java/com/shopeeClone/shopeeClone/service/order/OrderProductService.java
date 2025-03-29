@@ -9,5 +9,5 @@ public interface OrderProductService {
 	void delete(List<Long> ids);
 
 	List<OrderProductDTO> getall();
-
+	List<OrderProductDTO> findByUser();
 }

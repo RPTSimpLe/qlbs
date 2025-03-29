@@ -3,34 +3,34 @@
 	layout:decorate="admin/admin-layout">
 
 <head>
-	<meta charset="ISO-8859-1">
+	<meta charset="UTF-8">
 	<title>Show List Roles</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
-		<h1>Roles List</h1>
+		<h1>Danh Sách Vai Trò</h1>
 		<form id="seacrch-filter-role">
 			<div class="form-group">
 				<label></label>
-				<input class="form-control" name="code" placeholder="Seach by Code">
+				<input class="form-control" name="code" placeholder="Nhập mã">
 			</div>
-			<button type="submit" class="btn btn-primary">Search</button>
+			<button type="submit" class="btn btn-primary">Tìm kiếm</button>
 		</form>
-
 
 		<table class="table">
 			<thead class="thead-dark" id="role-filter-form">
-				<tr>
-					<th scope="col">Id</th>
-					<th scope="col">Role Name</th>
-					<th scope="col">Code</th>
-					<th scope="col">Add</th>
-				</tr>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Tên Vai Trò</th>
+				<th scope="col">Mã</th>
+				<th scope="col">Thêm</th>
+			</tr>
 			</thead>
 			<tbody id="list">
 			</tbody>
 		</table>
+
 
 		<script>
 			
@@ -55,9 +55,9 @@
 							<th scope="col">${a.code}</th>
 							<th scope="col">
 								<a href="/admin/role/${a.roleId}">
-											<button class="btn btn-primary">Update</button>
+											<button class="btn btn-primary">Sửa</button>
 										</a>
-								<button class="btn btn-danger" onclick="deleteRole(${a.roleId})">Delete</button>
+								<button class="btn btn-danger" onclick="deleteRole(${a.roleId})">Xóa</button>
 								</th>
 							
 						</tr>

@@ -1,15 +1,12 @@
 package com.shopeeClone.shopeeClone.api.user;
 
 import java.util.List;
+import java.util.Map;
 
+import com.shopeeClone.shopeeClone.dto.PageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.*;
 
 import com.shopeeClone.shopeeClone.dto.cart.CartDTO;
 import com.shopeeClone.shopeeClone.dto.order.CreateOrderForm;
@@ -22,24 +19,24 @@ import com.shopeeClone.shopeeClone.service.order.OrderService;
 @RequestMapping("api/v1/orders")
 public class OrderV1Api {
 	@Autowired
-	private OrderService orderService;
-	@Autowired
-	private OrderProductService service;
+	private OrderService service;
 	
 	@PostMapping
 	public OrderDTO create(@RequestBody CreateOrderForm form) {
-		return orderService.create(form);
+		return service.create(form);
 	}
-	
-	
-	//orderproduct
+
 	@GetMapping()
-	public List<OrderProductDTO> getAll() {
+	public List<OrderDTO> getAll() {
 		return service.getall();
 	}
-	
-	@DeleteMapping("{ids}")
-	public void delete(@PathVariable List<Long> ids) {
-		 service.delete(ids);
+
+	@GetMapping("/findByUser")
+	public List<OrderDTO> findByUser() {
+		return service.findByUser();
+	}
+	@GetMapping("/findByUserName")
+	public PageDTO<OrderDTO> findByUserName(@RequestParam Map<String, String> params) {
+		return service.findByUserName(params);
 	}
 }

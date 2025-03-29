@@ -31,7 +31,7 @@ public class OrderEntity extends BaseEntity {
 	
 	@OneToMany(mappedBy = "order")
 	private List<OrderProductEntity> orderProduct = new ArrayList<>();
-
+	private Long totalOrder;
 	public Long getOrderId() {
 		return orderId;
 	}
@@ -71,5 +71,12 @@ public class OrderEntity extends BaseEntity {
 	public void setOrderProduct(List<OrderProductEntity> orderProduct) {
 		this.orderProduct = orderProduct;
 	}
-	
+
+	public Long getTotalOrder() {
+		return totalOrder;
+	}
+
+	public void setTotalOrder(Long totalOrder) {
+		this.totalOrder = totalOrder;
+	}
 }

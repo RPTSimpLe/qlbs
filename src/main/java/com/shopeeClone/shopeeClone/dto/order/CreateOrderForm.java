@@ -16,7 +16,16 @@ public class CreateOrderForm {
 	private String createBy;
 	private List<Long> productIds;
 	private List<Integer> quantities;
-	
+	private Long totalOrder;
+
+	public Long getTotalOrder() {
+		return totalOrder;
+	}
+
+	public void setTotalOrder(Long totalOrder) {
+		this.totalOrder = totalOrder;
+	}
+
 	public List<Long> getCartIds() {
 		return cartIds;
 	}

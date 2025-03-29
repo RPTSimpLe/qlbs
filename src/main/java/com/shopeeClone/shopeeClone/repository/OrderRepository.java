@@ -12,5 +12,7 @@ import com.shopeeClone.shopeeClone.entity.OrderProductEntity;
 
 public interface OrderRepository extends JpaRepository<OrderEntity, Long>{
 	@Query("select r from OrderEntity r join r.address q where q =: address")
-	List<OrderEntity> findByAddress(@Param ("address") AddressEntity address);	
+	List<OrderEntity> findByAddress(@Param ("address") AddressEntity address);
+	@Query("SELECT r FROM OrderEntity r WHERE r.user.userId = :userId ORDER BY r.createDate DESC")
+    List<OrderEntity> findByUserId(Long userId);
 }

@@ -25,10 +25,10 @@
           <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
             <div class="card col-lg-4 mx-auto">
               <div class="card-body px-5 py-5">
-                <h3 class="card-title text-left mb-3">Login</h3>
+                <h3 class="card-title text-left mb-3">Đăng nhập</h3>
                 <form class="form-group" th:action="@{/login}" th:method="post">
                   <div class="form-group">
-                    <label>Username or email *</label>
+                    <label>Tên đăng nhập</label>
                     <input type="text" name="email" class="form-control p_input">
                   </div>
 
@@ -39,20 +39,20 @@
                   </div>
 
                   <div class="form-group">
-                    <label>Password *</label>
+                    <label>Mật khẩu</label>
                     <input type="password" class="form-control p_input" name="password">
                   </div>
                   <div class="form-group d-flex align-items-center justify-content-between">
                     <div class="form-check">
                       <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" name="remember-me"> Remember me </label>
+                        <input type="checkbox" class="form-check-input" name="remember-me"> Ghi nhớ </label>
                     </div>
-                    <a th:href="@{/#}" class="forgot-pass">Forgot password</a>
+                    <a th:href="@{/#}" class="forgot-pass">Quên mật khẩu</a>
                   </div>
                   <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
+                    <button type="submit" class="btn btn-primary btn-block enter-btn">Đăng nhập</button>
                   </div>
-                  <p class="sign-up">Don't have an Account?<a th:href="@{/signUp}"> Sign Up</a></p>
+                  <p class="sign-up">Chưa có tài khoản?<a th:href="@{/signUp}">Đăng kí</a></p>
                 </form>
               </div>
             </div>

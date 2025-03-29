@@ -58,25 +58,16 @@
     </div>
     <div class="container px-0">
         <nav class="navbar navbar-light bg-white navbar-expand-xl">
-            <a th:href="@{/}" class="navbar-brand"><h1 class="text-primary display-6">Book Store</h1></a>
+            <a th:href="@{/}" class="navbar-brand"><h1 class="text-primary display-6">Thanh Dat</h1></a>
             <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars text-primary"></span>
             </button>
             <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
-                    <a th:href="@{/}" class="nav-item nav-link active">Home</a>
-                    <a th:href="@{/user/categories}" class="nav-item nav-link">Shop</a>
-                    <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                            <a href="cart.html" class="dropdown-item">Cart</a>
-                            <a href="chackout.html" class="dropdown-item">Chackout</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                            <a href="404.html" class="dropdown-item">404 Page</a>
-                        </div>
-                    </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a th:href="@{/}" class="nav-item nav-link active">Trang chủ</a>
+                    <a th:href="@{/user/categories}" class="nav-item nav-link">Quần áo</a>
+
+                    <a href="/contact" class="nav-item nav-link">Liên hệ</a>
                 </div>
                 <div class="d-flex m-3 me-0">
                     <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
@@ -101,7 +92,7 @@
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content rounded-0">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tìm kiếm</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body d-flex align-items-center">
@@ -124,7 +115,7 @@
             <div class="row g-4">
                 <div class="col-lg-3">
                     <a href="#">
-                        <h1 class="text-primary mb-0">Book Store</h1>
+                        <h1 class="text-primary mb-0">Thanh Dat</h1>
                     </a>
                 </div>
                 <div class="col-lg-6">
@@ -235,13 +226,14 @@
             const user = await checklogin()
             let html = ``
             if(user.userId==null){
-                html = ` <a href="/login" class="dropdown-item">Login</a>
-                             <a href="/signUp" class="dropdown-item">Sign up</a>`
+                html = ` <a href="/login" class="dropdown-item">Đăng nhập</a>
+                             <a href="/signUp" class="dropdown-item">Đăng kí</a>`
             }else {
                 getCountCart(user.userId)
                 html =`<a class="dropdown-item" href="/profile" ">Profile</a>
+                        <a class="dropdown-item" href="/order/view" ">Đơn hàng</a>
                         <form action="/logout" id="logout" method="post">
-                            <a class="dropdown-item" onclick="logout()">Logout</a>
+                            <a class="dropdown-item" onclick="logout()">Đăng xuất</a>
                                     </form>`
             }
             authMenu.innerHTML=html

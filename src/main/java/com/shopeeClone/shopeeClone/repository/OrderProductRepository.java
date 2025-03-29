@@ -2,6 +2,7 @@ package com.shopeeClone.shopeeClone.repository;
 
 import java.util.List;
 
+import com.shopeeClone.shopeeClone.dto.user.UserDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,4 +17,6 @@ public interface OrderProductRepository  extends JpaRepository<OrderProductEntit
 	List<OrderProductEntity> findByOrder(@Param ("order") OrderEntity order);	
 	
 	List<OrderProductEntity> findByOrderProductId(Long orderProductId);
+	@Query("select r from OrderProductEntity r join r.order o where o.user.userId =:userId")
+    List<OrderProductEntity> findByUser(Long userId);
 }

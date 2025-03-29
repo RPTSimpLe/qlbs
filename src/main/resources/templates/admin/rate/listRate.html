@@ -7,35 +7,36 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h1>Rates List</h1>
+    <h1>Danh sách đánh giá</h1>
     <form id="rate-filter-form">
         <div class="form-group">
-            <input class="form-control" name="username" placeholder="Search by Username" />
+            <input class="form-control" name="username" placeholder="Tìm kiếm theo tên người dùng" />
         </div>
-        <button class="btn btn-primary" type="submit">Search</button>
+        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
     </form>
 
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Product</th>
-            <th>Username</th>
-            <th>Phone</th>
-            <th>Description</th>
-            <th>Created Date</th>
-            <th>Created By</th>
-            <th>Action</th>
+            <th>Sản phẩm</th>
+            <th>Tên người dùng</th>
+            <th>Số điện thoại</th>
+            <th>Mô tả</th>
+            <th>Ngày tạo</th>
+            <th>Người tạo</th>
+            <th>Hành động</th>
         </tr>
         </thead>
         <tbody id="rateList">
 
         </tbody>
     </table>
+
     <div id="demo" style="display: flex; justify-content: flex-end;"></div>
 
     <script>
         const searchForm = document.querySelector('#rate-filter-form');
-        const limit = 10;
+        const limit = 5;
         let formValue = {};
 
         searchForm.addEventListener('submit', (e) => {
@@ -61,7 +62,7 @@
             for (const rate of rates) {
                 html += `
 						<tr id="rate_${rate.id}">
-							<td><img style="width: 60px; height: 60px;" src="${rate.productDTO.imageDTOs[0].url}" alt="">${rate.productDTO.name}</td>
+							<td>${rate.productDTO.name}</td>
 							<td>${rate.name}</td>
 							<td>${rate.telephone}</td>
 							<td>${rate.feedBack}</td>
@@ -69,11 +70,10 @@
 							<td>${rate.createDate}</td>
 							<td>${rate.createBy}</td>
 							<td>
-								<button onclick="deleteRate(${rate.id})" class="btn btn-danger">Delete</button>
+								<button onclick="deleteRate(${rate.id})" class="btn btn-danger">Xóa</button>
 							</td>
 						</tr>
 					`;
-                console.log(rate)
             }
             document.querySelector("#rateList").innerHTML = html;
         }

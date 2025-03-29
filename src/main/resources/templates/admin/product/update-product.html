@@ -27,58 +27,58 @@
 <body>
 	<div layout:fragment="content">
         <form id="updateProductForm">
-            <input name="productId" th:value = "${product.productId}" type="hidden">
+            <input name="productId" th:value="${product.productId}" type="hidden">
             <div class="form-group">
-                <label>Product Name: </label>
-                <input th:value = "${product.name}" type="text" name="name" class="form-control name" placeholder="Product Name">
+                <label>Tên sản phẩm: </label>
+                <input th:value="${product.name}" type="text" name="name" class="form-control name" placeholder="Tên sản phẩm">
             </div>
             <div class="form-group">
-                <label>Description: </label>
-                <input th:value = "${product.description}" type="text" name="description" class="form-control description" placeholder="Description">
+                <label>Mô tả: </label>
+                <input th:value="${product.description}" type="text" name="description" class="form-control description" placeholder="Mô tả">
             </div>
             <div class="form-group">
-                <label>Import Price: </label>
-                <input th:value = "${product.importPrice}" type="number" name="importPrice" class="form-control importPrice" placeholder="Import Price">
+                <label>Giá nhập: </label>
+                <input th:value="${product.importPrice}" type="number" name="importPrice" class="form-control importPrice" placeholder="Giá nhập">
             </div>
             <div class="form-group">
-                <label>Product Price: </label>
-                <input th:value = "${product.price}" type="number" name="price" class="form-control price" placeholder="Product Price">
+                <label>Giá bán: </label>
+                <input th:value="${product.price}" type="number" name="price" class="form-control price" placeholder="Giá bán">
             </div>
             <div class="form-group">
-                <label>Discount Percent: </label>
-                <input th:value = "${product.discountPercent}" type="number" name="discountPercent" class="form-control discountPercent" placeholder="Discount Percent">
+                <label>Phần trăm giảm giá: </label>
+                <input th:value="${product.discountPercent}" type="number" name="discountPercent" class="form-control discountPercent" placeholder="Phần trăm giảm giá">
             </div>
             <div class="form-group">
-                <label>Category Name: </label>
-                <input th:value = "${product.category}" type="text" name="category" class="form-control category" placeholder="Category Name">
+                <label>Danh mục: </label>
+                <input th:value="${product.category}" type="text" name="category" class="form-control category" placeholder="Danh mục">
             </div>
             <div class="form-group">
-                <label>Supplier Name: </label>
-                <input th:value = "${product.suppilier}" type="text" name="suppilier" class="form-control suppilier" placeholder="Supplier Name">
+                <label>Nhà cung cấp: </label>
+                <input th:value="${product.suppilier}" type="text" name="suppilier" class="form-control suppilier" placeholder="Nhà cung cấp">
             </div>
             <div class="form-group">
-				<button class="btn btn-dark" type="submit">
-					save
-				</button>
-			</div>
+                <button class="btn btn-dark" type="submit">Lưu</button>
+            </div>
         </form>
-        <h3 style="font-weight:600;">Update Image</h3>
+
+        <h3 style="font-weight:600;">Cập nhật hình ảnh</h3>
         <form id="updateImageForm" enctype="multipart/form-data">
             <div id="previewImages"></div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroupFileAddon01">Add Images</span>
+                    <span class="input-group-text" id="inputGroupFileAddon01">Thêm ảnh</span>
                 </div>
                 <div class="custom-file">
                     <input type="file" aria-describedby="inputGroupFileAddon01" class="custom-file-input" multiple id="addImage" style="margin-top: 40px;">
-                  <label class="custom-file-label" for="addImage">Choose Image</label>
+                    <label class="custom-file-label" for="addImage">Chọn ảnh</label>
                 </div>
             </div>
             <div id="imagePreview" style="display: flex; flex-wrap: wrap;"></div>
-            <button type="submit" class="btn btn-dark">Save</button>
+            <button type="submit" class="btn btn-dark">Lưu</button>
         </form>
-        <a style="color: rgb(0, 17, 255); font-size: 30px;margin-top: 20px;" href="/admin/products/search">Back to List -></a>
-        
+
+        <a style="color: rgb(0, 17, 255); font-size: 30px;margin-top: 20px;" href="/admin/products/search">Quay lại danh sách -></a>
+
 
         <script th:inline="javascript">
             //update form

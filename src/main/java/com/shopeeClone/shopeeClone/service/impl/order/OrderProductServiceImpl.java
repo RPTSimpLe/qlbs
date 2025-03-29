@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.shopeeClone.shopeeClone.dto.user.UserDTO;
+import com.shopeeClone.shopeeClone.entity.UserEntity;
+import com.shopeeClone.shopeeClone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +29,8 @@ public class OrderProductServiceImpl implements OrderProductService {
 	private OrderRepository orderRepository;
 	@Autowired
 	private OrderProductConverter converter;
-	
+	@Autowired
+	private UserService userService;
 	@Override
 	public void delete(List<Long> ids) {
 		for (Long id : ids) {
@@ -58,4 +62,16 @@ public class OrderProductServiceImpl implements OrderProductService {
 		return dtos;
 	}
 
+	@Override
+	public List<OrderProductDTO> findByUser() {
+		UserDTO userDTO = userService.getUser();
+		List<OrderProductEntity> entities = repository.findByUser(userDTO.getUserId());
+		List<OrderProductDTO> dtos = new ArrayList<>();
+		for (OrderProductEntity orderProductEntity : entities) {
+			OrderProductDTO dto = new OrderProductDTO();
+			dto = converter.toDto(orderProductEntity);
+			dtos.add(dto);
+		}
+		return dtos;
+	}
 }

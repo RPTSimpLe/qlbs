@@ -3,35 +3,36 @@
 	layout:decorate="admin/admin-layout">
 
 <head>
-	<meta charset="ISO-8859-1">
+	<meta charset="UTF-8">
 	<title>Add Supplier</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
-		<h1>Create Supplier</h1>
+		<h1>Thêm Nhà Cung Cấp</h1>
 		<form id="addSupplier" class="addform">
 			<div class="form-group">
-				<label>Supplier Name:</label>
-				<input name="name" class="form-control" placeholder="Supplier Name" required>
+				<label>Tên Nhà Cung Cấp:</label>
+				<input name="name" class="form-control" placeholder="Nhập tên nhà cung cấp" required>
 			</div>
 			<div class="form-group">
-				<label>Phone: </label>
-				<input name="phone" class="form-control" placeholder="Phone">
+				<label>Số Điện Thoại: </label>
+				<input name="phone" class="form-control" placeholder="Nhập số điện thoại">
 			</div>
 			<p id="invalid-feedback" style="color: red; display: none;">
-		        Phone numbers must be numeric and consist of 10 or 11 numbers.
-		      </p>
+				Số điện thoại phải là số và có 10 hoặc 11 chữ số.
+			</p>
 			<div class="form-group">
-				<label>Description: </label>
-				<input name="description" class="form-control" placeholder="Description">
+				<label>Mô Tả: </label>
+				<input name="description" class="form-control" placeholder="Nhập mô tả">
 			</div>
 			<div class="form-group">
 				<label>Email: </label>
-				<input name="email" type="email" class="form-control" placeholder="Email" required>
+				<input name="email" type="email" class="form-control" placeholder="Nhập email" required>
 			</div>
-			<button type="submit" class="btn btn-primary">Create</button>
+			<button type="submit" class="btn btn-primary">Tạo Mới</button>
 		</form>
+
 
 
 		<script>

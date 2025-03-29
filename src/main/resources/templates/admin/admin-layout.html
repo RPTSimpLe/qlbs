@@ -31,7 +31,7 @@
 		<div>
 			<a href="#">
 				<form th:action="@{/logout}" th:method="post">
-					<button type="submit" class="btn btn-primary" style="font-size: inherit;color: #fff;">Logout</button>
+					<button type="submit" class="btn btn-primary" style="font-size: inherit;color: #fff;">Đăng xuất</button>
 				</form>
 			</a>
 		</div>
@@ -45,41 +45,41 @@
 				<div class="iocn-link">
 					<a href="#">
 						<i class='bx bx-collection'></i>
-						<span class="link_name">Category</span>
+						<span class="link_name">Danh mục</span>
 					</a>
 					<i class='bx bxs-chevron-down arrow'></i>
 				</div>
 				<ul class="sub-menu">
-					<li><a th:href="@{'/admin/categories/add'}">Add Category</a></li>
-					<li><a th:href="@{'/admin/categories/search'}">Search Category</a></li>
+					<li><a th:href="@{'/admin/categories/add'}">Thêm </a></li>
+					<li><a th:href="@{'/admin/categories/search'}">Danh sách</a></li>
 				</ul>
 			</li>
 			<li>
 				<div class="iocn-link">
 					<a href="#">
 						<i class='bx bx-book-alt'></i>
-						<span class="link_name">Supplier</span>
+						<span class="link_name">Nhà cung cấp</span>
 					</a>
 					<i class='bx bxs-chevron-down arrow'></i>
 				</div>
 				<ul class="sub-menu">
-					<li><a th:href="@{'/admin/supplier/add'}">Add Supplier</a></li>
-					<li><a th:href="@{'/admin/supplier/search'}">Search Supplier</a></li>
+					<li><a th:href="@{'/admin/supplier/add'}">Thêm</a></li>
+					<li><a th:href="@{'/admin/supplier/search'}">Danh sách</a></li>
 				</ul>
 			</li>
 			<li>
 				<div class="iocn-link">
 					<a href="#">
 					<i class='bx bx-pie-chart-alt-2'></i>
-						<span class="link_name">Role, User</span>
+						<span class="link_name">Quyền, tài khoản</span>
 					</a>
 					<i class='bx bxs-chevron-down arrow'></i>
 				</div>
 				<ul class="sub-menu">
-					<li><a th:href="@{'/admin/role/create'}">Create role</a></li>
-					<li><a th:href="@{'/admin/role/search'}">Search role</a></li>
-					<li><a th:href="@{'/admin/role/createUser'}">Create user</a></li>
-					<li><a th:href="@{'/admin/role/user'}">Search user</a></li>
+					<li><a th:href="@{'/admin/role/create'}">Thêm quyền</a></li>
+					<li><a th:href="@{'/admin/role/search'}">Danh sách quyền</a></li>
+					<li><a th:href="@{'/admin/role/createUser'}">Tạo tài khoản</a></li>
+					<li><a th:href="@{'/admin/role/user'}">Danh sách tài khoản</a></li>
 				</ul>
 			</li>
 			
@@ -87,13 +87,13 @@
 				<div class="iocn-link">
 					<a href="#">
 						<i class='bx bx-plug'></i>
-						<span class="link_name">Product</span>
+						<span class="link_name">Sản phẩm</span>
 					</a>
 					<i class='bx bxs-chevron-down arrow'></i>
 				</div>
 				<ul class="sub-menu">
-					<li><a th:href="@{'/admin/products/add'}">Add product</a></li>
-					<li><a th:href="@{'/admin/products/search'}">Search Product</a></li>
+					<li><a th:href="@{'/admin/products/add'}">Thêm</a></li>
+					<li><a th:href="@{'/admin/products/search'}">Danh sách</a></li>
 				</ul>
 			</li>
 
@@ -101,14 +101,17 @@
 				<div class="iocn-link">
 					<a th:href="@{/admin/rate/list}">
 						<i class='bx bx-plug'></i>
-						<span class="link_name">Rate</span>
+						<span class="link_name">Đánh giá</span>
 					</a>
-<!--					<i class='bx bxs-chevron-down arrow'></i>-->
 				</div>
-<!--				<ul class="sub-menu">-->
-<!--					<li><a th:href="@{'/admin/products/add'}">Add product</a></li>-->
-<!--					<li><a th:href="@{'/admin/products/search'}">Search Product</a></li>-->
-<!--				</ul>-->
+			</li>
+			<li>
+				<div class="iocn-link">
+					<a th:href="@{/admin/order}">
+						<i class='bx bx-plug'></i>
+						<span class="link_name">Đơn hàng</span>
+					</a>
+				</div>
 			</li>
 		</ul>
 

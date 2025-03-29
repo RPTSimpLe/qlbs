@@ -3,34 +3,32 @@
 	layout:decorate="admin/admin-layout">
 
 <head>
-	<meta charset="ISO-8859-1">
+	<meta charset="UTF-8">
 	<title>Insert title here</title>
 </head>
 
 <body>
 	<div layout:fragment="content">
 		<form id="updateCategoryForm">
-			<h1>Update Category</h1>
+			<h1>Cập nhật danh mục</h1>
 			<input name="categoryId" th:value="${category.categoryId}" type="hidden">
+
 			<div class="form-group">
-				<label>Category Name: </label>
-				<input name="name" th:value="${category.name}" class="form-control name" placeholder="Category Name">
+				<label>Tên danh mục: </label>
+				<input name="name" th:value="${category.name}" class="form-control name" placeholder="Nhập tên danh mục">
 			</div>
 
 			<div class="form-group">
-				<label>Description: </label>
-				<input name="description" th:value="${category.description}" class="form-control description" placeholder="Description">
+				<label>Mô tả: </label>
+				<input name="description" th:value="${category.description}" class="form-control description" placeholder="Nhập mô tả">
 			</div>
+
 			<div class="form-group">
 				<button class="btn btn-primary" type="submit">
-					Update
+					Cập nhật
 				</button>
 			</div>
 		</form>
-
-
-
-
 
 		<script>
 			const updateFrom = document.querySelector("#updateCategoryForm")

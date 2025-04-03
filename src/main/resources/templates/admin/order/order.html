@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/admin-layout">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Show Suppliers List</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="container">
+			<h1>Danh Sách Đơn hàng</h1>
+			<form id="supplier-filter-form">
+				<div class="form-group">
+					<input class="form-control" name="username" placeholder="Tìm kiếm theo tên người đặt" />
+				</div>
+				<button class="btn btn-primary" type="submit">Tìm kiếm</button>
+			</form>
+			<div class="order_details_table">
+				<div class="table-responsive">
+
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<script>
+			let formValue = {}
+			const searchForm = document.getElementById("supplier-filter-form")
+			searchForm.addEventListener('submit', (e) => {
+				e.preventDefault()
+				formValue = formToObject("#supplier-filter-form");
+				getOrder({
+					page: 1,
+					limit: limit
+				})
+			})
+
+
+			const limit = 5
+			const _$ = $;
+			function renderOrder(respond) {
+				let html = ``;
+				for (const order of respond.data) {
+					html += `
+								<table class="table table-bordered">
+						<thead>
+						<tr>
+							<th style="width: 60%" scope="col">Sản Phẩm</th>
+							<th scope="col">Số lượng</th>
+							<th scope="col">Tiền hàng</th>
+						</tr>
+						</thead>
+						<tbody>
+						`
+							+
+							renderProduct(order.orderProductDTOS)
+							+
+							`
+						<tr>
+							<td>
+								<p>Phí ship</p>
+							</td>
+							<td>
+								<h5></h5>
+							</td>
+							<td>
+								<p>10000đ</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p>Tổng tiền</p>
+							</td>
+							<td>
+
+							</td>
+							<td>
+									<p>${order.totalOrder}đ</p>
+							</td>
+						</tr>
+						<tr>
+								<td>
+									<h6>Hình thức thanh toán</h6>
+								</td>
+								<td>
+									<h5></h5>
+								</td>
+								<td>
+									<p>Vnpay</p>
+								</td>
+						</tr>
+						<tr>
+								<td>
+									<h6>Ngày tạo</h6>
+								</td>
+								<td>
+									<h5></h5>
+								</td>
+								<td>
+									<p>${order.createDate}</p>
+								</td>
+						</tr>
+						<tr>
+							<td>
+								<p>Khách hàng</p>
+							</td>
+							<td>
+							</td>
+							<td>
+									<p>${order.user.username}</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<p>Địa chỉ:</p>
+								<p>${order.address}</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<p>Mô tả:</p>
+								<p>${order.description}</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<p>Ngày tạo:</p>
+								<p>${order.createDate}</p>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+							`;
+				}
+				document.querySelector('.table-responsive').innerHTML = html
+			}
+			function renderProduct(products){
+				let html = ``
+				for (const product of products){
+					html +=`
+						<tr>
+							<td style="width: 60%">
+								<p>${product.dto.name}</p>
+							</td>
+							<td>
+								<h5>x ${product.quantity}</h5>
+							</td>
+							<td>
+								<p>${parseInt(product.dto.price)*parseInt(product.quantity)}đ</p>
+							</td>
+						</tr>
+					`
+				}
+				return html
+			}
+			function getOrder({page, limit}) {
+				get(`/api/v1/orders/findByUserName`, {
+					page,
+					limit, ...formValue
+				})
+						.then(respond => {
+							renderOrder(respond)
+							_$("#demo").pagination("destroy");
+							const {page, totalItems, limit} = respond;
+
+							showPagination({
+								totalItems: totalItems,
+								limit,
+								currentPage: page,
+								onPageClick: function (pageNumber) {
+									getOrder({page: pageNumber, limit})
+									console.log(pageNumber)
+								}
+							})
+						})
+			}
+			showPagination({
+				totalItems: 1,
+				limit,
+				currentPage: 1,
+				onPageClick: () => { }
+			})
+
+			getOrder({
+				page: 1,
+				limit: 100
+			})
+		</script>
+	</div>
+
+</body>
+
+</html>

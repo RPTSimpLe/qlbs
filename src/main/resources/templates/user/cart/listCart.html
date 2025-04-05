@@ -233,11 +233,11 @@
 
             post("/api/v1/orders",formValue)
                 .then(response=>{
-                    // get("/api/v1/payment/vn-pay",{amount:totalOrder,bankCode:"NCB",address: address,description: description})
-                    //     .then(res=>{
-                    //         console.log(res)
-                    //         window.location.href=res.paymentUrl
-                    //     })
+                    post("/api/payment/momo/"+totalOrder)
+                        .then(res=>{
+                            console.log(res)
+                            // window.location.href=res.paymentUrl
+                        })
                     window.location.href= "/order/view"
                 })
 

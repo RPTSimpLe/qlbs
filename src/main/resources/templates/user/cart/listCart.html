@@ -231,13 +231,14 @@
                 totalOrder: totalOrder
             }
 
-            post("/api/v1/orders",formValue)
-                .then(response=>{
+            // post("/api/v1/orders",formValue)
+            //     .then(response=>{
                     get("/api/v1/payment/vn-pay",{amount:totalOrder,bankCode:"NCB",address: address,description: description})
                         .then(res=>{
+                            console.log(res)
                             window.location.href=res.paymentUrl
                         })
-                })
+                // })
 
         }
         renderAddresses()

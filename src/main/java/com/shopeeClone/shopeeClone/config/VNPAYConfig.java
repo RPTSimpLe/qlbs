@@ -21,10 +21,10 @@ public class VNPAYConfig {
     private String vnp_PayUrl;
     @Value("http://localhost:8080/order/view")
     private String vnp_ReturnUrl;
-    @Value("TZNPJFRS")
+    @Value("N3AB31WQ")
     private String vnp_TmnCode ;
     @Getter
-    @Value("F3PDYE2PIBF4ISB5JYVXUVFE4A2QOPFF")
+    @Value("FCIUBKDHMTQDPMYWJNBOIFFMACMRSTZC")
     private String secretKey;
     @Value("2.1.0")
     private String vnp_Version;

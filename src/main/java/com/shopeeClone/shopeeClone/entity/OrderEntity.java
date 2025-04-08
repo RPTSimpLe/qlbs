@@ -32,6 +32,16 @@ public class OrderEntity extends BaseEntity {
 	@OneToMany(mappedBy = "order")
 	private List<OrderProductEntity> orderProduct = new ArrayList<>();
 	private Long totalOrder;
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Long getOrderId() {
 		return orderId;
 	}

@@ -38,9 +38,3 @@ No	Tên		        Số thẻ			    Hạn ghi trên thẻ	OTP	    Trường hợp 
 3	NGUYEN VAN A	9704 0000 0000 0034	03/07			    OTP	    Nguồn tiền không đủ
 4	NGUYEN VAN A	9704 0000 0000 0042	03/07			    OTP	    Hạn mức thẻ
 
-//Zalo pay
-1. Thông tin thẻ Visa, Master, JCB
-Số thẻ	4111111111111111
-Tên	NGUYEN VAN A
-Ngày hết hạn	01/26
-Mã CVV	123

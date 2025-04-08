@@ -17,6 +17,15 @@ public class CreateOrderForm {
 	private List<Long> productIds;
 	private List<Integer> quantities;
 	private Long totalOrder;
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public Long getTotalOrder() {
 		return totalOrder;

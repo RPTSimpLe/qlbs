@@ -42,6 +42,7 @@ public class OrderConvervter {
 		dto.setCreateBy(entity.getCreateBy());
 		dto.setOrderProductDTOS(orderProductConverter.toDto(entity.getOrderProduct()));
 		dto.setUser(userConverter.toDTO(entity.getUser()));
+		dto.setStatus(entity.getStatus());
 		return dto;
 	}
 	public List<OrderDTO> toDTO(List<OrderEntity> orderEntityList) {
@@ -60,6 +61,7 @@ public class OrderConvervter {
 		entity.setCreateDate(form.getCreateDate());
 		entity.setTotalOrder(form.getTotalOrder());
 		entity.setCreateBy(form.getCreateBy());
+		entity.setStatus(form.getStatus());
 		return entity;
 		
 	

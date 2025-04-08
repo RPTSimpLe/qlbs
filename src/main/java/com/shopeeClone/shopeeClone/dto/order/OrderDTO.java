@@ -17,6 +17,15 @@ public class OrderDTO {
 	private String createBy;
 	private UserDTO user;
 	private List<OrderProductDTO> orderProductDTOS;
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public UserDTO getUser() {
 		return user;

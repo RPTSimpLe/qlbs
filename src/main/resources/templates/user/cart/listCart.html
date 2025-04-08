@@ -84,6 +84,13 @@
                         <label for="exampleInputEmail1">Mô tả</label>
                         <textarea type="email" class="form-control description" id="exampleInputEmail1" aria-describedby="emailHelp"></textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Phương thức thanh toán</label>
+                        <select class="form-control" id="method"  >
+                            <option value="vnpay">VNpay</option>
+                            <option value="momo">Momo</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="mt-5">
                 </div>
@@ -221,6 +228,7 @@
             let description  = document.querySelector(".description").value
             let address = document.querySelector(".addresses").value
             let totalOrder = document.querySelector(".totalOrder").innerHTML.slice(0, -3)
+            let method = document.getElementById("method").value
             let  formValue ={
                 cartIds: [],
                 userId: 0,
@@ -228,19 +236,23 @@
                 description: description,
                 productIds: [],
                 quantities: [],
-                totalOrder: totalOrder
+                totalOrder: totalOrder,
+                status: method
             }
-
             post("/api/v1/orders",formValue)
                 .then(response=>{
-                    post("/api/payment/momo/"+totalOrder)
-                        .then(res=>{
-                            console.log(res)
-                            // window.location.href=res.paymentUrl
-                        })
-                    window.location.href= "/order/view"
+                   if (method=="momo"){
+                       post("/api/payment/momo/"+totalOrder)
+                           .then(res=>{
+                               window.location.href=res.payUrl
+                           })                   }else {
+                       get("/api/v1/payment/vn-pay",{amount:totalOrder,bankCode:"NCB",address: address,description: description})
+                           .then(res=>{
+                               window.location.href=res.paymentUrl
+                           })
+                   }
+                    // window.location.href= "/order/view"
                 })
-
         }
         renderAddresses()
     </script>
